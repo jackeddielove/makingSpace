@@ -289,7 +289,7 @@
       rotationSpeed = 0.05;
     }
   
-    //slide 9 -- slicing 4D with 3D
+    //slide 11 -- slicing 4D with 3D
     {
       //functions that return points on the edges between two grades of the face poset of the 4-cube, projected onto 3-space
       {
@@ -336,6 +336,36 @@
       s = 5;
     }
   
+    //slide 12 -- part 3 title
+
+    //slide 13 -- RGB space
+    {
+        rd = -7;
+        gr = -7;
+        bl = -7;
+        rgbTimer = 0;
+        rgbSpeed = 0.05;
+
+        rgb = false;
+        curve1 = false;
+        curve2 = false;
+        curve3 = false;
+
+        function strkClr(x, y, z) {
+            if ((x + y + z) / 3 < 128) {
+              return 255;
+            }
+            if ((x + y + z) / 3 >= 128) {
+              return 0;
+            }
+          }
+          
+          function rescale(x) {
+            return round(((x + 7) * 255) / 3, 0);
+          }
+    }
+
+
     //mouse functions
     {
       //mouseWheel functions
@@ -683,6 +713,18 @@
               t += s;
             }
           }
+
+          if (counter == 13) {
+            if (curve1 == true || curve2 == true || curve3 == true) {
+                if (event.delta > 0 && rgbTimer > 0) {
+                  rgbTimer -= rgbSpeed;
+                }
+                if (event.delta < 0 && rgbTimer < 1) {
+                  rgbTimer += rgbSpeed;
+                }
+              }
+          }
+          
           return false;
         }
       }
@@ -1043,6 +1085,63 @@
               }
             }
           }
+
+          if (counter == 13) {
+            if (
+                dist(
+                  mouseToWorld(mouseX, mouseY)[0],
+                  mouseToWorld(mouseX, mouseY)[1],
+                  -4.5,
+                  -3
+                ) < 0.5
+              ) {
+                rgb = !rgb;
+              }
+            
+              if (rgb == true) {
+                if (
+                  dist(
+                    mouseToWorld(mouseX, mouseY)[0],
+                    mouseToWorld(mouseX, mouseY)[1],
+                    -1.5,
+                    -3
+                  ) < 0.5
+                ) {
+                  curve1 = !curve1;
+                  rd = -7;
+                  gr = -7;
+                  bl = -7;
+                }
+            
+                if (
+                  dist(
+                    mouseToWorld(mouseX, mouseY)[0],
+                    mouseToWorld(mouseX, mouseY)[1],
+                    1.5,
+                    -3
+                  ) < 0.5
+                ) {
+                  curve2 = !curve2;
+                  rd = -7;
+                  gr = -7;
+                  bl = -7;
+                }
+            
+                if (
+                  dist(
+                    mouseToWorld(mouseX, mouseY)[0],
+                    mouseToWorld(mouseX, mouseY)[1],
+                    4.5,
+                    -3
+                  ) < 0.5
+                ) {
+                  curve3 = !curve3;
+                  rd = -7;
+                  gr = -7;
+                  bl = -7;
+                }
+              }
+          }
         }
       }
     }
@@ -1062,7 +1161,7 @@
       w = 1200;
     // createCanvas(w, r * w, WEBGL);
     createCanvas(windowWidth, windowHeight, WEBGL);
-      
+
       frameRate(100);
   
       unit = width / 16;
@@ -1129,6 +1228,8 @@
   
     if (counter != 13) {
     background("black");
+    } else {
+        background(rescale(rd), rescale(gr), rescale(bl));
     }
     
     // textFont("Arial Black");
@@ -2819,5 +2920,258 @@
       pop();
     }
     
+    //RGB space
+    if (counter == 13) {
+        //buttons
+        {
+              rectMode(CENTER);
+              textAlign(CENTER);
+              textSize(unit / 3);
+
+              //rgb space button
+              //button shape
+              noFill();
+              stroke("white");
+              strokeWeight(unit / 50);
+              rect(-4.5 * unit, 3 * unit, 2.25 * unit, 0.75 * unit, 0.25 * unit);
+
+              //button label
+              fill("white");
+              text("RGB space", -4.5 * unit, 3.1 * unit);
+
+              //curve 1 button
+              //button shape
+              noFill();
+              stroke("white");
+              strokeWeight(unit / 50);
+              rect(-1.5 * unit, 3 * unit, 2.25 * unit, 0.75 * unit, 0.25 * unit);
+
+              //button label
+              fill("white");
+              text("curve 1", -1.5 * unit, 3.1 * unit);
+
+              //curve 2 button
+              //button shape
+              noFill();
+              stroke("white");
+              strokeWeight(unit / 50);
+              rect(1.5 * unit, 3 * unit, 2.25 * unit, 0.75 * unit, 0.25 * unit);
+
+              //button label
+              fill("white");
+              text("curve 2", 1.5 * unit, 3.1 * unit);
+
+              //curve 3 button
+              //button shape
+              noFill();
+              stroke("white");
+              strokeWeight(unit / 50);
+              rect(4.5 * unit, 3 * unit, 2.25 * unit, 0.75 * unit, 0.25 * unit);
+
+              //button label
+              fill("white");
+              text("curve 3", 4.5 * unit, 3.1 * unit);
+        }
+
+        //sliders
+        {
+              rectMode(CENTER);
+              stroke(255);
+              strokeWeight(0.05 * unit);
+
+              //bars
+              fill(255, 0, 0);
+              rect(-5.5 * unit, -1 * unit, 3 * unit, 0.1 * unit, 0.1 * unit);
+
+              fill(0, 255, 0);
+              rect(-5.5 * unit, 0 * unit, 3 * unit, 0.1 * unit, 0.1 * unit);
+
+              fill(0, 0, 255);
+              rect(-5.5 * unit, 1 * unit, 3 * unit, 0.1 * unit, 0.1 * unit);
+
+              //handles
+              push();
+              translate(0, 0, 1);
+              strokeWeight(0.025 * unit);
+              fill(128);
+              rect(rd * unit, -1 * unit, 0.2 * unit, 0.5 * unit, 0.1 * unit);
+              rect(gr * unit, 0 * unit, 0.2 * unit, 0.5 * unit, 0.1 * unit);
+              rect(bl * unit, 1 * unit, 0.2 * unit, 0.5 * unit, 0.1 * unit);
+              pop();
+
+              //text
+              textSize(0.5 * unit);
+              fill(strkClr(rescale(rd), rescale(gr), rescale(bl)));
+              textAlign(LEFT);
+              text(rescale(rd), -3.5 * unit, -0.8 * unit);
+              text(rescale(gr), -3.5 * unit, 0.2 * unit);
+              text(rescale(bl), -3.5 * unit, 1.2 * unit);
+        }
+
+        //controls
+        {
+              if (curve1 == false && curve2 == false && curve3 == false) {
+                  //red
+                  {
+                      if (
+                          dist(
+                              rd,
+                              1,
+                              mouseToWorld(mouseX, mouseY)[0],
+                              mouseToWorld(mouseX, mouseY)[1]
+                          ) < 0.5 &&
+                          mouseIsPressed
+                      ) {
+                          if (mouseToWorld(mouseX, mouseY)[0] < -7) {
+                              rd = -7;
+                          }
+                          if (mouseToWorld(mouseX, mouseY)[0] > -4) {
+                              rd = -4;
+                          }
+                          if (
+                              mouseToWorld(mouseX, mouseY)[0] >= -7 &&
+                              mouseToWorld(mouseX, mouseY)[0] <= -4
+                          ) {
+                              rd = mouseToWorld(mouseX, mouseY)[0];
+                          }
+                      }
+                  }
+
+                  //green
+                  {
+                      if (
+                          dist(
+                              gr,
+                              0,
+                              mouseToWorld(mouseX, mouseY)[0],
+                              mouseToWorld(mouseX, mouseY)[1]
+                          ) < 0.5 &&
+                          mouseIsPressed
+                      ) {
+                          if (mouseToWorld(mouseX, mouseY)[0] < -7) {
+                              gr = -7;
+                          }
+                          if (mouseToWorld(mouseX, mouseY)[0] > -4) {
+                              gr = -4;
+                          }
+                          if (
+                              mouseToWorld(mouseX, mouseY)[0] >= -7 &&
+                              mouseToWorld(mouseX, mouseY)[0] <= -4
+                          ) {
+                              gr = mouseToWorld(mouseX, mouseY)[0];
+                          }
+                      }
+                  }
+
+                  //blue
+                  {
+                      if (
+                          dist(
+                              bl,
+                              -1,
+                              mouseToWorld(mouseX, mouseY)[0],
+                              mouseToWorld(mouseX, mouseY)[1]
+                          ) < 0.5 &&
+                          mouseIsPressed
+                      ) {
+                          if (mouseToWorld(mouseX, mouseY)[0] < -7) {
+                              bl = -7;
+                          }
+                          if (mouseToWorld(mouseX, mouseY)[0] > -4) {
+                              bl = -4;
+                          }
+                          if (
+                              mouseToWorld(mouseX, mouseY)[0] >= -7 &&
+                              mouseToWorld(mouseX, mouseY)[0] <= -4
+                          ) {
+                              bl = mouseToWorld(mouseX, mouseY)[0];
+                          }
+                      }
+                  }
+              }
+        }
+
+          push();
+          rotateX(PI / 3);
+          rotateZ(PI / 6);
+          translate(1.5 * unit, 1.5 * unit, 0);
+          scale(3, -3, 3);
+
+          if (rgb == true) {
+              //cube
+              {
+                  stroke(strkClr(rescale(rd), rescale(gr), rescale(bl)));
+                  strokeWeight(0.04 * unit);
+                  //front
+                  line(0, 0, 0, 0, 0, unit);
+                  line(0, 0, 0, unit, 0, 0);
+                  line(unit, 0, 0, unit, 0, unit);
+                  line(unit, 0, unit, 0, 0, unit);
+
+                  //back
+                  line(0, unit, 0, 0, unit, unit);
+                  line(0, unit, 0, unit, unit, 0);
+                  line(unit, unit, 0, unit, unit, unit);
+                  line(unit, unit, unit, 0, unit, unit);
+
+                  //connectors
+                  line(unit, 0, 0, unit, unit, 0);
+                  line(unit, 0, unit, unit, unit, unit);
+                  line(0, 0, unit, 0, unit, unit);
+                  line(0, 0, 0, 0, unit, 0);
+
+                  if (curve1 == false && curve2 == false && curve3 == false) {
+                      push();
+                      translate(
+                          (rescale(rd) / 255) * unit,
+                          (rescale(gr) / 255) * unit,
+                          (rescale(bl) / 255) * unit
+                      );
+                      sphere(0.05 * unit);
+                      pop();
+                  }
+              }
+          }
+
+          if (curve1 == true) {
+              for (p = 0; p < 1; p += 0.001) {
+                  point(p * unit, p * unit, p * unit);
+              }
+              push();
+              translate(rgbTimer * unit, rgbTimer * unit, rgbTimer * unit);
+              sphere(0.05 * unit);
+              pop();
+          }
+
+          if (curve2 == true) {
+              for (p = 0; p < 1; p += 0.001) {
+                  point(p * unit, p ** 2 * unit, p ** 3 * unit);
+              }
+              push();
+              translate(rgbTimer * unit, rgbTimer ** 2 * unit, rgbTimer ** 3 * unit);
+              sphere(0.05 * unit);
+              pop();
+          }
+
+          if (curve3 == true) {
+              for (p = 0; p < 1; p += 0.001) {
+                  point(
+                      (unit * (sin(p * 2 * PI) + 1)) / 2,
+                      (unit * (cos(p * 2 * PI) + 1)) / 2,
+                      p * unit
+                  );
+              }
+              push();
+              translate(
+                  (unit * (sin(rgbTimer * 2 * PI) + 1)) / 2,
+                  (unit * (cos(rgbTimer * 2 * PI) + 1)) / 2,
+                  rgbTimer * unit
+              );
+              sphere(0.05 * unit);
+              pop();
+          }
+
+          pop();
+    }
   }
   
