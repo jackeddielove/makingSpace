@@ -16,6 +16,10 @@
         if (keyCode === LEFT_ARROW && counter > 0) {
           counter--;
         }
+        if (key === "f") {
+            let fs = fullscreen();
+            fullscreen(!fs);
+          }
         return false;
       }
   
@@ -1056,8 +1060,9 @@
       //set aspect ratio and screen width
       r = 9 / 16;
       w = 1200;
-      createCanvas(w, r * w, WEBGL);
-  
+    // createCanvas(w, r * w, WEBGL);
+    createCanvas(windowWidth, windowHeight, WEBGL);
+      
       frameRate(100);
   
       unit = width / 16;
