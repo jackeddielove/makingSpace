@@ -1158,9 +1158,9 @@
     function setup() {
       //set aspect ratio and screen width
       r = 9 / 16;
-      w = 1200;
-    // createCanvas(w, r * w, WEBGL);
-    createCanvas(windowWidth, windowHeight, WEBGL);
+      w = windowWidth;
+    createCanvas(w, r * w, WEBGL);
+    // createCanvas(windowWidth, windowHeight, WEBGL);
 
       frameRate(100);
   
@@ -1623,7 +1623,9 @@
       push();
       rotateX(PI / 3);
       rotateZ(PI / 6);
-      scale(2, -2, 2);
+    //   scale(2, -2, 2);
+    scale(1.5, -1.5, 1.5);
+
   
       //draw the xyz-axes
       stroke("white");
