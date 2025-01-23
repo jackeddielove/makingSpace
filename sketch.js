@@ -100,7 +100,10 @@
   
     //slide 8 -- projecting 3D to 2D
     {
-      //fixes bug that makes cube disappear if the first button is clicked and unclicked without rotation occuring
+      //fixes bug that makes cube disappear if the first button
+      //is clicked and unclicked without rotation occuring
+      rotated_1 = false;
+
       rotated = false;
   
       //divisor of pi for rotations: higher number = smoother animation
@@ -564,11 +567,11 @@
             if (Xbutton == true) {
               if (event.delta > 0) {
                 xTheta--;
-                rotated = true;
+                rotated_1 = true;
               }
               if (event.delta < 0) {
                 xTheta++;
-                rotated = true;
+                rotated_1 = true;
               }
               a1 = Rx(xTheta, u1);
               a2 = Rx(xTheta, u2);
@@ -578,11 +581,11 @@
             if (Ybutton == true) {
               if (event.delta > 0) {
                 yTheta--;
-                rotated = true;
+                rotated_1 = true;
               }
               if (event.delta < 0) {
                 yTheta++;
-                rotated = true;
+                rotated_1 = true;
               }
               a1 = Ry(yTheta, u1);
               a2 = Ry(yTheta, u2);
@@ -592,11 +595,11 @@
             if (Zbutton == true) {
               if (event.delta > 0) {
                 zTheta--;
-                rotated = true;
+                rotated_1 = true;
               }
               if (event.delta < 0) {
                 zTheta++;
-                rotated = true;
+                rotated_1 = true;
               }
               a1 = Rz(zTheta, u1);
               a2 = Rz(zTheta, u2);
