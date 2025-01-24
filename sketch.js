@@ -3050,9 +3050,9 @@
                 fill("black");
               }
               textAlign(LEFT);
-              text(rd, -3.5 * unit, -0.8 * unit);
-              text(gr, -3.5 * unit, 0.2 * unit);
-              text(bl, -3.5 * unit, 1.2 * unit);
+              text(round(rd, 0), -3.5 * unit, -0.8 * unit);
+              text(round(gr, 0), -3.5 * unit, 0.2 * unit);
+              text(round(bl, 0), -3.5 * unit, 1.2 * unit);
         }
 
         //controls
@@ -3193,6 +3193,9 @@
               translate(rgbTimer * unit, rgbTimer * unit, rgbTimer * unit);
               sphere(0.05 * unit);
               pop();
+              rd = rgbTimer*255;
+              gr = rgbTimer*255;
+              bl = rgbTimer*255;
           }
 
           if (curve2 == true) {
@@ -3203,26 +3206,34 @@
               translate(rgbTimer * unit, rgbTimer ** 2 * unit, rgbTimer ** 3 * unit);
               sphere(0.05 * unit);
               pop();
+
+              rd = rgbTimer*255;
+              gr = ((rgbTimer)**2)*255;
+              bl = ((rgbTimer)**3)*255;
+
           }
 
           if (curve3 == true) {
               for (p = 0; p < 1; p += 0.001) {
                   point(
-                      (unit * (sin(p * 2 * PI) + 1)) / 2,
-                      (unit * (cos(p * 2 * PI) + 1)) / 2,
+                      unit * ((sin(p * 2 * PI) + 1) / 2),
+                      unit * ((cos(p * 2 * PI) + 1) / 2),
                       p * unit
                   );
               }
               push();
               translate(
-                  (unit * (sin(rgbTimer * 2 * PI) + 1)) / 2,
-                  (unit * (cos(rgbTimer * 2 * PI) + 1)) / 2,
+                  unit * ((sin(rgbTimer * 2 * PI) + 1) / 2),
+                  unit * ((cos(rgbTimer * 2 * PI) + 1) / 2),
                   rgbTimer * unit
               );
               sphere(0.05 * unit);
               pop();
-          }
 
+              rd = ((sin(rgbTimer * 2 * PI) + 1) / 2 ) * 255;
+              gr = ((cos(rgbTimer * 2 * PI) + 1) / 2 ) * 255;
+              bl = rgbTimer * 255;
+          }
           pop();
     }
   }
