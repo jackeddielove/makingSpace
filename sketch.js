@@ -3185,6 +3185,10 @@
               }
           }
 
+if (rgbTimer < 0) {
+    rgbTimer = 0;
+}
+
           if (curve1 == true) {
               for (p = 0; p < 1; p += 0.001) {
                   point(p * unit, p * unit, p * unit);
