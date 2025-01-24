@@ -3220,23 +3220,23 @@ if (rgbTimer < 0) {
           if (curve3 == true) {
               for (p = 0; p < 1; p += 0.001) {
                   point(
+                      p * unit,
                       unit * ((sin(p * 2 * PI) + 1) / 2),
-                      unit * ((cos(p * 2 * PI) + 1) / 2),
-                      p * unit
+                      unit * ((cos(p * 2 * PI) + 1) / 2)
                   );
               }
               push();
               translate(
+                  rgbTimer * unit,
                   unit * ((sin(rgbTimer * 2 * PI) + 1) / 2),
-                  unit * ((cos(rgbTimer * 2 * PI) + 1) / 2),
-                  rgbTimer * unit
+                  unit * ((cos(rgbTimer * 2 * PI) + 1) / 2)
               );
               sphere(0.05 * unit);
               pop();
 
-              rd = ((sin(rgbTimer * 2 * PI) + 1) / 2 ) * 255;
-              gr = ((cos(rgbTimer * 2 * PI) + 1) / 2 ) * 255;
-              bl = rgbTimer * 255;
+              gr = ((sin(rgbTimer * 2 * PI) + 1) / 2 ) * 255;
+              bl = ((cos(rgbTimer * 2 * PI) + 1) / 2 ) * 255;
+              rd = rgbTimer * 255;
           }
           pop();
     }
