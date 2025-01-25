@@ -3548,26 +3548,26 @@
 
                     rotateX(PI / 3);
                     rotateZ(PI / 6);
-                    translate(1 * unit, 2 * unit, 0);
-                    scale(2.5, -2.5, 2.5);
+                    scale(1, -1, 1);
+                    translate(0.5 * unit, -2.5 * unit, 0);
 
                     //front-0
-                    line(0, 0, 0, 0, 0, unit);
-                    line(0, 0, 0, unit, 0, 0);
-                    line(unit, 0, 0, unit, 0, unit);
-                    line(unit, 0, unit, 0, 0, unit);
+                    line(0, 0, 0, 0, 0, 2.5*unit);
+                    line(0, 0, 0, 2.5*unit, 0, 0);
+                    line(2.5*unit, 0, 0, 2.5*unit, 0, 2.5*unit);
+                    line(2.5*unit, 0, 2.5*unit, 0, 0, 2.5*unit);
 
                     //back-0
-                    line(0, unit, 0, 0, unit, unit);
-                    line(0, unit, 0, unit, unit, 0);
-                    line(unit, unit, 0, unit, unit, unit);
-                    line(unit, unit, unit, 0, unit, unit);
+                    line(0, 2.5*unit, 0, 0, 2.5*unit, 2.5*unit);
+                    line(0, 2.5*unit, 0, 2.5*unit, 2.5*unit, 0);
+                    line(2.5*unit, 2.5*unit, 0, 2.5*unit, 2.5*unit, 2.5*unit);
+                    line(2.5*unit, 2.5*unit, 2.5*unit, 0, 2.5*unit, 2.5*unit);
 
                     //connectors-0
-                    line(unit, 0, 0, unit, unit, 0);
-                    line(unit, 0, unit, unit, unit, unit);
-                    line(0, 0, unit, 0, unit, unit);
-                    line(0, 0, 0, 0, unit, 0);
+                    line(2.5*unit, 0, 0, 2.5*unit, 2.5*unit, 0);
+                    line(2.5*unit, 0, 2.5*unit, 2.5*unit, 2.5*unit, 2.5*unit);
+                    line(0, 0, 2.5*unit, 0, 2.5*unit, 2.5*unit);
+                    line(0, 0, 0, 0, 2.5*unit, 0);
 
                     pop();
                 }
@@ -3575,29 +3575,50 @@
                 //black = 1 face
                 {
                     push();
+
                     rotateX(PI / 3);
                     rotateZ(PI / 6);
-                    translate(2 * unit, 0 * unit, 1*unit);
-                    scale(2.5, -2.5, 2.5);
+                    scale(1, -1, 1);
+                    translate(2.0 * unit, 0.0 * unit, 0.75 * unit);
 
                     //front-0
-                    line(0, 0, 0, 0, 0, unit);
-                    line(0, 0, 0, unit, 0, 0);
-                    line(unit, 0, 0, unit, 0, unit);
-                    line(unit, 0, unit, 0, 0, unit);
+                    line(0, 0, 0, 0, 0, 2.5*unit);
+                    line(0, 0, 0, 2.5*unit, 0, 0);
+                    line(2.5*unit, 0, 0, 2.5*unit, 0, 2.5*unit);
+                    line(2.5*unit, 0, 2.5*unit, 0, 0, 2.5*unit);
 
                     //back-0
-                    line(0, unit, 0, 0, unit, unit);
-                    line(0, unit, 0, unit, unit, 0);
-                    line(unit, unit, 0, unit, unit, unit);
-                    line(unit, unit, unit, 0, unit, unit);
+                    line(0, 2.5*unit, 0, 0, 2.5*unit, 2.5*unit);
+                    line(0, 2.5*unit, 0, 2.5*unit, 2.5*unit, 0);
+                    line(2.5*unit, 2.5*unit, 0, 2.5*unit, 2.5*unit, 2.5*unit);
+                    line(2.5*unit, 2.5*unit, 2.5*unit, 0, 2.5*unit, 2.5*unit);
 
                     //connectors-0
-                    line(unit, 0, 0, unit, unit, 0);
-                    line(unit, 0, unit, unit, unit, unit);
-                    line(0, 0, unit, 0, unit, unit);
-                    line(0, 0, 0, 0, unit, 0);
+                    line(2.5*unit, 0, 0, 2.5*unit, 2.5*unit, 0);
+                    line(2.5*unit, 0, 2.5*unit, 2.5*unit, 2.5*unit, 2.5*unit);
+                    line(0, 0, 2.5*unit, 0, 2.5*unit, 2.5*unit);
+                    line(0, 0, 0, 0, 2.5*unit, 0);
 
+                    pop();
+                }
+
+                //connectors
+                {
+                    push();
+                    rotateX(PI / 3);
+                    rotateZ(PI / 6);
+                    scale(1, -1, 1);
+                    vertices = [[0, 0, 0], [0, 0, 2.5], [0, 2.5, 0], [0, 2.5, 2.5], [2.5, 0, 0], [2.5, 0, 2.5], [2.5, 2.5, 0], [2.5, 2.5, 2.5]];
+                    for (j = 0; j < 8; j++) {
+                        line(
+                            (vertices[j][0] + 0.5) * unit,
+                            (vertices[j][1] - 2.5) * unit,
+                            (vertices[j][2] + 0.0) * unit,
+                            (vertices[j][0] + 2.0) * unit,
+                            (vertices[j][1] + 0.0) * unit,
+                            (vertices[j][2] + 0.75) * unit,
+                        );
+                    }
                     pop();
                 }
             }
