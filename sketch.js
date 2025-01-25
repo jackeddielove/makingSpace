@@ -353,23 +353,50 @@
         curve1 = false;
         curve2 = false;
         curve3 = false;
-
-        function strkClr(x, y, z) {
-            if ((x + y + z) / 3 < 128) {
-              return 255;
+        
+        //conversions
+        {
+            //convert slider location (-7 to -4) with color value (0 to 255), and vice versa
+            function sliderToRgb(x) {
+                return round((x + 7) * (255 / 3), 0);
             }
-            if ((x + y + z) / 3 >= 128) {
-              return 0;
-            }
-          }
-          
-          function sliderToColor(x) {
-            return round((x + 7) * (255 / 3), 0);
-          }
 
-          function colorToSlider(x) {
-            return x * (3/255) - 7;
-          }
+            function rgbToSlider(x) {
+                return x * (3 / 255) - 7;
+            }
+        }
+    }
+
+    //slide 14 -- CMYK space
+    {
+        cy = 1;
+        mg = 1;
+        yw = 1;
+        bk = 1;
+
+        //conversions
+        {
+            //cmyk to rgb
+            function cmykToRgb(c, m, y, k) {
+                return [255 * (1 - c) * (1 - k), 255 * (1 - m) * (1 - k), 255 * (1 - y) * (1 - k)];
+            }
+
+            //rgb to cmyk
+            function rgbToCmyk(r, g, b) {
+                k = 1 - max(r, g, b);
+                return [1 - (r / (255 * (1 - k))), 1 - (g / (255 * (1 - k))), 1 - (b / (255 * (1 - k))), k];
+            }
+
+            //convert slider location (-7 to -4) with color value (0 to 1), and vice versa
+            function sliderToCmyk(x) {
+                return round((x + 7) / 3, 3);
+            }
+
+            function cmykToSlider(x) {
+                return x * 3 - 7;
+            }
+        }
+        //
     }
 
 
@@ -1229,18 +1256,27 @@
   }
   
   function draw() {
-    // if (keyIsPressed && keyCode === SHIFT) {
-    //   orbitControl();
-    // }
-  
-    if (counter != 13) {
-    background("black");
-    } else {
-        background(rd, gr, bl);
+
+    //general
+    {
+        // if (keyIsPressed && keyCode === SHIFT) {
+        //   orbitControl();
+        // }
+
+        if (counter == 13) {
+            background(rd, gr, bl);
+        }
+
+        if (counter == 14) {
+            background(cmykToRgb(cy, mg, yw, bk)[0], cmykToRgb(cy, mg, yw, bk)[1], cmykToRgb(cy, mg, yw, bk)[2]);
+        }
+        if (counter != 13 && counter != 14) {
+            background("black");
+        }
+
+        // textFont("Arial Black");
+        textFont(font);
     }
-    
-    // textFont("Arial Black");
-    textFont(font);
   
     //title slide
     if (counter == 0) {
@@ -2931,6 +2967,10 @@
     
     //RGB space
     if (counter == 13) {
+        if (rgbTimer < 0) {
+            rgbTimer = 0;
+        }
+
         //buttons
         {
               rectMode(CENTER);
@@ -3036,9 +3076,9 @@
               translate(0, 0, 1);
               strokeWeight(0.025 * unit);
               fill(128);
-              rect(colorToSlider(rd) * unit, -1 * unit, 0.2 * unit, 0.5 * unit, 0.1 * unit);
-              rect(colorToSlider(gr) * unit, 0 * unit, 0.2 * unit, 0.5 * unit, 0.1 * unit);
-              rect(colorToSlider(bl) * unit, 1 * unit, 0.2 * unit, 0.5 * unit, 0.1 * unit);
+              rect(rgbToSlider(rd) * unit, -1 * unit, 0.2 * unit, 0.5 * unit, 0.1 * unit);
+              rect(rgbToSlider(gr) * unit, 0 * unit, 0.2 * unit, 0.5 * unit, 0.1 * unit);
+              rect(rgbToSlider(bl) * unit, 1 * unit, 0.2 * unit, 0.5 * unit, 0.1 * unit);
               pop();
 
               //text
@@ -3062,7 +3102,7 @@
                   {
                       if (
                           dist(
-                              colorToSlider(rd),
+                              rgbToSlider(rd),
                               1,
                               mouseToWorld(mouseX, mouseY)[0],
                               mouseToWorld(mouseX, mouseY)[1]
@@ -3079,7 +3119,7 @@
                               mouseToWorld(mouseX, mouseY)[0] >= -7 &&
                               mouseToWorld(mouseX, mouseY)[0] <= -4
                           ) {
-                              rd = sliderToColor(mouseToWorld(mouseX, mouseY)[0]);
+                              rd = sliderToRgb(mouseToWorld(mouseX, mouseY)[0]);
                           }
                       }
                   }
@@ -3088,7 +3128,7 @@
                   {
                       if (
                           dist(
-                              colorToSlider(gr),
+                              rgbToSlider(gr),
                               0,
                               mouseToWorld(mouseX, mouseY)[0],
                               mouseToWorld(mouseX, mouseY)[1]
@@ -3105,7 +3145,7 @@
                               mouseToWorld(mouseX, mouseY)[0] >= -7 &&
                               mouseToWorld(mouseX, mouseY)[0] <= -4
                           ) {
-                              gr = sliderToColor(mouseToWorld(mouseX, mouseY)[0]);
+                              gr = sliderToRgb(mouseToWorld(mouseX, mouseY)[0]);
                           }
                       }
                   }
@@ -3114,7 +3154,7 @@
                   {
                       if (
                           dist(
-                              colorToSlider(bl),
+                              rgbToSlider(bl),
                               -1,
                               mouseToWorld(mouseX, mouseY)[0],
                               mouseToWorld(mouseX, mouseY)[1]
@@ -3131,13 +3171,15 @@
                               mouseToWorld(mouseX, mouseY)[0] >= -7 &&
                               mouseToWorld(mouseX, mouseY)[0] <= -4
                           ) {
-                              bl = sliderToColor(mouseToWorld(mouseX, mouseY)[0]);
+                              bl = sliderToRgb(mouseToWorld(mouseX, mouseY)[0]);
                           }
                       }
                   }
               }
         }
 
+        //graph
+        {
           push();
           rotateX(PI / 3);
           rotateZ(PI / 6);
@@ -3184,10 +3226,6 @@
                   }
               }
           }
-
-if (rgbTimer < 0) {
-    rgbTimer = 0;
-}
 
           if (curve1 == true) {
               for (p = 0; p < 1; p += 0.001) {
@@ -3239,6 +3277,310 @@ if (rgbTimer < 0) {
               rd = rgbTimer * 255;
           }
           pop();
+        }
+    }
+
+    //CMYK space
+    if (counter == 14) {
+        //buttons
+        {
+            rectMode(CENTER);
+            textAlign(CENTER);
+            textSize(unit / 3);
+
+            //cmyk space button
+            {
+                //button shape
+                noFill();
+                if ((cmykToRgb(cy, mg, yw, bk)[0] + cmykToRgb(cy, mg, yw, bk)[1] + cmykToRgb(cy, mg, yw, bk)[2]) / 3 < 128) {
+                    stroke("white");
+                }
+                if ((cmykToRgb(cy, mg, yw, bk)[0] + cmykToRgb(cy, mg, yw, bk)[1] + cmykToRgb(cy, mg, yw, bk)[2]) / 3 >= 128) {
+                    stroke("black");
+                }
+                strokeWeight(unit / 50);
+                rect(-4.5 * unit, 3 * unit, 2.25 * unit, 0.75 * unit, 0.25 * unit);
+
+                //button label
+                if ((cmykToRgb(cy, mg, yw, bk)[0] + cmykToRgb(cy, mg, yw, bk)[1] + cmykToRgb(cy, mg, yw, bk)[2]) / 3 < 128) {
+                    fill("white");
+                }
+                if ((cmykToRgb(cy, mg, yw, bk)[0] + cmykToRgb(cy, mg, yw, bk)[1] + cmykToRgb(cy, mg, yw, bk)[2]) / 3 >= 128) {
+                    fill("black");
+                }
+            } text("CMYK space", -4.5 * unit, 3.1 * unit);
+
+
+            //   //curve 1 button
+            //   {
+            //   //button shape
+            //   noFill();
+            //   if ((rd + gr + bl) / 3 < 128) {
+            //       stroke("white");
+            //   }
+            //   if ((rd + gr + bl) / 3 >= 128) {
+            //       stroke("black");
+            //   } strokeWeight(unit / 50);
+            //   rect(-1.5 * unit, 3 * unit, 2.25 * unit, 0.75 * unit, 0.25 * unit);
+
+            //   //button label
+            //   if ((rd + gr + bl) / 3 < 128) {
+            //       fill("white");
+            //   }
+            //   if ((rd + gr + bl) / 3 >= 128) {
+            //       fill("black");
+            //   } text("curve 1", -1.5 * unit, 3.1 * unit);
+            // }
+
+            //   //curve 2 button
+            //   {
+            //   //button shape
+            //   noFill();
+            //   if ((rd + gr + bl) / 3 < 128) {
+            //       stroke("white");
+            //   }
+            //   if ((rd + gr + bl) / 3 >= 128) {
+            //       stroke("black");
+            //   } strokeWeight(unit / 50);
+            //   rect(1.5 * unit, 3 * unit, 2.25 * unit, 0.75 * unit, 0.25 * unit);
+
+            //   //button label
+            //   if ((rd + gr + bl) / 3 < 128) {
+            //       fill("white");
+            //   }
+            //   if ((rd + gr + bl) / 3 >= 128) {
+            //       fill("black");
+            //   } text("curve 2", 1.5 * unit, 3.1 * unit);
+            // }
+
+            //   //curve 3 button
+            //   {
+            //   //button shape
+            //   noFill();
+            //   if ((rd + gr + bl) / 3 < 128) {
+            //       stroke("white");
+            //   }
+            //   if ((rd + gr + bl) / 3 >= 128) {
+            //       stroke("black");
+            //   } strokeWeight(unit / 50);
+            //   rect(4.5 * unit, 3 * unit, 2.25 * unit, 0.75 * unit, 0.25 * unit);
+
+            //   //button label
+            //   if ((rd + gr + bl) / 3 < 128) {
+            //       fill("white");
+            //   }
+            //   if ((rd + gr + bl) / 3 >= 128) {
+            //       fill("black");
+            //   } text("curve 3", 4.5 * unit, 3.1 * unit);
+            // }
+        }
+
+        //sliders
+        {
+            rectMode(CENTER);
+            stroke(255);
+            strokeWeight(0.05 * unit);
+
+            //bars
+            fill(0, 255, 255);
+            rect(-5.5 * unit, -1.5 * unit, 3 * unit, 0.1 * unit, 0.1 * unit);
+
+            fill(255, 0, 255);
+            rect(-5.5 * unit, -0.5 * unit, 3 * unit, 0.1 * unit, 0.1 * unit);
+
+            fill(255, 255, 0);
+            rect(-5.5 * unit, 0.5 * unit, 3 * unit, 0.1 * unit, 0.1 * unit);
+
+            fill(0, 0, 0);
+            rect(-5.5 * unit, 1.5 * unit, 3 * unit, 0.1 * unit, 0.1 * unit);
+
+            //handles
+            push();
+            translate(0, 0, 1);
+            strokeWeight(0.025 * unit);
+            fill(128);
+            rect(cmykToSlider(cy) * unit, -1.5 * unit, 0.2 * unit, 0.5 * unit, 0.1 * unit);
+            rect(cmykToSlider(mg) * unit, -0.5 * unit, 0.2 * unit, 0.5 * unit, 0.1 * unit);
+            rect(cmykToSlider(yw) * unit, 0.5 * unit, 0.2 * unit, 0.5 * unit, 0.1 * unit);
+            rect(cmykToSlider(bk) * unit, 1.5 * unit, 0.2 * unit, 0.5 * unit, 0.1 * unit);
+            pop();
+
+            //text
+            textSize(0.5 * unit);
+            if ((cmykToRgb(cy, mg, yw, bk)[0] + cmykToRgb(cy, mg, yw, bk)[1] + cmykToRgb(cy, mg, yw, bk)[2]) / 3 < 128) {
+                fill("white");
+            }
+            if ((cmykToRgb(cy, mg, yw, bk)[0] + cmykToRgb(cy, mg, yw, bk)[1] + cmykToRgb(cy, mg, yw, bk)[2]) / 3 >= 128) {
+                fill("black");
+            }
+            textAlign(LEFT);
+            text(round(cy, 3), -3.5 * unit, -1.3 * unit);
+            text(round(mg, 3), -3.5 * unit, -0.3 * unit);
+            text(round(yw, 3), -3.5 * unit, 0.7 * unit);
+            text(round(bk, 3), -3.5 * unit, 1.7 * unit);
+        }
+
+        //controls
+        {
+            //cyan
+            {
+                if (
+                    dist(
+                        cmykToSlider(cy),
+                        1.5,
+                        mouseToWorld(mouseX, mouseY)[0],
+                        mouseToWorld(mouseX, mouseY)[1]
+                    ) < 0.5 &&
+                    mouseIsPressed
+                ) {
+                    if (mouseToWorld(mouseX, mouseY)[0] < -7) {
+                        cy = 0;
+                    }
+                    if (mouseToWorld(mouseX, mouseY)[0] > -4) {
+                        cy = 1;
+                    }
+                    if (
+                        mouseToWorld(mouseX, mouseY)[0] >= -7 &&
+                        mouseToWorld(mouseX, mouseY)[0] <= -4
+                    ) {
+                        cy = sliderToCmyk(mouseToWorld(mouseX, mouseY)[0]);
+                    }
+                }
+            }
+
+            //magenta
+            {
+                if (
+                    dist(
+                        cmykToSlider(mg),
+                        0.5,
+                        mouseToWorld(mouseX, mouseY)[0],
+                        mouseToWorld(mouseX, mouseY)[1]
+                    ) < 0.5 &&
+                    mouseIsPressed
+                ) {
+                    if (mouseToWorld(mouseX, mouseY)[0] < -7) {
+                        mg = 0;
+                    }
+                    if (mouseToWorld(mouseX, mouseY)[0] > -4) {
+                        mg = 1;
+                    }
+                    if (
+                        mouseToWorld(mouseX, mouseY)[0] >= -7 &&
+                        mouseToWorld(mouseX, mouseY)[0] <= -4
+                    ) {
+                        mg = sliderToCmyk(mouseToWorld(mouseX, mouseY)[0]);
+                    }
+                }
+            }
+
+            //yellow
+            {
+                if (
+                    dist(
+                        cmykToSlider(yw),
+                        -0.5,
+                        mouseToWorld(mouseX, mouseY)[0],
+                        mouseToWorld(mouseX, mouseY)[1]
+                    ) < 0.5 &&
+                    mouseIsPressed
+                ) {
+                    if (mouseToWorld(mouseX, mouseY)[0] < -7) {
+                        yw = 0;
+                    }
+                    if (mouseToWorld(mouseX, mouseY)[0] > -4) {
+                        yw = 1;
+                    }
+                    if (
+                        mouseToWorld(mouseX, mouseY)[0] >= -7 &&
+                        mouseToWorld(mouseX, mouseY)[0] <= -4
+                    ) {
+                        yw = sliderToCmyk(mouseToWorld(mouseX, mouseY)[0]);
+                    }
+                }
+            }
+
+            //black
+            {
+                if (
+                    dist(
+                        cmykToSlider(bk),
+                        -1.5,
+                        mouseToWorld(mouseX, mouseY)[0],
+                        mouseToWorld(mouseX, mouseY)[1]
+                    ) < 0.5 &&
+                    mouseIsPressed
+                ) {
+                    if (mouseToWorld(mouseX, mouseY)[0] < -7) {
+                        bk = 0;
+                    }
+                    if (mouseToWorld(mouseX, mouseY)[0] > -4) {
+                        bk = 1;
+                    }
+                    if (
+                        mouseToWorld(mouseX, mouseY)[0] >= -7 &&
+                        mouseToWorld(mouseX, mouseY)[0] <= -4
+                    ) {
+                        bk = sliderToCmyk(mouseToWorld(mouseX, mouseY)[0]);
+                    }
+                }
+            }
+        }
+
+        //graph
+        {
+          push();
+          rotateX(PI / 3);
+          rotateZ(PI / 6);
+          translate(1 * unit, 1 * unit, 0);
+          scale(2.5, -2.5, 2.5);
+
+        //   if (rgb == true) {
+              //cube
+              {
+                //   if ((rd + gr + bl) / 3 < 128) {
+                //       stroke("white");
+                //   }
+                //   if ((rd + gr + bl) / 3 >= 128) {
+                //       stroke("black");
+                //   }
+                  strokeWeight(0.04 * unit);
+                  //front
+                  line(0, 0, 0, 0, 0, unit);
+                  line(0, 0, 0, unit, 0, 0);
+                  line(unit, 0, 0, unit, 0, unit);
+                  line(unit, 0, unit, 0, 0, unit);
+
+                  //back
+                  line(0, unit, 0, 0, unit, unit);
+                  line(0, unit, 0, unit, unit, 0);
+                  line(unit, unit, 0, unit, unit, unit);
+                  line(unit, unit, unit, 0, unit, unit);
+
+                  //connectors
+                  line(unit, 0, 0, unit, unit, 0);
+                  line(unit, 0, unit, unit, unit, unit);
+                  line(0, 0, unit, 0, unit, unit);
+                  line(0, 0, 0, 0, unit, 0);
+
+                //   if (curve1 == false && curve2 == false && curve3 == false) {
+                //       push();
+                //       translate(
+                //           (rd / 255) * unit,
+                //           (gr / 255) * unit,
+                //           (bl / 255) * unit
+                //       );
+                //       sphere(0.05 * unit);
+                //       pop();
+                //   }
+              }
+        //   }
+
+        //   if (rgbTimer < 0) {
+        //       rgbTimer = 0;
+        //   }
+          pop();
+        }
     }
   }
   
