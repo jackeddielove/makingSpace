@@ -3529,57 +3529,78 @@
 
         //graph
         {
-          push();
-          rotateX(PI / 3);
-          rotateZ(PI / 6);
-          translate(1 * unit, 1 * unit, 0);
-          scale(2.5, -2.5, 2.5);
+            //cube
+            {
+                //stroke settings
+                {
+                    if ((cmykToRgb(cy, mg, yw, bk)[0] + cmykToRgb(cy, mg, yw, bk)[1] + cmykToRgb(cy, mg, yw, bk)[2]) / 3 < 128) {
+                        stroke("white");
+                    }
+                    if ((cmykToRgb(cy, mg, yw, bk)[0] + cmykToRgb(cy, mg, yw, bk)[1] + cmykToRgb(cy, mg, yw, bk)[2]) / 3 >= 128) {
+                        stroke("black");
+                    }
+                    strokeWeight(0.04 * unit);
+                }
 
-        //   if (rgb == true) {
-              //cube
-              {
-                //   if ((rd + gr + bl) / 3 < 128) {
-                //       stroke("white");
-                //   }
-                //   if ((rd + gr + bl) / 3 >= 128) {
-                //       stroke("black");
-                //   }
-                  strokeWeight(0.04 * unit);
-                  //front
-                  line(0, 0, 0, 0, 0, unit);
-                  line(0, 0, 0, unit, 0, 0);
-                  line(unit, 0, 0, unit, 0, unit);
-                  line(unit, 0, unit, 0, 0, unit);
+                //black = 0 face
+                {
+                    push();
 
-                  //back
-                  line(0, unit, 0, 0, unit, unit);
-                  line(0, unit, 0, unit, unit, 0);
-                  line(unit, unit, 0, unit, unit, unit);
-                  line(unit, unit, unit, 0, unit, unit);
+                    rotateX(PI / 3);
+                    rotateZ(PI / 6);
+                    translate(1 * unit, 2 * unit, 0);
+                    scale(2.5, -2.5, 2.5);
 
-                  //connectors
-                  line(unit, 0, 0, unit, unit, 0);
-                  line(unit, 0, unit, unit, unit, unit);
-                  line(0, 0, unit, 0, unit, unit);
-                  line(0, 0, 0, 0, unit, 0);
+                    //front-0
+                    line(0, 0, 0, 0, 0, unit);
+                    line(0, 0, 0, unit, 0, 0);
+                    line(unit, 0, 0, unit, 0, unit);
+                    line(unit, 0, unit, 0, 0, unit);
 
-                //   if (curve1 == false && curve2 == false && curve3 == false) {
-                //       push();
-                //       translate(
-                //           (rd / 255) * unit,
-                //           (gr / 255) * unit,
-                //           (bl / 255) * unit
-                //       );
-                //       sphere(0.05 * unit);
-                //       pop();
-                //   }
-              }
-        //   }
+                    //back-0
+                    line(0, unit, 0, 0, unit, unit);
+                    line(0, unit, 0, unit, unit, 0);
+                    line(unit, unit, 0, unit, unit, unit);
+                    line(unit, unit, unit, 0, unit, unit);
 
-        //   if (rgbTimer < 0) {
-        //       rgbTimer = 0;
-        //   }
-          pop();
+                    //connectors-0
+                    line(unit, 0, 0, unit, unit, 0);
+                    line(unit, 0, unit, unit, unit, unit);
+                    line(0, 0, unit, 0, unit, unit);
+                    line(0, 0, 0, 0, unit, 0);
+
+                    pop();
+                }
+
+                //black = 1 face
+                {
+                    push();
+                    rotateX(PI / 3);
+                    rotateZ(PI / 6);
+                    translate(2 * unit, 0 * unit, 1*unit);
+                    scale(2.5, -2.5, 2.5);
+
+                    //front-0
+                    line(0, 0, 0, 0, 0, unit);
+                    line(0, 0, 0, unit, 0, 0);
+                    line(unit, 0, 0, unit, 0, unit);
+                    line(unit, 0, unit, 0, 0, unit);
+
+                    //back-0
+                    line(0, unit, 0, 0, unit, unit);
+                    line(0, unit, 0, unit, unit, 0);
+                    line(unit, unit, 0, unit, unit, unit);
+                    line(unit, unit, unit, 0, unit, unit);
+
+                    //connectors-0
+                    line(unit, 0, 0, unit, unit, 0);
+                    line(unit, 0, unit, unit, unit, unit);
+                    line(0, 0, unit, 0, unit, unit);
+                    line(0, 0, 0, 0, unit, 0);
+
+                    pop();
+                }
+            }
         }
     }
   }
