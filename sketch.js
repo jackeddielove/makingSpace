@@ -3531,7 +3531,7 @@ function draw() {
     {
       //cube
       //set edgelength
-      edge = 2.5 * unit;
+      edgeLength = 2.5 * unit;
       {
         //stroke settings
         {
@@ -3554,22 +3554,22 @@ function draw() {
           translate(0.5 * unit, -2.5 * unit, -0.5 * unit);
 
           //front
-          line(0, 0, 0, 0, 0, edge);
-          line(0, 0, 0, edge, 0, 0);
-          line(edge, 0, 0, edge, 0, edge);
-          line(edge, 0, edge, 0, 0, edge);
+          line(0, 0, 0, 0, 0, edgeLength);
+          line(0, 0, 0, edgeLength, 0, 0);
+          line(edgeLength, 0, 0, edgeLength, 0, edgeLength);
+          line(edgeLength, 0, edgeLength, 0, 0, edgeLength);
 
           //back
-          line(0, edge, 0, 0, edge, edge);
-          line(0, edge, 0, edge, edge, 0);
-          line(edge, edge, 0, edge, edge, edge);
-          line(edge, edge, edge, 0, edge, edge);
+          line(0, edgeLength, 0, 0, edgeLength, edgeLength);
+          line(0, edgeLength, 0, edgeLength, edgeLength, 0);
+          line(edgeLength, edgeLength, 0, edgeLength, edgeLength, edgeLength);
+          line(edgeLength, edgeLength, edgeLength, 0, edgeLength, edgeLength);
 
           //connectors
-          line(edge, 0, 0, edge, edge, 0);
-          line(edge, 0, edge, edge, edge, edge);
-          line(0, 0, edge, 0, edge, edge);
-          line(0, 0, 0, 0, edge, 0);
+          line(edgeLength, 0, 0, edgeLength, edgeLength, 0);
+          line(edgeLength, 0, edgeLength, edgeLength, edgeLength, edgeLength);
+          line(0, 0, edgeLength, 0, edgeLength, edgeLength);
+          line(0, 0, 0, 0, edgeLength, 0);
 
 
           //dotted connectors
@@ -3578,7 +3578,7 @@ function draw() {
           cubeVerts = [[0, 0, 0], [0, 0, 1], [0, 1, 0], [0, 1, 1], [1, 0, 0], [1, 0, 1], [1, 1, 0], [1, 1, 1]];
           for (j = 0; j < 8; j++) {
             for (i = 1; i < n; i++) {
-              point(cubeVerts[j][0]*edge + (i / n) * 1 * unit, cubeVerts[j][1]*edge + (i / n) * 1.5 * unit, cubeVerts[j][2]*edge + (i / n) * 1.25 * unit);
+              point(cubeVerts[j][0]*edgeLength + (i / n) * 1 * unit, cubeVerts[j][1]*edgeLength + (i / n) * 1.5 * unit, cubeVerts[j][2]*edgeLength + (i / n) * 1.25 * unit);
             }
           }
           pop();
@@ -3596,22 +3596,22 @@ function draw() {
           translate(1.5 * unit, -1.0 * unit, 0.75 * unit);
 
           //front
-          line(0, 0, 0, 0, 0, edge);
-          line(0, 0, 0, edge, 0, 0);
-          line(edge, 0, 0, edge, 0, edge);
-          line(edge, 0, edge, 0, 0, edge);
+          line(0, 0, 0, 0, 0, edgeLength);
+          line(0, 0, 0, edgeLength, 0, 0);
+          line(edgeLength, 0, 0, edgeLength, 0, edgeLength);
+          line(edgeLength, 0, edgeLength, 0, 0, edgeLength);
 
           //back
-          line(0, edge, 0, 0, edge, edge);
-          line(0, edge, 0, edge, edge, 0);
-          line(edge, edge, 0, edge, edge, edge);
-          line(edge, edge, edge, 0, edge, edge);
+          line(0, edgeLength, 0, 0, edgeLength, edgeLength);
+          line(0, edgeLength, 0, edgeLength, edgeLength, 0);
+          line(edgeLength, edgeLength, 0, edgeLength, edgeLength, edgeLength);
+          line(edgeLength, edgeLength, edgeLength, 0, edgeLength, edgeLength);
 
           //connectors
-          line(edge, 0, 0, edge, edge, 0);
-          line(edge, 0, edge, edge, edge, edge);
-          line(0, 0, edge, 0, edge, edge);
-          line(0, 0, 0, 0, edge, 0);
+          line(edgeLength, 0, 0, edgeLength, edgeLength, 0);
+          line(edgeLength, 0, edgeLength, edgeLength, edgeLength, edgeLength);
+          line(0, 0, edgeLength, 0, edgeLength, edgeLength);
+          line(0, 0, 0, 0, edgeLength, 0);
 
           pop();
         }
