@@ -374,6 +374,12 @@
     yw = 1;
     bk = 1;
 
+    cmykTimer = 0;
+    cmykSpeed = .05;
+
+    cmyk = false;
+    cmykCurve1 = false;
+
     //conversions
     {
       //cmyk to rgb
@@ -3282,98 +3288,98 @@ function draw() {
 
   //CMYK space
   if (counter == 14) {
-    //buttons
-    {
-      rectMode(CENTER);
-      textAlign(CENTER);
-      textSize(unit / 3);
+    // //buttons
+    // {
+    //   rectMode(CENTER);
+    //   textAlign(CENTER);
+    //   textSize(unit / 3);
 
-      //cmyk space button
-      {
-        //button shape
-        noFill();
-        if ((cmykToRgb(cy, mg, yw, bk)[0] + cmykToRgb(cy, mg, yw, bk)[1] + cmykToRgb(cy, mg, yw, bk)[2]) / 3 < 128) {
-          stroke("white");
-        }
-        if ((cmykToRgb(cy, mg, yw, bk)[0] + cmykToRgb(cy, mg, yw, bk)[1] + cmykToRgb(cy, mg, yw, bk)[2]) / 3 >= 128) {
-          stroke("black");
-        }
-        strokeWeight(unit / 50);
-        rect(-4.5 * unit, 3 * unit, 2.25 * unit, 0.75 * unit, 0.25 * unit);
+    //   //cmyk space button
+    //   {
+    //     //button shape
+    //     noFill();
+    //     if ((cmykToRgb(cy, mg, yw, bk)[0] + cmykToRgb(cy, mg, yw, bk)[1] + cmykToRgb(cy, mg, yw, bk)[2]) / 3 < 128) {
+    //       stroke("white");
+    //     }
+    //     if ((cmykToRgb(cy, mg, yw, bk)[0] + cmykToRgb(cy, mg, yw, bk)[1] + cmykToRgb(cy, mg, yw, bk)[2]) / 3 >= 128) {
+    //       stroke("black");
+    //     }
+    //     strokeWeight(unit / 50);
+    //     rect(-4.5 * unit, 3 * unit, 2.25 * unit, 0.75 * unit, 0.25 * unit);
 
-        //button label
-        if ((cmykToRgb(cy, mg, yw, bk)[0] + cmykToRgb(cy, mg, yw, bk)[1] + cmykToRgb(cy, mg, yw, bk)[2]) / 3 < 128) {
-          fill("white");
-        }
-        if ((cmykToRgb(cy, mg, yw, bk)[0] + cmykToRgb(cy, mg, yw, bk)[1] + cmykToRgb(cy, mg, yw, bk)[2]) / 3 >= 128) {
-          fill("black");
-        }
-      } text("CMYK space", -4.5 * unit, 3.1 * unit);
+    //     //button label
+    //     if ((cmykToRgb(cy, mg, yw, bk)[0] + cmykToRgb(cy, mg, yw, bk)[1] + cmykToRgb(cy, mg, yw, bk)[2]) / 3 < 128) {
+    //       fill("white");
+    //     }
+    //     if ((cmykToRgb(cy, mg, yw, bk)[0] + cmykToRgb(cy, mg, yw, bk)[1] + cmykToRgb(cy, mg, yw, bk)[2]) / 3 >= 128) {
+    //       fill("black");
+    //     }
+    //   } text("CMYK space", -4.5 * unit, 3.1 * unit);
 
 
-      //   //curve 1 button
-      //   {
-      //   //button shape
-      //   noFill();
-      //   if ((rd + gr + bl) / 3 < 128) {
-      //       stroke("white");
-      //   }
-      //   if ((rd + gr + bl) / 3 >= 128) {
-      //       stroke("black");
-      //   } strokeWeight(unit / 50);
-      //   rect(-1.5 * unit, 3 * unit, 2.25 * unit, 0.75 * unit, 0.25 * unit);
+    //   //   //curve 1 button
+    //   //   {
+    //   //   //button shape
+    //   //   noFill();
+    //   //   if ((rd + gr + bl) / 3 < 128) {
+    //   //       stroke("white");
+    //   //   }
+    //   //   if ((rd + gr + bl) / 3 >= 128) {
+    //   //       stroke("black");
+    //   //   } strokeWeight(unit / 50);
+    //   //   rect(-1.5 * unit, 3 * unit, 2.25 * unit, 0.75 * unit, 0.25 * unit);
 
-      //   //button label
-      //   if ((rd + gr + bl) / 3 < 128) {
-      //       fill("white");
-      //   }
-      //   if ((rd + gr + bl) / 3 >= 128) {
-      //       fill("black");
-      //   } text("curve 1", -1.5 * unit, 3.1 * unit);
-      // }
+    //   //   //button label
+    //   //   if ((rd + gr + bl) / 3 < 128) {
+    //   //       fill("white");
+    //   //   }
+    //   //   if ((rd + gr + bl) / 3 >= 128) {
+    //   //       fill("black");
+    //   //   } text("curve 1", -1.5 * unit, 3.1 * unit);
+    //   // }
 
-      //   //curve 2 button
-      //   {
-      //   //button shape
-      //   noFill();
-      //   if ((rd + gr + bl) / 3 < 128) {
-      //       stroke("white");
-      //   }
-      //   if ((rd + gr + bl) / 3 >= 128) {
-      //       stroke("black");
-      //   } strokeWeight(unit / 50);
-      //   rect(1.5 * unit, 3 * unit, 2.25 * unit, 0.75 * unit, 0.25 * unit);
+    //   //   //curve 2 button
+    //   //   {
+    //   //   //button shape
+    //   //   noFill();
+    //   //   if ((rd + gr + bl) / 3 < 128) {
+    //   //       stroke("white");
+    //   //   }
+    //   //   if ((rd + gr + bl) / 3 >= 128) {
+    //   //       stroke("black");
+    //   //   } strokeWeight(unit / 50);
+    //   //   rect(1.5 * unit, 3 * unit, 2.25 * unit, 0.75 * unit, 0.25 * unit);
 
-      //   //button label
-      //   if ((rd + gr + bl) / 3 < 128) {
-      //       fill("white");
-      //   }
-      //   if ((rd + gr + bl) / 3 >= 128) {
-      //       fill("black");
-      //   } text("curve 2", 1.5 * unit, 3.1 * unit);
-      // }
+    //   //   //button label
+    //   //   if ((rd + gr + bl) / 3 < 128) {
+    //   //       fill("white");
+    //   //   }
+    //   //   if ((rd + gr + bl) / 3 >= 128) {
+    //   //       fill("black");
+    //   //   } text("curve 2", 1.5 * unit, 3.1 * unit);
+    //   // }
 
-      //   //curve 3 button
-      //   {
-      //   //button shape
-      //   noFill();
-      //   if ((rd + gr + bl) / 3 < 128) {
-      //       stroke("white");
-      //   }
-      //   if ((rd + gr + bl) / 3 >= 128) {
-      //       stroke("black");
-      //   } strokeWeight(unit / 50);
-      //   rect(4.5 * unit, 3 * unit, 2.25 * unit, 0.75 * unit, 0.25 * unit);
+    //   //   //curve 3 button
+    //   //   {
+    //   //   //button shape
+    //   //   noFill();
+    //   //   if ((rd + gr + bl) / 3 < 128) {
+    //   //       stroke("white");
+    //   //   }
+    //   //   if ((rd + gr + bl) / 3 >= 128) {
+    //   //       stroke("black");
+    //   //   } strokeWeight(unit / 50);
+    //   //   rect(4.5 * unit, 3 * unit, 2.25 * unit, 0.75 * unit, 0.25 * unit);
 
-      //   //button label
-      //   if ((rd + gr + bl) / 3 < 128) {
-      //       fill("white");
-      //   }
-      //   if ((rd + gr + bl) / 3 >= 128) {
-      //       fill("black");
-      //   } text("curve 3", 4.5 * unit, 3.1 * unit);
-      // }
-    }
+    //   //   //button label
+    //   //   if ((rd + gr + bl) / 3 < 128) {
+    //   //       fill("white");
+    //   //   }
+    //   //   if ((rd + gr + bl) / 3 >= 128) {
+    //   //       fill("black");
+    //   //   } text("curve 3", 4.5 * unit, 3.1 * unit);
+    //   // }
+    // }
 
     //sliders
     {
@@ -3544,7 +3550,7 @@ function draw() {
           strokeWeight(0.04 * unit);
         }
 
-        //black = 0 face
+        //black = 0 face and dotted connectors and (c,m,y,k) point
         {
           push();
 
@@ -3581,6 +3587,12 @@ function draw() {
               point(cubeVerts[j][0]*edgeLength + (i / n) * 1 * unit, cubeVerts[j][1]*edgeLength + (i / n) * 1.5 * unit, cubeVerts[j][2]*edgeLength + (i / n) * 1.25 * unit);
             }
           }
+
+          //(c,m,y,k) point
+          push();
+          translate(cy*edgeLength+bk*1*unit, mg*edgeLength+bk*1.5*unit, yw*edgeLength+bk*1.25*unit);
+          sphere(0.1 * unit);
+          pop();
           pop();
         }
 
@@ -3616,30 +3628,7 @@ function draw() {
           pop();
         }
 
-        // //connectors
-        // {
-        //     push();
-        //     rotateX(PI / 3);
-        //     rotateZ(PI / 6);
-        //     scale(1, -1, 1);
-        //     strokeWeight(0.1*unit);
-
-        //     point(0,0,0);
-        //     strokeWeight(0.04*unit);
-
-        //     vertices = [[0, 0, 0], [0, 0, 2.5], [0, 2.5, 0], [0, 2.5, 2.5], [2.5, 0, 0], [2.5, 0, 2.5], [2.5, 2.5, 0], [2.5, 2.5, 2.5]];
-        //     for (j = 0; j < 8; j++) {
-        //         line(
-        //             (vertices[j][0] + 0.5) * unit,
-        //             (vertices[j][1] - 2.5) * unit,
-        //             (vertices[j][2] + 0.0) * unit,
-        //             (vertices[j][0] + 2.0) * unit,
-        //             (vertices[j][1] + 0.0) * unit,
-        //             (vertices[j][2] + 0.75) * unit,
-        //         );
-        //     }
-        //     pop();
-        // }
+        //(c,m,y,k) point
       }
     }
   }
