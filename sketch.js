@@ -45,6 +45,20 @@
   }
 
   //slide 0 -- title
+  {
+    titleTimer = 0;
+    phi_x = 0;
+    phi_y = 0;
+    phi_z = 0;
+    function titleRotation(a, b, c, v) {
+      return [cos(a) * v[0] - sin(a) * sin(b) * v[1] - sin(a) * cos(b) * sin(c) * v[2] - sin(a) * cos(b) * cos(c) * v[3],
+      0 * v[0] + cos(b) * v[1] - sin(b) * sin(c) * v[2] - sin(b) * cos(c) * v[3],
+      0 * v[0] + 0 * v[1] + cos(c) * v[2] - sin(c) * v[3],
+      sin(a) * v[0] + cos(a) * sin(b) * v[1] + cos(a) * cos(b) * sin(c) * v[2] + cos(a) * cos(b) * cos(c) * v[3]];
+    }
+
+    //also used here are edge, arrComp, and p_i from slide 10
+  }
 
   //slide 1 -- part 1 title
 
@@ -201,8 +215,12 @@
     gr_4 = [p_15];
     grs = [gr_0, gr_1, gr_2, gr_3, gr_4];
 
+    //this is used on title slide
+    P = [p_0, p_1, p_2, p_3, p_4, p_5, p_6, p_7, p_8, p_9, p_10, p_11, p_12, p_13, p_14, p_15];
+
     //adding, comparing, drawing vertices and edges
     {
+
       function arrSum(a, b) {
         return [a[0] + b[0], a[1] + b[1], a[2] + b[2], a[3] + b[3]];
       }
@@ -1298,6 +1316,27 @@ function draw() {
     text("The mathematics of", 0, 1.125 * unit);
     text("higher dimensions", 0, 1.895 * unit);
     pop();
+
+    push();
+    scale(2.5*unit, 2.5*unit, 2.5*unit);
+    translate(-0.25, 0);
+    rotateX(PI / 3);
+    rotateZ(PI / 6);    
+    stroke('white');
+    strokeWeight(0.01*unit);
+    for (j=0; j<15; j++) {
+      for (i=j+1; i<16; i++) {
+        if (arrComp(P[j], P[i]) == true) {
+          edge(titleRotation(phi_x, phi_y, phi_z, P[j]), titleRotation(phi_x, phi_y, phi_z, P[i]));
+        }
+      }
+    }
+    pop();
+
+    titleTimer++;
+    phi_x = sin(titleTimer/25);
+    phi_y = cos(1.5*titleTimer/25);
+    phi_z = sin(titleTimer/25)*cos(titleTimer/25);
   }
 
   //part 1 title slide
@@ -3536,9 +3575,10 @@ function draw() {
     //graph
     {
       //cube
-      //set edgelength
-      edgeLength = 2.5 * unit;
       {
+        //set edgelength
+        edgeLength = 2.5 * unit;
+
         //stroke settings
         {
           if ((cmykToRgb(cy, mg, yw, bk)[0] + cmykToRgb(cy, mg, yw, bk)[1] + cmykToRgb(cy, mg, yw, bk)[2]) / 3 < 128) {
@@ -3584,13 +3624,13 @@ function draw() {
           cubeVerts = [[0, 0, 0], [0, 0, 1], [0, 1, 0], [0, 1, 1], [1, 0, 0], [1, 0, 1], [1, 1, 0], [1, 1, 1]];
           for (j = 0; j < 8; j++) {
             for (i = 1; i < n; i++) {
-              point(cubeVerts[j][0]*edgeLength + (i / n) * 1 * unit, cubeVerts[j][1]*edgeLength + (i / n) * 1.5 * unit, cubeVerts[j][2]*edgeLength + (i / n) * 1.25 * unit);
+              point(cubeVerts[j][0] * edgeLength + (i / n) * 1 * unit, cubeVerts[j][1] * edgeLength + (i / n) * 1.5 * unit, cubeVerts[j][2] * edgeLength + (i / n) * 1.25 * unit);
             }
           }
 
           //(c,m,y,k) point
           push();
-          translate(cy*edgeLength+bk*1*unit, mg*edgeLength+bk*1.5*unit, yw*edgeLength+bk*1.25*unit);
+          translate(cy * edgeLength + bk * 1 * unit, mg * edgeLength + bk * 1.5 * unit, yw * edgeLength + bk * 1.25 * unit);
           sphere(0.1 * unit);
           pop();
           pop();
