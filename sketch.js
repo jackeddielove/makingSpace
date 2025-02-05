@@ -50,6 +50,7 @@
     phi_x = 0;
     phi_y = 0;
     phi_z = 0;
+    //rotates a point in 4-space (v) in the xy plane by a radians, the xz plane by b radians, and the yz plane by c radians
     function titleRotation(a, b, c, v) {
       return [cos(a) * v[0] - sin(a) * sin(b) * v[1] - sin(a) * cos(b) * sin(c) * v[2] - sin(a) * cos(b) * cos(c) * v[3],
       0 * v[0] + cos(b) * v[1] - sin(b) * sin(c) * v[2] - sin(b) * cos(c) * v[3],
@@ -1334,9 +1335,9 @@ function draw() {
     pop();
 
     titleTimer++;
-    phi_x = sin(titleTimer/25);
-    phi_y = cos(1.5*titleTimer/25);
-    phi_z = sin(titleTimer/25)*cos(titleTimer/25);
+    phi_x = sin(titleTimer/40);
+    phi_y = cos(1.5*titleTimer/40);
+    phi_z = sin(titleTimer/40)*cos(titleTimer/40);
   }
 
   //part 1 title slide
@@ -1711,7 +1712,6 @@ function draw() {
     push();
     rotateX(PI / 3);
     rotateZ(PI / 6);
-    //   scale(2, -2, 2);
     scale(1.5, -1.5, 1.5);
 
 
@@ -1721,7 +1721,6 @@ function draw() {
     line(-20 * unit, 0, 0, 20 * unit, 0, 0);
     line(0, -20 * unit, 0, 0, 20 * unit, 0);
     line(0, 0, -20 * unit, 0, 0, 20 * unit);
-    // pop();
 
     //draw point
     if (buttons[0] % 2 == 1) {
