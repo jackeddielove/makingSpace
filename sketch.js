@@ -1319,14 +1319,14 @@ function draw() {
     pop();
 
     push();
-    scale(2.5*unit, 2.5*unit, 2.5*unit);
+    scale(2.5 * unit, 2.5 * unit, 2.5 * unit);
     translate(-0.25, 0);
     rotateX(PI / 3);
-    rotateZ(PI / 6);    
+    rotateZ(PI / 6);
     stroke('white');
-    strokeWeight(0.01*unit);
-    for (j=0; j<15; j++) {
-      for (i=j+1; i<16; i++) {
+    strokeWeight(0.01 * unit);
+    for (j = 0; j < 15; j++) {
+      for (i = j + 1; i < 16; i++) {
         if (arrComp(P[j], P[i]) == true) {
           edge(titleRotation(phi_x, phi_y, phi_z, P[j]), titleRotation(phi_x, phi_y, phi_z, P[i]));
         }
@@ -1335,9 +1335,9 @@ function draw() {
     pop();
 
     titleTimer++;
-    phi_x = sin(titleTimer/40);
-    phi_y = cos(1.5*titleTimer/40);
-    phi_z = sin(titleTimer/40)*cos(titleTimer/40);
+    phi_x = sin(titleTimer / 40);
+    phi_y = cos(1.5 * titleTimer / 40);
+    phi_z = sin(titleTimer / 40) * cos(titleTimer / 40);
   }
 
   //part 1 title slide
@@ -1733,57 +1733,65 @@ function draw() {
     }
 
     //draw plane
-    if (buttons[1] % 2 == 1) {
-      push();
+    {
+      if (buttons[1] % 2 == 1) {
 
-      //rotating the xy-plane to the plane ax+by+cz=d
-      //translate the origin to d/c if c!=0
-      if (plCoefficients[2] != 0) {
-        translate(0, 0, (plCoefficients[3] / plCoefficients[2]) * unit);
-      }
-      if (plCoefficients[2] == 0 && plCoefficients[1] != 0) {
-        translate(0, (plCoefficients[3] / plCoefficients[1]) * unit, 0);
-      }
-      if (plCoefficients[2] == 0 && plCoefficients[1] == 0) {
-        translate((plCoefficients[3] / plCoefficients[0]) * unit, 0, 0);
-      }
-      if (plCoefficients[0] > 0) {
-        //rotate about z-axis arctan(b/a) if a>0
-        rotateZ(atan(plCoefficients[1] / plCoefficients[0]));
-      }
-      //rotate about z-axis pi+arctan(b/a) if a<0
-      if (plCoefficients[0] < 0) {
-        rotateZ(PI + atan(plCoefficients[1] / plCoefficients[0]));
-      }
-      if (plCoefficients[0] == 0) {
-        rotateZ(PI / 2);
-      }
-      //after rotating about z-axis, rotate about the new y-axis by arccos(c/sqrt(a^2+b^2+c^2))
-      rotateY(
-        acos(
-          plCoefficients[2] /
-          sqrt(
-            plCoefficients[0] ** 2 +
-            plCoefficients[1] ** 2 +
-            plCoefficients[2] ** 2
-          )
-        )
-      );
+        A = plCoefficients[0];
+        B = plCoefficients[1];
+        C = plCoefficients[2];
+        D = plCoefficients[3];
+        r = sqrt(A ** 2 + B ** 2);
+        s = sqrt(A ** 2 + B ** 2 + C ** 2);
 
-      l = 3;
-      //draw the rectangle in the xy-plane with corners (+/-5, +/-5, 0), to be transformed to the plane ax+by+cz=d
-      planeColor = color("lime");
-      stroke("lime");
-      planeColor.setAlpha(128);
-      fill(planeColor);
-      // fill("lime");
-      beginShape();
-      vertex(-l * unit, -l * unit, 0);
-      vertex(-l * unit, l * unit, 0);
-      vertex(l * unit, l * unit, 0);
-      vertex(l * unit, -l * unit, 0);
-      endShape(CLOSE);
-      pop();
+        l = 4 * unit;
+
+        planeColor = color("lime");
+        stroke("lime");
+        planeColor.setAlpha(128);
+        fill(planeColor);
+
+        if ([A, B, C] != [0, 0, 0]) {
+          push();
+          if (D == 0) {
+            if (A >= 0) {
+              rotateZ(asin(B / r));
+            }
+            if (A < 0) {
+              rotateZ(PI - asin(B / r));
+            }
+            rotateY(acos(C / s));
+          }
+          if (D != 0) {
+            if (C != 0) {
+              translate(0, 0, unit * D / C);
+              if (A >= 0) {
+                rotateZ(asin(B / r));
+              }
+              if (A < 0) {
+                rotateZ(PI - asin(B / r));
+              }
+              rotateY(acos(C / s));
+            }
+            if (C == 0) {
+              if (A >= 0) {
+                rotateZ(asin(B / r));
+              }
+              if (A < 0) {
+                rotateZ(PI - asin(B / r));
+              }
+              rotateY(acos(C / s));
+              translate(0, 0, unit * D / r);
+            }
+          }
+          beginShape();
+          vertex(-l, -l, 0);
+          vertex(-l, l, 0);
+          vertex(l, l, 0);
+          vertex(l, -l, 0);
+          endShape(CLOSE);
+          pop();
+        }
+      }
     }
 
     //draw cube
