@@ -663,7 +663,7 @@
           }
         }
 
-        if (counter == 9) {
+        if (counter == 10) {
           if (event.delta > 0) {
             cubeSliceTimer += cubeSliceSpeed;
           }
@@ -672,7 +672,7 @@
           }
         }
 
-        if (counter == 10) {
+        if (counter == 9) {
           if (xyButton == true) {
             if (event.delta > 0) {
               xyTheta -= rotationSpeed;
@@ -933,7 +933,7 @@
           }
         }
 
-        if (counter == 10) {
+        if (counter == 9) {
           //xyButton
           {
             if (
