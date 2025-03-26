@@ -36,15 +36,6 @@ function edge(a, b) {
   line(a[0], a[1], a[2], b[0], b[1], b[2])
 }
 
-//cmyk to rgb
-function cmykToRgb(c, m, y, k) {
-  return [
-    255 * (1 - c) * (1 - k),
-    255 * (1 - m) * (1 - k),
-    255 * (1 - y) * (1 - k),
-  ]
-}
-
 //rgb to cmyk
 function rgbToCmyk(r, g, b) {
   k = 1 - max(r, g, b)
@@ -54,13 +45,4 @@ function rgbToCmyk(r, g, b) {
     1 - b / (255 * (1 - k)),
     k,
   ]
-}
-
-//convert slider location (-7 to -4) with color value (0 to 1), and vice versa
-function sliderToCmyk(x) {
-  return round((x + 7) / 3, 3)
-}
-
-function cmykToSlider(x) {
-  return x * 3 - 7
 }
