@@ -12,6 +12,7 @@ class Slide5 {
     }
   }
   show() {
+    background("black")
     //table borders
     stroke("white")
     strokeWeight(0.02 * unit)

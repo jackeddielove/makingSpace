@@ -73,6 +73,7 @@ class Slide11 {
   }
 
   show() {
+    background("black")
     //set h and grade for each interval of t-values
     if (this.t >= 0 && this.t < 100) {
       this.h = this.t / 100

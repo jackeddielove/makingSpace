@@ -64,10 +64,6 @@ let counter = 0
     ]
   }
 }
-//////////////////////////
-//////////////////////////
-//////////////////////////
-//setup
 
 function preload() {
   font = loadFont("font.otf")
@@ -104,19 +100,12 @@ function setup() {
 }
 
 function draw() {
-  //general
-  {
-    // if (keyIsPressed && keyCode === SHIFT) {
-    //   orbitControl();
-    // }
+  // if (keyIsPressed && keyCode === SHIFT) {
+  //   orbitControl();
+  // }
 
-    if (counter != 13 && counter != 14) {
-      background("black")
-    }
-
-    // textFont("Arial Black");
-    textFont(font)
-  }
+  // textFont("Arial Black");
+  textFont(font)
 
   //title slide
   if (counter == 0) {

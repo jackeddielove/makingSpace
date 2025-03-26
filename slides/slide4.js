@@ -147,6 +147,7 @@ class Slide4 {
   }
 
   show() {
+    background("black")
     //buttons
     rectMode(CENTER)
     textAlign(CENTER)

@@ -107,6 +107,7 @@ class Slide2 {
   }
 
   show() {
+    background("black")
     //buttons
 
     rectMode(CENTER)

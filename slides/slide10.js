@@ -34,6 +34,7 @@ class Slide10 {
     }
   }
   show() {
+    background("black")
     //3D drawing template
     {
       push()

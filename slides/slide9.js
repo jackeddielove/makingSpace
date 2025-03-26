@@ -403,6 +403,7 @@ class Slide9 {
   }
 
   show() {
+    background("black")
     //buttons
     rectMode(CENTER)
     textAlign(CENTER)

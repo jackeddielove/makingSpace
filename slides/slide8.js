@@ -216,6 +216,7 @@ class Slide8 {
     }
   }
   show() {
+    background("black")
     //buttons
     {
       rectMode(CENTER)

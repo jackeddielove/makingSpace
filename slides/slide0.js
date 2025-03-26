@@ -24,6 +24,7 @@ class Slide0 {
     ]
   }
   show() {
+    background("black")
     push()
     translate(-7.0 * unit, 0.0 * unit)
     textAlign(LEFT)

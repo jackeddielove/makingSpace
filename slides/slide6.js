@@ -14,6 +14,7 @@ class Slide6 {
     }
   }
   show() {
+    background("black")
     //fixed part of table
     //black background
     push()

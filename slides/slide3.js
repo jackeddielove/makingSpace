@@ -12,6 +12,7 @@ class Slide3 {
   }
 
   show() {
+    background("black")
     //table borders
     stroke("white")
     strokeWeight(unit / 50)
