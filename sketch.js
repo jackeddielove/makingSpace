@@ -8,7 +8,8 @@ let slide0,
   slide7,
   slide8,
   slide9,
-  slide10
+  slide10,
+  slide11
 let unit, size
 
 {
@@ -59,55 +60,6 @@ let unit, size
     ]
   }
 
-  //slide 11 -- slicing 4D with 3D
-  {
-    //functions that return points on the edges between two grades of the face poset of the 4-cube, projected onto 3-space
-    {
-      //this is for grade 1; returns the vertex h*u as an array
-      function vert1(u, h) {
-        return [h * u[0], h * u[1], h * u[2]]
-      }
-
-      //this is for grade 2, returns the vertex u+h*v as an array
-      function vert2(u, v, h) {
-        return [
-          u[0] + h * v[0],
-          u[1] + h * v[1],
-          u[2] + h * v[2],
-          u[3] + h * v[3],
-        ]
-      }
-
-      //this is for grade 3, returns the vertex (u+v)+h*w as an array
-      function vert3(u, v, w, h) {
-        return [
-          u[0] + v[0] + h * w[0],
-          u[1] + v[1] + h * w[1],
-          u[2] + v[2] + h * w[2],
-          u[3] + v[3] + h * w[3],
-        ]
-      }
-
-      //this is for grade 4, returns the vector (u+v+w)+h*x
-      function vert4(u, v, w, x, h) {
-        return [
-          u[0] + v[0] + w[0] + h * x[0],
-          u[1] + v[1] + w[1] + h * x[1],
-          u[2] + v[2] + w[2] + h * x[2],
-          u[3] + v[3] + w[3] + h * x[3],
-        ]
-      }
-    }
-
-    //initialize grade
-    grade = 0
-
-    //set animation speed
-    s = 5
-  }
-
-  //slide 12 -- part 3 title
-
   //slide 13 -- RGB space
   {
     rd = 0
@@ -152,46 +104,36 @@ let unit, size
 //////////////////////////
 //////////////////////////
 //setup
-{
-  function preload() {
-    font = loadFont("font.otf")
-  }
 
-  function setup() {
-    //set aspect ratio and screen width
-    r = 9 / 16
-    w = windowWidth
-    createCanvas(w, r * w, WEBGL)
-    unit = width / 16
+function preload() {
+  font = loadFont("font.otf")
+}
 
-    //set edge length of cubes for slicing/projecting
-    size = 2.5 * unit
+function setup() {
+  //set aspect ratio and screen width
+  r = 9 / 16
+  w = windowWidth
+  createCanvas(w, r * w, WEBGL)
+  unit = width / 16
 
-    // createCanvas(windowWidth, windowHeight, WEBGL);
-    slide0 = new Slide0()
-    slide1 = new Slide1()
-    slide2 = new Slide2()
-    slide3 = new Slide3()
-    slide4 = new Slide4()
-    slide5 = new Slide5()
-    slide6 = new Slide6()
-    slide7 = new Slide7()
-    slide8 = new Slide8()
-    slide9 = new Slide9()
-    slide10 = new Slide10()
+  //set edge length of cubes for slicing/projecting
+  size = 2.5 * unit
 
-    frameRate(100)
+  // createCanvas(windowWidth, windowHeight, WEBGL);
+  slide0 = new Slide0()
+  slide1 = new Slide1()
+  slide2 = new Slide2()
+  slide3 = new Slide3()
+  slide4 = new Slide4()
+  slide5 = new Slide5()
+  slide6 = new Slide6()
+  slide7 = new Slide7()
+  slide8 = new Slide8()
+  slide9 = new Slide9()
+  slide10 = new Slide10()
+  slide11 = new Slide11()
 
-    //setup for 4d slices
-    {
-      //constants for basis vectors
-      a = (size * 1) / sqrt(2)
-      b = (size * 1) / 2
-
-      //initiate t, which will be controlled by up and down arrows
-      t = 0
-    }
-  }
+  frameRate(100)
 }
 
 function draw() {
@@ -277,216 +219,7 @@ function draw() {
 
   //slicing 4D with 3D
   if (counter == 11) {
-    //set h and grade for each interval of t-values
-    if (t >= 0 && t < 100) {
-      h = t / 100
-      grade = 1
-    }
-
-    if (t >= 100 && t < 200) {
-      h = (t - 100) / 100
-      grade = 2
-    }
-
-    if (t >= 200 && t < 300) {
-      h = (t - 200) / 100
-      grade = 3
-    }
-
-    if (t >= 300 && t <= 400) {
-      h = (t - 300) / 100
-      grade = 4
-    }
-
-    //set the view of 3d space
-    push()
-    rotateX(PI / 3)
-    rotateZ(PI / 5)
-    scale(1, -1, 1)
-
-    //x-y-z axes
-    stroke("white")
-    strokeWeight(1)
-    line(-10 * unit, 0, 0, 10 * unit, 0, 0)
-    line(0, -10 * unit, 0, 0, 10 * unit, 0)
-    line(0, 0, -10 * unit, 0, 0, 10 * unit)
-
-    //define the basis vectors
-    f1 = [a, 0, -b]
-    f2 = [0, a, b]
-    f3 = [-a, 0, -b]
-    f4 = [0, -a, b]
-
-    basis = [f1, f2, f3, f4]
-
-    //create indices omitting one each of 0, 1, 2, 3, to call when drawing slices.
-    indices = [
-      [1, 2, 3],
-      [0, 2, 3],
-      [0, 1, 3],
-      [0, 1, 2],
-    ]
-
-    fill("aqua")
-    stroke("magenta")
-    strokeWeight(unit / 20)
-
-    if (grade == 1) {
-      for (let i = 0; i < 4; i++) {
-        beginShape()
-        for (let j = 0; j < 3; j++) {
-          vertex(
-            vert1(basis[indices[i][j]], h)[0],
-            vert1(basis[indices[i][j]], h)[1],
-            vert1(basis[indices[i][j]], h)[2]
-          )
-        }
-        endShape(CLOSE)
-      }
-    }
-
-    if (grade == 2) {
-      //triangles
-      for (let i = 0; i < 4; i++) {
-        beginShape()
-        for (let j = 0; j < 3; j++) {
-          vertex(
-            vert2(basis[i], basis[indices[i][j]], h)[0],
-            vert2(basis[i], basis[indices[i][j]], h)[1],
-            vert2(basis[i], basis[indices[i][j]], h)[2]
-          )
-        }
-        endShape(CLOSE)
-      }
-      //hexagons
-      for (let i = 0; i < 4; i++) {
-        beginShape()
-        for (let j = 0; j < 3; j++) {
-          vertex(
-            vert2(basis[indices[i][j]], basis[indices[i][(j + 2) % 3]], h)[0],
-            vert2(basis[indices[i][j]], basis[indices[i][(j + 2) % 3]], h)[1],
-            vert2(basis[indices[i][j]], basis[indices[i][(j + 2) % 3]], h)[2]
-          )
-          vertex(
-            vert2(basis[indices[i][j]], basis[indices[i][(j + 4) % 3]], h)[0],
-            vert2(basis[indices[i][j]], basis[indices[i][(j + 4) % 3]], h)[1],
-            vert2(basis[indices[i][j]], basis[indices[i][(j + 4) % 3]], h)[2]
-          )
-        }
-        endShape(CLOSE)
-      }
-    }
-
-    if (grade == 3) {
-      //triangles
-      for (let i = 0; i < 4; i++) {
-        beginShape()
-        for (let j = 0; j < 3; j++) {
-          vertex(
-            vert3(
-              basis[indices[i][(j + 1) % 3]],
-              basis[indices[i][(j + 2) % 3]],
-              basis[indices[i][j]],
-              h
-            )[0],
-            vert3(
-              basis[indices[i][(j + 1) % 3]],
-              basis[indices[i][(j + 2) % 3]],
-              basis[indices[i][j]],
-              h
-            )[1],
-            vert3(
-              basis[indices[i][(j + 1) % 3]],
-              basis[indices[i][(j + 2) % 3]],
-              basis[indices[i][j]],
-              h
-            )[2]
-          )
-        }
-        endShape(CLOSE)
-      }
-      //hexagons
-      for (let i = 0; i < 4; i++) {
-        beginShape()
-        for (let j = 0; j < 3; j++) {
-          vertex(
-            vert3(
-              basis[i],
-              basis[indices[i][(2 * j) % 3]],
-              basis[indices[i][(2 * j + 1) % 3]],
-              h
-            )[0],
-            vert3(
-              basis[i],
-              basis[indices[i][(2 * j) % 3]],
-              basis[indices[i][(2 * j + 1) % 3]],
-              h
-            )[1],
-            vert3(
-              basis[i],
-              basis[indices[i][(2 * j) % 3]],
-              basis[indices[i][(2 * j + 1) % 3]],
-              h
-            )[2]
-          )
-          vertex(
-            vert3(
-              basis[i],
-              basis[indices[i][(2 * j) % 3]],
-              basis[indices[i][(2 * j + 2) % 3]],
-              h
-            )[0],
-            vert3(
-              basis[i],
-              basis[indices[i][(2 * j) % 3]],
-              basis[indices[i][(2 * j + 2) % 3]],
-              h
-            )[1],
-            vert3(
-              basis[i],
-              basis[indices[i][(2 * j) % 3]],
-              basis[indices[i][(2 * j + 2) % 3]],
-              h
-            )[2]
-          )
-        }
-        endShape(CLOSE)
-      }
-    }
-
-    if (grade == 4) {
-      for (let i = 0; i < 4; i++) {
-        beginShape()
-        for (let j = 0; j < 3; j++) {
-          vertex(
-            vert4(
-              basis[(indices[i][j] + 1) % 4],
-              basis[(indices[i][j] + 2) % 4],
-              basis[(indices[i][j] + 3) % 4],
-              basis[indices[i][j]],
-              h
-            )[0],
-            vert4(
-              basis[(indices[i][j] + 1) % 4],
-              basis[(indices[i][j] + 2) % 4],
-              basis[(indices[i][j] + 3) % 4],
-              basis[indices[i][j]],
-              h
-            )[1],
-            vert4(
-              basis[(indices[i][j] + 1) % 4],
-              basis[(indices[i][j] + 2) % 4],
-              basis[(indices[i][j] + 3) % 4],
-              basis[indices[i][j]],
-              h
-            )[2]
-          )
-        }
-        endShape(CLOSE)
-      }
-    }
-
-    pop()
+    slide11.show()
   }
 
   //part 3 title slide

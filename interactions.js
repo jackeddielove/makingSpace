@@ -39,12 +39,7 @@ function mouseWheel(event) {
   }
 
   if (counter == 11) {
-    if (event.delta > 0) {
-      t -= s
-    }
-    if (event.delta < 0) {
-      t += s
-    }
+    slide11.handleMouseWheel(event)
   }
 
   if (counter == 13) {
