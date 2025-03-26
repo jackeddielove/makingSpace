@@ -43,14 +43,7 @@ function mouseWheel(event) {
   }
 
   if (counter == 13) {
-    if (curve1 == true || curve2 == true || curve3 == true) {
-      if (event.delta > 0 && rgbTimer > 0) {
-        rgbTimer -= rgbSpeed
-      }
-      if (event.delta < 0 && rgbTimer < 1) {
-        rgbTimer += rgbSpeed
-      }
-    }
+    slide13.handleMouseWheel(event)
   }
 
   return false
@@ -110,59 +103,6 @@ function mouseClicked() {
   }
 
   if (counter == 13) {
-    if (
-      dist(
-        mouseToWorld(mouseX, mouseY)[0],
-        mouseToWorld(mouseX, mouseY)[1],
-        -4.5,
-        -3
-      ) < 0.5
-    ) {
-      rgb = !rgb
-    }
-
-    if (rgb == true) {
-      if (
-        dist(
-          mouseToWorld(mouseX, mouseY)[0],
-          mouseToWorld(mouseX, mouseY)[1],
-          -1.5,
-          -3
-        ) < 0.5
-      ) {
-        curve1 = !curve1
-        rd = 0
-        gr = 0
-        bl = 0
-      }
-
-      if (
-        dist(
-          mouseToWorld(mouseX, mouseY)[0],
-          mouseToWorld(mouseX, mouseY)[1],
-          1.5,
-          -3
-        ) < 0.5
-      ) {
-        curve2 = !curve2
-        rd = 0
-        gr = 0
-        bl = 0
-      }
-
-      if (
-        dist(
-          mouseToWorld(mouseX, mouseY)[0],
-          mouseToWorld(mouseX, mouseY)[1],
-          4.5,
-          -3
-        ) < 0.5
-      ) {
-        curve3 = !curve3
-        rd = 0
-        gr = 0
-        bl = 0
-      }
-    }
+    slide13.handleMouseClicked()
   }
 }
