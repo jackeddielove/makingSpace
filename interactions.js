@@ -45,41 +45,12 @@ function mouseWheel(event) {
   if (counter == 13) {
     slide13.handleMouseWheel(event)
   }
-
   return false
 }
 
 function mouseClicked() {
   if (counter == 2) {
-    //turns buttons on slide 1 on and off
-    for (let i = 0; i < 3; i++) {
-      if (
-        dist(
-          -6 + 2 * i,
-          3.75,
-          mouseToWorld(mouseX, mouseY)[0],
-          mouseToWorld(mouseX, mouseY)[1]
-        ) < 0.5
-      ) {
-        buttons_2d[i]++
-      }
-    }
-
-    // turns on and off green points on line on slide 1
-    for (let i = -8; i < 9; i++) {
-      for (let j = -5; j < 6; j++) {
-        if (
-          dist(
-            i,
-            j,
-            mouseToWorld(mouseX, mouseY)[0],
-            mouseToWorld(mouseX, mouseY)[1]
-          ) < 0.1
-        ) {
-          gridPts[(i + 8) * 11 + (j + 5)] = !gridPts[(i + 8) * 11 + (j + 5)]
-        }
-      }
-    }
+    slide2.handleMouseClicked()
   }
 
   if (counter == 3) {

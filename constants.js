@@ -8,6 +8,5 @@ let phi_y = 0
 let phi_z = 0
 
 //button states
-let buttons_2d = [0, 0, 0]
 //starting coordinates of point
 let ptCoords_2d = [5, 3]

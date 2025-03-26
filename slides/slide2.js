@@ -4,8 +4,41 @@ class Slide2 {
     this.sqColor = color(255, 0, 255, 128) // fuchsia
     //starting coefficients of line
     this.coefficients = [1, 1, 4]
+    this.buttons_2d = [0, 0, 0]
   }
 
+  handleMouseClicked() {
+    //turns buttons on slide 1 on and off
+    for (let i = 0; i < 3; i++) {
+      if (
+        dist(
+          -6 + 2 * i,
+          3.75,
+          mouseToWorld(mouseX, mouseY)[0],
+          mouseToWorld(mouseX, mouseY)[1]
+        ) < 0.5
+      ) {
+        this.buttons_2d[i]++
+      }
+    }
+
+    // turns on and off green points on line on slide 1
+    for (let i = -8; i < 9; i++) {
+      for (let j = -5; j < 6; j++) {
+        if (
+          dist(
+            i,
+            j,
+            mouseToWorld(mouseX, mouseY)[0],
+            mouseToWorld(mouseX, mouseY)[1]
+          ) < 0.1
+        ) {
+          this.gridPts[(i + 8) * 11 + (j + 5)] =
+            !this.gridPts[(i + 8) * 11 + (j + 5)]
+        }
+      }
+    }
+  }
   handleMouseWheel(event) {
     //adjust coefficients in line equation
 
@@ -77,7 +110,7 @@ class Slide2 {
     textAlign(CENTER)
     textSize(unit / 3)
 
-    //point button (buttons_2d[0])
+    //point button (this.buttons_2d[0])
     //button shape
     noFill()
     stroke("white")
@@ -88,7 +121,7 @@ class Slide2 {
     fill("white")
     text("point", -6 * unit, -3.65 * unit)
 
-    //line button (buttons_2d[1])
+    //line button (this.buttons_2d[1])
     //button shape
     noFill()
     stroke("white")
@@ -99,7 +132,7 @@ class Slide2 {
     fill("white")
     text("line", -4 * unit, -3.65 * unit)
 
-    //square button (buttons_2d[2])
+    //square button (this.buttons_2d[2])
     //button shape
     noFill()
     stroke("white")
@@ -157,7 +190,7 @@ class Slide2 {
     }
 
     // draw and manipulate point
-    if (buttons_2d[0] % 3 > 0) {
+    if (this.buttons_2d[0] % 3 > 0) {
       if (
         dist(
           ptCoords_2d[0],
@@ -180,7 +213,7 @@ class Slide2 {
         unit / 3
       )
 
-      if (buttons_2d[0] % 3 == 2) {
+      if (this.buttons_2d[0] % 3 == 2) {
         textSize(unit / 2)
         fill("white")
         textAlign(CENTER)
@@ -198,7 +231,7 @@ class Slide2 {
 
     //line ax+by+c=0, drawn from (-10, y(-10)) to (10, y(10))
 
-    if (buttons_2d[1] % 3 > 0) {
+    if (this.buttons_2d[1] % 3 > 0) {
       strokeWeight(unit / 20)
       stroke("lime")
 
@@ -234,7 +267,7 @@ class Slide2 {
     }
 
     //show line equation
-    if (buttons_2d[1] % 3 == 2) {
+    if (this.buttons_2d[1] % 3 == 2) {
       textSize(unit / 2)
       fill("white")
       noStroke()
@@ -250,7 +283,7 @@ class Slide2 {
 
     //unit square
 
-    if (buttons_2d[2] % 3 != 0) {
+    if (this.buttons_2d[2] % 3 != 0) {
       noStroke()
       fill(this.sqColor)
       rectMode(CENTER)
@@ -262,7 +295,7 @@ class Slide2 {
       rect(0.5 * unit, -0.5 * unit, unit)
     }
 
-    if (buttons_2d[2] % 3 == 2) {
+    if (this.buttons_2d[2] % 3 == 2) {
       //vertices
       fill("fuchsia")
       circle(unit, -unit, unit / 4)
