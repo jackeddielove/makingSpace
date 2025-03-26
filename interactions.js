@@ -241,12 +241,7 @@ function mouseClicked() {
   }
 
   if (counter == 5) {
-    //turns bullet points on in slide 4
-    for (let i = 0; i < 3; i++) {
-      if (dist(0.5 * unit, (2.2 + 2 * i) * unit, mouseX, mouseY) < unit / 4) {
-        bullets_3d[i] = !bullets_3d[i]
-      }
-    }
+    slide5.handleMouseClicked()
   }
 
   if (counter == 8) {
