@@ -337,6 +337,11 @@ class Slide9 {
     }
   }
 
+  //adding, comparing, drawing vertices and edges
+  arrSum(a, b) {
+    return [a[0] + b[0], a[1] + b[1], a[2] + b[2], a[3] + b[3]]
+  }
+
   //fix 23, rotate 01
   R_xy(theta, v) {
     return [
@@ -563,23 +568,23 @@ class Slide9 {
     const grade_1 = [v_0001, v_0010, v_0100, v_1000]
 
     //grade 2
-    const v_0011 = arrSum(d_1, d_2)
-    const v_0101 = arrSum(d_1, d_3)
-    const v_0110 = arrSum(d_2, d_3)
-    const v_1001 = arrSum(d_1, d_4)
-    const v_1010 = arrSum(d_2, d_4)
-    const v_1100 = arrSum(d_3, d_4)
+    const v_0011 = this.arrSum(d_1, d_2)
+    const v_0101 = this.arrSum(d_1, d_3)
+    const v_0110 = this.arrSum(d_2, d_3)
+    const v_1001 = this.arrSum(d_1, d_4)
+    const v_1010 = this.arrSum(d_2, d_4)
+    const v_1100 = this.arrSum(d_3, d_4)
     const grade_2 = [v_0011, v_0101, v_0110, v_1001, v_1010, v_1100]
 
     //grade 3
-    const v_0111 = arrSum(arrSum(d_1, d_2), d_3)
-    const v_1011 = arrSum(arrSum(d_1, d_2), d_4)
-    const v_1101 = arrSum(arrSum(d_1, d_3), d_4)
-    const v_1110 = arrSum(arrSum(d_2, d_3), d_4)
+    const v_0111 = this.arrSum(this.arrSum(d_1, d_2), d_3)
+    const v_1011 = this.arrSum(this.arrSum(d_1, d_2), d_4)
+    const v_1101 = this.arrSum(this.arrSum(d_1, d_3), d_4)
+    const v_1110 = this.arrSum(this.arrSum(d_2, d_3), d_4)
     const grade_3 = [v_0111, v_1011, v_1101, v_1110]
 
     //grade 4
-    const v_1111 = arrSum(arrSum(arrSum(d_1, d_2), d_3), d_4)
+    const v_1111 = this.arrSum(this.arrSum(this.arrSum(d_1, d_2), d_3), d_4)
     const grade_4 = [v_1111]
 
     const grades = [grade_0, grade_1, grade_2, grade_3, grade_4]
