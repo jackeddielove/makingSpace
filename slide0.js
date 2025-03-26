@@ -1,4 +1,22 @@
 class Slide0 {
+  //rotates a point in 4-space (v) in the xy plane by a radians, the xz plane by b radians, and the yz plane by c radians
+  titleRotation(a, b, c, v) {
+    return [
+      cos(a) * v[0] -
+        sin(a) * sin(b) * v[1] -
+        sin(a) * cos(b) * sin(c) * v[2] -
+        sin(a) * cos(b) * cos(c) * v[3],
+      0 * v[0] +
+        cos(b) * v[1] -
+        sin(b) * sin(c) * v[2] -
+        sin(b) * cos(c) * v[3],
+      0 * v[0] + 0 * v[1] + cos(c) * v[2] - sin(c) * v[3],
+      sin(a) * v[0] +
+        cos(a) * sin(b) * v[1] +
+        cos(a) * cos(b) * sin(c) * v[2] +
+        cos(a) * cos(b) * cos(c) * v[3],
+    ]
+  }
   show() {
     push()
     translate(-7.0 * unit, 0.0 * unit)
@@ -24,8 +42,8 @@ class Slide0 {
       for (let i = j + 1; i < 16; i++) {
         if (arrComp(P[j], P[i]) == true) {
           edge(
-            titleRotation(phi_x, phi_y, phi_z, P[j]),
-            titleRotation(phi_x, phi_y, phi_z, P[i])
+            this.titleRotation(phi_x, phi_y, phi_z, P[j]),
+            this.titleRotation(phi_x, phi_y, phi_z, P[i])
           )
         }
       }

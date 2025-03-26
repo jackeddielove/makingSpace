@@ -374,7 +374,7 @@ function mouseWheel(event) {
 function mouseClicked() {
   if (counter == 2) {
     //turns buttons on slide 1 on and off
-    for (i = 0; i < 3; i++) {
+    for (let i = 0; i < 3; i++) {
       if (
         dist(
           -6 + 2 * i,
@@ -388,8 +388,8 @@ function mouseClicked() {
     }
 
     // turns on and off green points on line on slide 1
-    for (i = -8; i < 9; i++) {
-      for (j = -5; j < 6; j++) {
+    for (let i = -8; i < 9; i++) {
+      for (let j = -5; j < 6; j++) {
         if (
           dist(
             i,
@@ -406,7 +406,7 @@ function mouseClicked() {
 
   if (counter == 3) {
     //turns bullet points on in slide 2
-    for (i = 0; i < 3; i++) {
+    for (let i = 0; i < 3; i++) {
       if (dist(0.5 * unit, (2.2 + 2 * i) * unit, mouseX, mouseY) < unit / 4) {
         bullets[i] = !bullets[i]
       }
@@ -415,7 +415,7 @@ function mouseClicked() {
 
   if (counter == 4) {
     //turns buttons on slide 3 on and off
-    for (i = 0; i < 3; i++) {
+    for (let i = 0; i < 3; i++) {
       if (
         dist(
           -6 + 2 * i,
@@ -431,7 +431,7 @@ function mouseClicked() {
 
   if (counter == 5) {
     //turns bullet points on in slide 4
-    for (i = 0; i < 3; i++) {
+    for (let i = 0; i < 3; i++) {
       if (dist(0.5 * unit, (2.2 + 2 * i) * unit, mouseX, mouseY) < unit / 4) {
         bullets_3d[i] = !bullets_3d[i]
       }

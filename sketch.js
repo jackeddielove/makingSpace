@@ -590,9 +590,9 @@ function draw() {
     //vertices
     if (buttons[2] % 3 == 2) {
       fill("fuchsia")
-      for (i = 0; i < 2; i++) {
-        for (j = 0; j < 2; j++) {
-          for (k = 0; k < 2; k++) {
+      for (let i = 0; i < 2; i++) {
+        for (let j = 0; j < 2; j++) {
+          for (let k = 0; k < 2; k++) {
             push()
             translate(i * unit, j * unit, k * unit)
             sphere(0.1 * unit)
@@ -722,7 +722,7 @@ function draw() {
     //scrolling part of table
     push()
     translate(h, 0, -0.15)
-    for (i = 0; i < 5; i++) {
+    for (let i = 0; i < 5; i++) {
       line(
         -4 * unit + i * 6 * unit,
         -3.1 * unit,
@@ -772,7 +772,7 @@ function draw() {
     text("(", 15.2 * unit, -1.5 * unit)
     text(")", 18.7 * unit, -1.5 * unit)
 
-    for (i = 0; i < 5; i++) {
+    for (let i = 0; i < 5; i++) {
       textSize(0.4 * unit)
       text("x", 15.5 * unit + i * 0.7 * unit, -1.5 * unit)
       if (i < 4) {
@@ -783,7 +783,7 @@ function draw() {
     }
 
     //plane
-    for (i = 0; i < 5; i++) {
+    for (let i = 0; i < 5; i++) {
       textSize(0.35 * unit)
       text("x", 14.6 * unit + i * 1.1 * unit, 0.75 * unit)
       text("a", 14.2 * unit + i * 1.1 * unit, 0.75 * unit)
@@ -1288,9 +1288,9 @@ function draw() {
     strokeWeight(0.05 * unit)
     stroke("lime")
 
-    for (i = 0; i < grades.length - 1; i++) {
-      for (j = 0; j < grades[i].length; j++) {
-        for (k = 0; k < grades[i + 1].length; k++) {
+    for (let i = 0; i < grades.length - 1; i++) {
+      for (let j = 0; j < grades[i].length; j++) {
+        for (let k = 0; k < grades[i + 1].length; k++) {
           if (arrComp(grs[i][j], grs[i + 1][k]) == true) {
             edge(grades[i][j], grades[i + 1][k])
           }
@@ -1609,9 +1609,9 @@ function draw() {
     strokeWeight(unit / 20)
 
     if (grade == 1) {
-      for (i = 0; i < 4; i++) {
+      for (let i = 0; i < 4; i++) {
         beginShape()
-        for (j = 0; j < 3; j++) {
+        for (let j = 0; j < 3; j++) {
           vertex(
             vert1(basis[indices[i][j]], h)[0],
             vert1(basis[indices[i][j]], h)[1],
@@ -1624,9 +1624,9 @@ function draw() {
 
     if (grade == 2) {
       //triangles
-      for (i = 0; i < 4; i++) {
+      for (let i = 0; i < 4; i++) {
         beginShape()
-        for (j = 0; j < 3; j++) {
+        for (let j = 0; j < 3; j++) {
           vertex(
             vert2(basis[i], basis[indices[i][j]], h)[0],
             vert2(basis[i], basis[indices[i][j]], h)[1],
@@ -1636,9 +1636,9 @@ function draw() {
         endShape(CLOSE)
       }
       //hexagons
-      for (i = 0; i < 4; i++) {
+      for (let i = 0; i < 4; i++) {
         beginShape()
-        for (j = 0; j < 3; j++) {
+        for (let j = 0; j < 3; j++) {
           vertex(
             vert2(basis[indices[i][j]], basis[indices[i][(j + 2) % 3]], h)[0],
             vert2(basis[indices[i][j]], basis[indices[i][(j + 2) % 3]], h)[1],
@@ -1656,9 +1656,9 @@ function draw() {
 
     if (grade == 3) {
       //triangles
-      for (i = 0; i < 4; i++) {
+      for (let i = 0; i < 4; i++) {
         beginShape()
-        for (j = 0; j < 3; j++) {
+        for (let j = 0; j < 3; j++) {
           vertex(
             vert3(
               basis[indices[i][(j + 1) % 3]],
@@ -1683,9 +1683,9 @@ function draw() {
         endShape(CLOSE)
       }
       //hexagons
-      for (i = 0; i < 4; i++) {
+      for (let i = 0; i < 4; i++) {
         beginShape()
-        for (j = 0; j < 3; j++) {
+        for (let j = 0; j < 3; j++) {
           vertex(
             vert3(
               basis[i],
@@ -1732,9 +1732,9 @@ function draw() {
     }
 
     if (grade == 4) {
-      for (i = 0; i < 4; i++) {
+      for (let i = 0; i < 4; i++) {
         beginShape()
-        for (j = 0; j < 3; j++) {
+        for (let j = 0; j < 3; j++) {
           vertex(
             vert4(
               basis[(indices[i][j] + 1) % 4],
@@ -2066,7 +2066,7 @@ function draw() {
       }
 
       if (curve1 == true) {
-        for (p = 0; p < 1; p += 0.001) {
+        for (let p = 0; p < 1; p += 0.001) {
           point(p * unit, p * unit, p * unit)
         }
         push()
@@ -2079,7 +2079,7 @@ function draw() {
       }
 
       if (curve2 == true) {
-        for (p = 0; p < 1; p += 0.001) {
+        for (let p = 0; p < 1; p += 0.001) {
           point(p * unit, p ** 2 * unit, p ** 3 * unit)
         }
         push()
@@ -2093,7 +2093,7 @@ function draw() {
       }
 
       if (curve3 == true) {
-        for (p = 0; p < 1; p += 0.001) {
+        for (let p = 0; p < 1; p += 0.001) {
           point(
             p * unit,
             unit * ((sin(p * 2 * PI) + 1) / 2),
@@ -2469,8 +2469,8 @@ function draw() {
             [1, 1, 0],
             [1, 1, 1],
           ]
-          for (j = 0; j < 8; j++) {
-            for (i = 1; i < n; i++) {
+          for (let j = 0; j < 8; j++) {
+            for (let i = 1; i < n; i++) {
               point(
                 cubeVerts[j][0] * edgeLength + (i / n) * 1 * unit,
                 cubeVerts[j][1] * edgeLength + (i / n) * 1.5 * unit,

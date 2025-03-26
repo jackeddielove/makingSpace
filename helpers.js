@@ -25,7 +25,7 @@ function arrSum(a, b) {
 
 function arrComp(a, b) {
   score = 0
-  for (n = 0; n < a.length; n++) {
+  for (let n = 0; n < a.length; n++) {
     if (a[n] != b[n]) {
       score++
     }
