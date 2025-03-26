@@ -27,47 +27,7 @@ function mouseWheel(event) {
   }
 
   if (counter == 8) {
-    if (Xbutton == true) {
-      if (event.delta > 0) {
-        xTheta--
-        rotated_1 = true
-      }
-      if (event.delta < 0) {
-        xTheta++
-        rotated_1 = true
-      }
-      a1 = Rx(xTheta, u1)
-      a2 = Rx(xTheta, u2)
-      a3 = Rx(xTheta, u3)
-    }
-
-    if (Ybutton == true) {
-      if (event.delta > 0) {
-        yTheta--
-        rotated_1 = true
-      }
-      if (event.delta < 0) {
-        yTheta++
-        rotated_1 = true
-      }
-      a1 = Ry(yTheta, u1)
-      a2 = Ry(yTheta, u2)
-      a3 = Ry(yTheta, u3)
-    }
-
-    if (Zbutton == true) {
-      if (event.delta > 0) {
-        zTheta--
-        rotated_1 = true
-      }
-      if (event.delta < 0) {
-        zTheta++
-        rotated_1 = true
-      }
-      a1 = Rz(zTheta, u1)
-      a2 = Rz(zTheta, u2)
-      a3 = Rz(zTheta, u3)
-    }
+    slide8.handleMouseWheel(event)
   }
 
   if (counter == 10) {
@@ -240,71 +200,7 @@ function mouseClicked() {
   }
 
   if (counter == 8) {
-    //Xbutton
-    if (
-      dist(
-        mouseToWorld(mouseX, mouseY)[0],
-        mouseToWorld(mouseX, mouseY)[1],
-        -6,
-        -1.25
-      ) < 0.75
-    ) {
-      if (Xbutton == true && rotated == true) {
-        u1 = a1
-        u2 = a2
-        u3 = a3
-        xTheta = 0
-        yTheta = 0
-        zTheta = 0
-      }
-      if (Ybutton == false && Zbutton == false) {
-        Xbutton = !Xbutton
-      }
-    }
-
-    //Ybutton
-    if (
-      dist(
-        mouseToWorld(mouseX, mouseY)[0],
-        mouseToWorld(mouseX, mouseY)[1],
-        -6,
-        -2.25
-      ) < 0.75
-    ) {
-      if (Ybutton == true && rotated == true) {
-        u1 = a1
-        u2 = a2
-        u3 = a3
-        xTheta = 0
-        yTheta = 0
-        zTheta = 0
-      }
-      if (Xbutton == false && Zbutton == false) {
-        Ybutton = !Ybutton
-      }
-    }
-
-    //Zbutton
-    if (
-      dist(
-        mouseToWorld(mouseX, mouseY)[0],
-        mouseToWorld(mouseX, mouseY)[1],
-        -6,
-        -3.25
-      ) < 0.75
-    ) {
-      if (Zbutton == true && rotated == true) {
-        u1 = a1
-        u2 = a2
-        u3 = a3
-        xTheta = 0
-        yTheta = 0
-        zTheta = 0
-      }
-      if (Xbutton == false && Ybutton == false) {
-        Zbutton = !Zbutton
-      }
-    }
+    slide8.handleMouseClicked()
   }
 
   if (counter == 9) {

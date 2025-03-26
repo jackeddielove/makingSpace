@@ -1,25 +1,9 @@
-let slide0, slide1, slide2, slide3, slide4, slide5, slide6, slide7
+let slide0, slide1, slide2, slide3, slide4, slide5, slide6, slide7, slide8
+let unit, size
+
 {
   //slide 8 -- projecting 3D to 2D
   {
-    //fixes bug that makes cube disappear if the first button
-    //is clicked and unclicked without rotation occuring
-    rotated_1 = false
-
-    rotated = false
-
-    //divisor of pi for rotations: higher number = smoother animation
-    div = 32
-
-    //intialize buttons
-    Xbutton = false
-    Ybutton = false
-    Zbutton = false
-
-    //initialize angles
-    xTheta = 0
-    yTheta = 0
-    zTheta = 0
   }
 
   //slide 9 -- slicing 3D with 2D
@@ -196,6 +180,11 @@ let slide0, slide1, slide2, slide3, slide4, slide5, slide6, slide7
     r = 9 / 16
     w = windowWidth
     createCanvas(w, r * w, WEBGL)
+    unit = width / 16
+
+    //set edge length of cubes for slicing/projecting
+    size = 2.5 * unit
+
     // createCanvas(windowWidth, windowHeight, WEBGL);
     slide0 = new Slide0()
     slide1 = new Slide1()
@@ -205,26 +194,9 @@ let slide0, slide1, slide2, slide3, slide4, slide5, slide6, slide7
     slide5 = new Slide5()
     slide6 = new Slide6()
     slide7 = new Slide7()
+    slide8 = new Slide8()
 
     frameRate(100)
-
-    unit = width / 16
-
-    //set edge length of cubes for slicing/projecting
-    size = 2.5 * unit
-
-    //setup for 3D projections
-    {
-      //initialize a_i vectors; they keep track of the u_i during rotation
-      a1 = createVector(0, 0, 0)
-      a2 = createVector(0, 0, 0)
-      a3 = createVector(0, 0, 0)
-
-      //initialize u_i
-      u1 = createVector(size, 0, 0)
-      u2 = createVector(0, size, 0)
-      u3 = createVector(0, 0, size)
-    }
 
     //setup for 3D slices
     {
@@ -337,286 +309,7 @@ function draw() {
 
   //projecting 3D to 2D
   if (counter == 8) {
-    //some variables
-    {
-      //rotated unit vectors
-      d1 = Rx(xTheta, Ry(yTheta, Rz(zTheta, u1)))
-      d2 = Rx(xTheta, Ry(yTheta, Rz(zTheta, u2)))
-      d3 = Rx(xTheta, Ry(yTheta, Rz(zTheta, u3)))
-
-      //cube vertices
-      v0 = createVector(0, 0, 0)
-      v1 = d1
-      v2 = vecSum(d1, d2)
-      v3 = d2
-      v4 = d3
-      v5 = vecSum(d1, d3)
-      v6 = vecSum(vecSum(d1, d2), d3)
-      v7 = vecSum(d2, d3)
-    }
-
-    //buttons
-    {
-      rectMode(CENTER)
-      textAlign(CENTER)
-
-      //shape
-      stroke("white")
-      strokeWeight(0.02 * unit)
-
-      noFill()
-      if (Xbutton == true) {
-        fill("white")
-      }
-      rect(-6 * unit, 1.25 * unit, 2 * unit, 0.75 * unit, 0.25 * unit)
-      noFill()
-      if (Ybutton == true) {
-        fill("white")
-      }
-      rect(-6 * unit, 2.25 * unit, 2 * unit, 0.75 * unit, 0.25 * unit)
-      noFill()
-      if (Zbutton == true) {
-        fill("white")
-      }
-      rect(-6 * unit, 3.25 * unit, 2 * unit, 0.75 * unit, 0.25 * unit)
-
-      //label
-      textSize(0.35 * unit)
-      fill("white")
-      if (Xbutton == true) {
-        fill("black")
-      }
-      text("rotate X", -6 * unit, 1.35 * unit)
-      fill("white")
-      if (Ybutton == true) {
-        fill("black")
-      }
-      text("rotate Y", -6 * unit, 2.35 * unit)
-      fill("white")
-      if (Zbutton == true) {
-        fill("black")
-      }
-      text("rotate Z", -6 * unit, 3.35 * unit)
-    }
-
-    //3D drawing template
-    {
-      push()
-      rotateX(PI / 3)
-      rotateZ(PI / 6)
-      scale(1, -1, 1)
-
-      //x-y-z axes
-      stroke("white")
-      strokeWeight(1)
-      line(-10 * unit, 0, 0, 10 * unit, 0, 0)
-      line(0, -10 * unit, 0, 0, 10 * unit, 0)
-      line(0, 0, -10 * unit, 0, 0, 10 * unit)
-
-      //xy-plane
-      fill(255, 128)
-      beginShape()
-      vertex(5 * unit, 5 * unit, 0)
-      vertex(5 * unit, -5 * unit, 0)
-      vertex(-5 * unit, -5 * unit, 0)
-      vertex(-5 * unit, 5 * unit, 0)
-      endShape(CLOSE)
-      pop()
-    }
-
-    //2D drawing template
-    {
-      push()
-      translate(-0.35 * width, -0.25 * height, -1)
-      fill(128)
-      rectMode(CENTER)
-      rect(0, 0, 4 * unit, 4 * unit, 20)
-      stroke("white")
-      strokeWeight(unit / 30)
-      line(2 * unit, 0, -2 * unit, 0)
-      line(0, 2 * unit, 0, -2 * unit)
-      pop()
-    }
-
-    //3D drawing
-    {
-      push()
-      rotateX(PI / 3)
-      rotateZ(PI / 6)
-      scale(1, -1, 1)
-
-      //cube
-      {
-        fill(255, 128)
-        strokeWeight(0.05 * unit)
-        stroke("magenta")
-
-        //face 0123
-        beginShape()
-        vertex(v0.x, v0.y, v0.z)
-        vertex(v1.x, v1.y, v1.z)
-        vertex(v2.x, v2.y, v2.z)
-        vertex(v3.x, v3.y, v3.z)
-        endShape(CLOSE)
-
-        //face 0154
-        beginShape()
-        vertex(v0.x, v0.y, v0.z)
-        vertex(v1.x, v1.y, v1.z)
-        vertex(v5.x, v5.y, v5.z)
-        vertex(v4.x, v4.y, v4.z)
-        endShape(CLOSE)
-
-        //face 0374
-        beginShape()
-        vertex(v0.x, v0.y, v0.z)
-        vertex(v3.x, v3.y, v3.z)
-        vertex(v7.x, v7.y, v7.z)
-        vertex(v4.x, v4.y, v4.z)
-        endShape(CLOSE)
-
-        //face 1265
-        beginShape()
-        vertex(v1.x, v1.y, v1.z)
-        vertex(v2.x, v2.y, v2.z)
-        vertex(v6.x, v6.y, v6.z)
-        vertex(v5.x, v5.y, v5.z)
-        endShape(CLOSE)
-
-        //face 2376
-        beginShape()
-        vertex(v2.x, v2.y, v2.z)
-        vertex(v3.x, v3.y, v3.z)
-        vertex(v7.x, v7.y, v7.z)
-        vertex(v6.x, v6.y, v6.z)
-        endShape(CLOSE)
-
-        //face 4567
-        beginShape()
-        vertex(v4.x, v4.y, v4.z)
-        vertex(v5.x, v5.y, v5.z)
-        vertex(v6.x, v6.y, v6.z)
-        vertex(v7.x, v7.y, v7.z)
-        endShape(CLOSE)
-      }
-
-      //projection
-      {
-        stroke("lime")
-        noFill()
-
-        //face 0123
-        beginShape()
-        vertex(v0.x, v0.y)
-        vertex(v1.x, v1.y)
-        vertex(v2.x, v2.y)
-        vertex(v3.x, v3.y)
-        endShape(CLOSE)
-
-        //face 0154
-        beginShape()
-        vertex(v0.x, v0.y)
-        vertex(v1.x, v1.y)
-        vertex(v5.x, v5.y)
-        vertex(v4.x, v4.y)
-        endShape(CLOSE)
-
-        //face 0374
-        beginShape()
-        vertex(v0.x, v0.y)
-        vertex(v3.x, v3.y)
-        vertex(v7.x, v7.y)
-        vertex(v4.x, v4.y)
-        endShape(CLOSE)
-
-        //face 1265
-        beginShape()
-        vertex(v1.x, v1.y)
-        vertex(v2.x, v2.y)
-        vertex(v6.x, v6.y)
-        vertex(v5.x, v5.y)
-        endShape(CLOSE)
-
-        //face 2376
-        beginShape()
-        vertex(v2.x, v2.y)
-        vertex(v3.x, v3.y)
-        vertex(v7.x, v7.y)
-        vertex(v6.x, v6.y)
-        endShape(CLOSE)
-
-        //face 4567
-        beginShape()
-        vertex(v4.x, v4.y)
-        vertex(v5.x, v5.y)
-        vertex(v6.x, v6.y)
-        vertex(v7.x, v7.y)
-        endShape(CLOSE)
-      }
-
-      pop()
-    }
-
-    //2D drawing
-    {
-      push()
-      translate(-0.35 * width, -0.25 * height, -1)
-
-      scale(0.5, -0.5)
-      stroke("lime")
-      strokeWeight(0.1 * unit)
-      noFill()
-
-      //face 0123
-      beginShape()
-      vertex(v0.x, v0.y)
-      vertex(v1.x, v1.y)
-      vertex(v2.x, v2.y)
-      vertex(v3.x, v3.y)
-      endShape(CLOSE)
-
-      //face 0154
-      beginShape()
-      vertex(v0.x, v0.y)
-      vertex(v1.x, v1.y)
-      vertex(v5.x, v5.y)
-      vertex(v4.x, v4.y)
-      endShape(CLOSE)
-
-      //face 0374
-      beginShape()
-      vertex(v0.x, v0.y)
-      vertex(v3.x, v3.y)
-      vertex(v7.x, v7.y)
-      vertex(v4.x, v4.y)
-      endShape(CLOSE)
-
-      //face 1265
-      beginShape()
-      vertex(v1.x, v1.y)
-      vertex(v2.x, v2.y)
-      vertex(v6.x, v6.y)
-      vertex(v5.x, v5.y)
-      endShape(CLOSE)
-
-      //face 2376
-      beginShape()
-      vertex(v2.x, v2.y)
-      vertex(v3.x, v3.y)
-      vertex(v7.x, v7.y)
-      vertex(v6.x, v6.y)
-      endShape(CLOSE)
-
-      //face 4567
-      beginShape()
-      vertex(v4.x, v4.y)
-      vertex(v5.x, v5.y)
-      vertex(v6.x, v6.y)
-      vertex(v7.x, v7.y)
-      endShape(CLOSE)
-
-      pop()
-    }
+    slide8.show()
   }
 
   //projecting 4D to 3D

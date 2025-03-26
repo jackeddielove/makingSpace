@@ -1,32 +1,3 @@
-function Rx(theta, v) {
-  c = createVector(
-    v.x,
-    v.y * cos((theta * PI) / div) - v.z * sin((theta * PI) / div),
-    v.y * sin((theta * PI) / div) + v.z * cos((theta * PI) / div)
-  )
-
-  return c
-}
-
-function Ry(theta, v) {
-  c = createVector(
-    v.x * cos((theta * PI) / div) + v.z * sin((theta * PI) / div),
-    v.y,
-    -v.x * sin((theta * PI) / div) + v.z * cos((theta * PI) / div)
-  )
-
-  return c
-}
-
-function Rz(theta, v) {
-  c = createVector(
-    v.x * cos((theta * PI) / div) - v.y * sin((theta * PI) / div),
-    v.x * sin((theta * PI) / div) + v.y * cos((theta * PI) / div),
-    v.z
-  )
-  return c
-}
-
 //fix 23, rotate 01
 function R_xy(theta, v) {
   return [

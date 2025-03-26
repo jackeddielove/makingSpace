@@ -6,12 +6,11 @@ function mouseToWorld(x, y) {
 }
 
 function vecSum(a, b) {
-  c = createVector(
+  return createVector(
     p5.Vector.add(a, b).x,
     p5.Vector.add(a, b).y,
     p5.Vector.add(a, b).z
   )
-  return c
 }
 
 //adding, comparing, drawing vertices and edges
