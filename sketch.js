@@ -1,7 +1,5 @@
-let slide0, slide1, slide2, slide3, slide4, slide5, slide6
+let slide0, slide1, slide2, slide3, slide4, slide5, slide6, slide7
 {
-  //slide 7 -- part 2 title
-
   //slide 8 -- projecting 3D to 2D
   {
     //fixes bug that makes cube disappear if the first button
@@ -206,6 +204,7 @@ let slide0, slide1, slide2, slide3, slide4, slide5, slide6
     slide4 = new Slide4()
     slide5 = new Slide5()
     slide6 = new Slide6()
+    slide7 = new Slide7()
 
     frameRate(100)
 
@@ -333,20 +332,7 @@ function draw() {
 
   //part 2 title slide
   if (counter == 7) {
-    push()
-    translate(-7.0 * unit, 0.0 * unit)
-    textAlign(LEFT)
-    fill("white")
-
-    textSize(1.5 * unit)
-    text("Part 2", 0, 0)
-
-    textSize(1 * unit)
-    text("Expanding our vision", 0, 1.5 * unit)
-
-    textSize(0.75 * unit)
-    text("seeing in 4D", 0, 2.625 * unit)
-    pop()
+    slide7.show()
   }
 
   //projecting 3D to 2D
