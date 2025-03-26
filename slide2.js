@@ -2,6 +2,72 @@ class Slide2 {
   constructor() {
     this.gridPts = new Array(187).fill(false)
     this.sqColor = color(255, 0, 255, 128) // fuchsia
+    //starting coefficients of line
+    this.coefficients = [1, 1, 4]
+  }
+
+  handleMouseWheel() {
+    //adjust coefficients in line equation
+
+    //adjust a
+    if (
+      dist(
+        mouseToWorld(mouseX, mouseY)[0],
+        mouseToWorld(mouseX, mouseY)[1],
+        2.5 + 2.25 * 0,
+        3.5
+      ) < 0.25
+    ) {
+      if (event.delta > 0) {
+        this.coefficients[0]--
+      }
+      if (event.delta < 0) {
+        this.coefficients[0]++
+      }
+    }
+    //adjust b
+    if (
+      dist(
+        mouseToWorld(mouseX, mouseY)[0],
+        mouseToWorld(mouseX, mouseY)[1],
+        2.5 + 2.25 * 1,
+        3.5
+      ) < 0.25
+    ) {
+      if (event.delta > 0) {
+        this.coefficients[1]--
+      }
+      if (event.delta < 0) {
+        this.coefficients[1]++
+      }
+    }
+    //adjust c
+    if (
+      dist(
+        mouseToWorld(mouseX, mouseY)[0],
+        mouseToWorld(mouseX, mouseY)[1],
+        2.5 + 2.25 * 2,
+        3.5
+      ) < 0.25
+    ) {
+      if (event.delta > 0) {
+        this.coefficients[2]--
+      }
+      if (event.delta < 0) {
+        this.coefficients[2]++
+      }
+    }
+  }
+
+  worldToScreen(x, y) {
+    return [x * unit, -y * unit]
+  }
+
+  //return the y-coordinate for the line ax+by+c=0 on slide 1 given an x-coordinate
+  f(x) {
+    return (
+      (-this.coefficients[0] * x + this.coefficients[2]) / this.coefficients[1]
+    )
   }
 
   show() {
@@ -73,8 +139,8 @@ class Slide2 {
           textAlign(CENTER)
           text(
             "(" + i + ", " + j + ")",
-            worldToScreen(i, j)[0],
-            worldToScreen(i, j)[1] - unit / 3
+            this.worldToScreen(i, j)[0],
+            this.worldToScreen(i, j)[1] - unit / 3
           )
         } else {
           dotColor = "white"
@@ -82,7 +148,11 @@ class Slide2 {
         }
         fill(dotColor)
         noStroke()
-        circle(worldToScreen(i, j)[0], worldToScreen(i, j)[1], dotSize)
+        circle(
+          this.worldToScreen(i, j)[0],
+          this.worldToScreen(i, j)[1],
+          dotSize
+        )
       }
     }
 
@@ -105,8 +175,8 @@ class Slide2 {
       fill("dodgerblue")
       noStroke()
       circle(
-        worldToScreen(ptCoords_2d[0], ptCoords_2d[1])[0],
-        worldToScreen(ptCoords_2d[0], ptCoords_2d[1])[1],
+        this.worldToScreen(ptCoords_2d[0], ptCoords_2d[1])[0],
+        this.worldToScreen(ptCoords_2d[0], ptCoords_2d[1])[1],
         unit / 3
       )
 
@@ -120,8 +190,8 @@ class Slide2 {
             ", " +
             round(ptCoords_2d[1], 2) +
             ")",
-          worldToScreen(ptCoords_2d[0], ptCoords_2d[1])[0],
-          worldToScreen(ptCoords_2d[0], ptCoords_2d[1])[1] - unit / 3
+          this.worldToScreen(ptCoords_2d[0], ptCoords_2d[1])[0],
+          this.worldToScreen(ptCoords_2d[0], ptCoords_2d[1])[1] - unit / 3
         )
       }
     }
@@ -132,20 +202,32 @@ class Slide2 {
       strokeWeight(unit / 20)
       stroke("lime")
 
-      if (coefficients[1] != 0) {
+      if (this.coefficients[1] != 0) {
         line(
-          worldToScreen(-10, f(-10))[0],
-          worldToScreen(-10, f(-10))[1],
-          worldToScreen(10, f(10))[0],
-          worldToScreen(10, f(10))[1]
+          this.worldToScreen(-10, this.f(-10))[0],
+          this.worldToScreen(-10, this.f(-10))[1],
+          this.worldToScreen(10, this.f(10))[0],
+          this.worldToScreen(10, this.f(10))[1]
         )
       } else {
-        if (coefficients[0] != 0) {
+        if (this.coefficients[0] != 0) {
           line(
-            worldToScreen(coefficients[2] / coefficients[0], -5)[0],
-            worldToScreen(coefficients[2] / coefficients[0], -5)[1],
-            worldToScreen(coefficients[2] / coefficients[0], 5)[0],
-            worldToScreen(coefficients[2] / coefficients[0], 5)[1]
+            this.worldToScreen(
+              this.coefficients[2] / this.coefficients[0],
+              -5
+            )[0],
+            this.worldToScreen(
+              this.coefficients[2] / this.coefficients[0],
+              -5
+            )[1],
+            this.worldToScreen(
+              this.coefficients[2] / this.coefficients[0],
+              5
+            )[0],
+            this.worldToScreen(
+              this.coefficients[2] / this.coefficients[0],
+              5
+            )[1]
           )
         }
       }
@@ -157,13 +239,13 @@ class Slide2 {
       fill("white")
       noStroke()
       textAlign(CENTER)
-      text(round(coefficients[0], 1), 2.5 * unit, -3.25 * unit)
+      text(round(this.coefficients[0], 1), 2.5 * unit, -3.25 * unit)
       text("x", 3.25 * unit, -3.25 * unit)
       text("+", 4 * unit, -3.25 * unit)
-      text(round(coefficients[1], 1), 4.75 * unit, -3.25 * unit)
+      text(round(this.coefficients[1], 1), 4.75 * unit, -3.25 * unit)
       text("y", 5.5 * unit, -3.25 * unit)
       text("=", 6.25 * unit, -3.25 * unit)
-      text(round(coefficients[2], 1), 7 * unit, -3.25 * unit)
+      text(round(this.coefficients[2], 1), 7 * unit, -3.25 * unit)
     }
 
     //unit square

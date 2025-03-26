@@ -5,10 +5,6 @@ function mouseToWorld(x, y) {
   return [x / unit - 8, -y / unit + 4.5]
 }
 
-function worldToScreen(x, y) {
-  return [x * unit, -y * unit]
-}
-
 function vecSum(a, b) {
   c = createVector(
     p5.Vector.add(a, b).x,
@@ -68,9 +64,4 @@ function sliderToCmyk(x) {
 
 function cmykToSlider(x) {
   return x * 3 - 7
-}
-
-//return the y-coordinate for the line ax+by+c=0 on slide 1 given an x-coordinate
-function f(x) {
-  return (-coefficients[0] * x + coefficients[2]) / coefficients[1]
 }

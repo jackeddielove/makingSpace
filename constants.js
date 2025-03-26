@@ -11,5 +11,3 @@ let phi_z = 0
 let buttons_2d = [0, 0, 0]
 //starting coordinates of point
 let ptCoords_2d = [5, 3]
-//starting coefficients of line
-let coefficients = [1, 1, 4]
