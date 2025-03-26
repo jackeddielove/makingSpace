@@ -1,4 +1,10 @@
 class Slide0 {
+  constructor() {
+    this.titleTimer = 0
+    this.phi_x = 0
+    this.phi_y = 0
+    this.phi_z = 0
+  }
   //rotates a point in 4-space (v) in the xy plane by a radians, the xz plane by b radians, and the yz plane by c radians
   titleRotation(a, b, c, v) {
     return [
@@ -42,17 +48,17 @@ class Slide0 {
       for (let i = j + 1; i < 16; i++) {
         if (arrComp(P[j], P[i]) == true) {
           edge(
-            this.titleRotation(phi_x, phi_y, phi_z, P[j]),
-            this.titleRotation(phi_x, phi_y, phi_z, P[i])
+            this.titleRotation(this.phi_x, this.phi_y, this.phi_z, P[j]),
+            this.titleRotation(this.phi_x, this.phi_y, this.phi_z, P[i])
           )
         }
       }
     }
     pop()
 
-    titleTimer++
-    phi_x = sin(titleTimer / 40)
-    phi_y = cos((1.5 * titleTimer) / 40)
-    phi_z = sin(titleTimer / 40) * cos(titleTimer / 40)
+    this.titleTimer++
+    this.phi_x = sin(this.titleTimer / 40)
+    this.phi_y = cos((1.5 * this.titleTimer) / 40)
+    this.phi_z = sin(this.titleTimer / 40) * cos(this.titleTimer / 40)
   }
 }

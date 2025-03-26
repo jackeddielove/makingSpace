@@ -14,6 +14,7 @@ let slide0,
   slide13,
   slide14
 let unit, size
+let counter = 0
 
 {
   //edge poset

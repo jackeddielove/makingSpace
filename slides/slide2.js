@@ -5,6 +5,9 @@ class Slide2 {
     //starting coefficients of line
     this.coefficients = [1, 1, 4]
     this.buttons_2d = [0, 0, 0]
+    //button states
+    //starting coordinates of point
+    this.ptCoords_2d = [5, 3]
   }
 
   handleMouseClicked() {
@@ -193,23 +196,23 @@ class Slide2 {
     if (this.buttons_2d[0] % 3 > 0) {
       if (
         dist(
-          ptCoords_2d[0],
-          ptCoords_2d[1],
+          this.ptCoords_2d[0],
+          this.ptCoords_2d[1],
           mouseToWorld(mouseX, mouseY)[0],
           mouseToWorld(mouseX, mouseY)[1]
         ) < 0.5 &&
         mouseIsPressed
       ) {
-        ptCoords_2d[0] = mouseToWorld(mouseX, mouseY)[0]
-        ptCoords_2d[1] = mouseToWorld(mouseX, mouseY)[1]
+        this.ptCoords_2d[0] = mouseToWorld(mouseX, mouseY)[0]
+        this.ptCoords_2d[1] = mouseToWorld(mouseX, mouseY)[1]
       }
 
       //labelled point
       fill("dodgerblue")
       noStroke()
       circle(
-        this.worldToScreen(ptCoords_2d[0], ptCoords_2d[1])[0],
-        this.worldToScreen(ptCoords_2d[0], ptCoords_2d[1])[1],
+        this.worldToScreen(this.ptCoords_2d[0], this.ptCoords_2d[1])[0],
+        this.worldToScreen(this.ptCoords_2d[0], this.ptCoords_2d[1])[1],
         unit / 3
       )
 
@@ -219,12 +222,13 @@ class Slide2 {
         textAlign(CENTER)
         text(
           "(" +
-            round(ptCoords_2d[0], 2) +
+            round(this.ptCoords_2d[0], 2) +
             ", " +
-            round(ptCoords_2d[1], 2) +
+            round(this.ptCoords_2d[1], 2) +
             ")",
-          this.worldToScreen(ptCoords_2d[0], ptCoords_2d[1])[0],
-          this.worldToScreen(ptCoords_2d[0], ptCoords_2d[1])[1] - unit / 3
+          this.worldToScreen(this.ptCoords_2d[0], this.ptCoords_2d[1])[0],
+          this.worldToScreen(this.ptCoords_2d[0], this.ptCoords_2d[1])[1] -
+            unit / 3
         )
       }
     }

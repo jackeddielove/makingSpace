@@ -32,6 +32,7 @@ function edge(a, b) {
 }
 
 //rgb to cmyk
+// CURRENTLY UNUSED
 function rgbToCmyk(r, g, b) {
   k = 1 - max(r, g, b)
   return [
