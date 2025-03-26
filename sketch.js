@@ -7,13 +7,11 @@ let slide0,
   slide6,
   slide7,
   slide8,
-  slide9
+  slide9,
+  slide10
 let unit, size
 
 {
-  cubeSliceTimer = 0
-  cubeSliceSpeed = 4
-
   //edge poset
   p_0 = [0, 0, 0, 0]
   gr_0 = [p_0]
@@ -180,24 +178,9 @@ let unit, size
     slide7 = new Slide7()
     slide8 = new Slide8()
     slide9 = new Slide9()
+    slide10 = new Slide10()
 
     frameRate(100)
-
-    //setup for 3D slices
-    {
-      //constants for basis vectors
-      a = sqrt(2)
-      b1 = sqrt(3)
-      //basis vectors
-      e1 = createVector(size * (1 / a), size * (-1 / (a * b1)), size * (1 / b1))
-      e2 = createVector(
-        size * (-1 / a),
-        size * (-1 / (a * b1)),
-        size * (1 / b1)
-      )
-      e3 = createVector(size * 0, size * (a / b1), size * (1 / b1))
-      origin = createVector(0, 0, 0)
-    }
 
     //setup for 4d slices
     {
@@ -289,253 +272,7 @@ function draw() {
 
   //slicing 3D with 2D
   if (counter == 10) {
-    //3D drawing template
-    {
-      push()
-      rotateX(PI / 3)
-      rotateZ(PI / 6)
-      scale(1, -1, 1)
-
-      //x-y-z axes
-      stroke("white")
-      strokeWeight(1)
-      line(-10 * unit, 0, 0, 10 * unit, 0, 0)
-      line(0, -10 * unit, 0, 0, 10 * unit, 0)
-      line(0, 0, -10 * unit, 0, 0, 10 * unit)
-
-      //xy-plane
-      fill(255, 128)
-      beginShape()
-      vertex(5 * unit, 5 * unit, 0)
-      vertex(5 * unit, -5 * unit, 0)
-      vertex(-5 * unit, -5 * unit, 0)
-      vertex(-5 * unit, 5 * unit, 0)
-      endShape(CLOSE)
-      pop()
-    }
-
-    //2D drawing template
-    {
-      push()
-      translate(-0.35 * width, -0.25 * height, -1)
-      fill(128)
-      rectMode(CENTER)
-      rect(0, 0, 4 * unit, 4 * unit, 20)
-      stroke("white")
-      strokeWeight(unit / 30)
-      line(2 * unit, 0, -2 * unit, 0)
-      line(0, 2 * unit, 0, -2 * unit)
-      pop()
-    }
-
-    //3D drawings
-    {
-      push()
-      rotateX(PI / 3)
-      rotateZ(PI / 6)
-      scale(1, -1, 1)
-
-      //draw slices
-      {
-        strokeWeight(unit / 15)
-        stroke("lime")
-        sliceColor = color("lime")
-        sliceColor.setAlpha(128)
-        fill(sliceColor)
-        h = (3.0 * cubeSliceTimer) / (size * b1)
-
-        //translate these shapes one pixel above the xy-plane so they show up better
-        push()
-        translate(0, 0, 1)
-
-        //the bottom third of the cube
-        if (h > 0 && h <= 1) {
-          beginShape()
-          vertex(h * e1.x, h * e1.y, 0)
-          vertex(h * e2.x, h * e2.y, 0)
-          vertex(h * e3.x, h * e3.y, 0)
-          endShape(CLOSE)
-        }
-        //the middle third of the cube
-        if (h > 1 && h <= 2) {
-          beginShape()
-          vertex(e1.x + (h - 1) * e3.x, e1.y + (h - 1) * e3.y, 0)
-          vertex(e1.x + (h - 1) * e2.x, e1.y + (h - 1) * e2.y, 0)
-          vertex(e2.x + (h - 1) * e1.x, e2.y + (h - 1) * e1.y, 0)
-          vertex(e2.x + (h - 1) * e3.x, e2.y + (h - 1) * e3.y, 0)
-          vertex(e3.x + (h - 1) * e2.x, e3.y + (h - 1) * e2.y, 0)
-          vertex(e3.x + (h - 1) * e1.x, e3.y + (h - 1) * e1.y, 0)
-          endShape(CLOSE)
-        }
-        //the top third of the cube
-        if (h > 2 && h <= 3) {
-          beginShape()
-          vertex(e1.x + e2.x + (h - 2) * e3.x, e1.y + e2.y + (h - 2) * e3.y, 0)
-          vertex(e1.x + e3.x + (h - 2) * e2.x, e1.y + e3.y + (h - 2) * e2.y, 0)
-          vertex(e2.x + e3.x + (h - 2) * e1.x, e2.y + e3.y + (h - 2) * e1.y, 0)
-          endShape(CLOSE)
-        }
-        pop()
-      }
-
-      //draw cube by faces
-      //the notation face(a,b,c) means the square with vertices a, a+b, a+c, a+b+c, where 0 means orgin and i means e_i
-
-      fill(255, 128)
-      strokeWeight(unit / 30)
-      stroke("magenta")
-
-      //face1(0,1,2)
-      {
-        beginShape()
-        vertex(0, 0, 0 - cubeSliceTimer)
-        vertex(e1.x, e1.y, e1.z - cubeSliceTimer)
-        vertex(
-          vecSum(e1, e2).x,
-          vecSum(e1, e2).y,
-          vecSum(e1, e2).z - cubeSliceTimer
-        )
-        vertex(e2.x, e2.y, e2.z - cubeSliceTimer)
-        endShape(CLOSE)
-      }
-
-      //face2(0,1,3)
-      {
-        beginShape()
-        vertex(0, 0, 0 - cubeSliceTimer)
-        vertex(e1.x, e1.y, e1.z - cubeSliceTimer)
-        vertex(
-          vecSum(e1, e3).x,
-          vecSum(e1, e3).y,
-          vecSum(e1, e3).z - cubeSliceTimer
-        )
-        vertex(e3.x, e3.y, e3.z - cubeSliceTimer)
-        endShape(CLOSE)
-      }
-
-      //face3(0,2,3)
-      {
-        beginShape()
-        vertex(0, 0, 0 - cubeSliceTimer)
-        vertex(e2.x, e2.y, e2.z - cubeSliceTimer)
-        vertex(
-          vecSum(e2, e3).x,
-          vecSum(e2, e3).y,
-          vecSum(e2, e3).z - cubeSliceTimer
-        )
-        vertex(e3.x, e3.y, e3.z - cubeSliceTimer)
-        endShape(CLOSE)
-      }
-
-      //face4(1,2,3)
-      {
-        beginShape()
-        vertex(e1.x, e1.y, e1.z - cubeSliceTimer)
-        vertex(
-          vecSum(e1, e2).x,
-          vecSum(e1, e2).y,
-          vecSum(e1, e2).z - cubeSliceTimer
-        )
-        vertex(
-          vecSum(e1, vecSum(e2, e3)).x,
-          vecSum(e1, vecSum(e2, e3)).y,
-          vecSum(e1, vecSum(e2, e3)).z - cubeSliceTimer
-        )
-        vertex(
-          vecSum(e1, e3).x,
-          vecSum(e1, e3).y,
-          vecSum(e1, e3).z - cubeSliceTimer
-        )
-        endShape(CLOSE)
-      }
-
-      //face5(3,1,2)
-      {
-        beginShape()
-        vertex(e3.x, e3.y, e3.z - cubeSliceTimer)
-        vertex(
-          vecSum(e3, e2).x,
-          vecSum(e3, e2).y,
-          vecSum(e3, e2).z - cubeSliceTimer
-        )
-        vertex(
-          vecSum(e1, vecSum(e2, e3)).x,
-          vecSum(e1, vecSum(e2, e3)).y,
-          vecSum(e1, vecSum(e2, e3)).z - cubeSliceTimer
-        )
-        vertex(
-          vecSum(e1, e3).x,
-          vecSum(e1, e3).y,
-          vecSum(e1, e3).z - cubeSliceTimer
-        )
-        endShape(CLOSE)
-      }
-
-      //face6(2,1,3)
-      {
-        beginShape()
-        vertex(e2.x, e2.y, e2.z - cubeSliceTimer)
-        vertex(
-          vecSum(e3, e2).x,
-          vecSum(e3, e2).y,
-          vecSum(e3, e2).z - cubeSliceTimer
-        )
-        vertex(
-          vecSum(e1, vecSum(e2, e3)).x,
-          vecSum(e1, vecSum(e2, e3)).y,
-          vecSum(e1, vecSum(e2, e3)).z - cubeSliceTimer
-        )
-        vertex(
-          vecSum(e1, e2).x,
-          vecSum(e1, e2).y,
-          vecSum(e1, e2).z - cubeSliceTimer
-        )
-        endShape(CLOSE)
-      }
-
-      pop()
-    }
-
-    //2D drawings
-    {
-      push()
-      translate(-0.35 * width, -0.25 * height)
-      scale(1, -1, 1)
-
-      //cube slices
-      scale(0.75, 0.75, 1)
-      stroke("lime")
-      strokeWeight(unit / 20)
-      sliceColor = color("lime")
-      sliceColor.setAlpha(128)
-      fill(sliceColor)
-
-      if (h > 0 && h <= 1) {
-        beginShape()
-        vertex(h * e1.x, h * e1.y, 0)
-        vertex(h * e2.x, h * e2.y, 0)
-        vertex(h * e3.x, h * e3.y, 0)
-        endShape(CLOSE)
-      }
-      if (h > 1 && h <= 2) {
-        beginShape()
-        vertex(e1.x + (h - 1) * e3.x, e1.y + (h - 1) * e3.y, 0)
-        vertex(e1.x + (h - 1) * e2.x, e1.y + (h - 1) * e2.y, 0)
-        vertex(e2.x + (h - 1) * e1.x, e2.y + (h - 1) * e1.y, 0)
-        vertex(e2.x + (h - 1) * e3.x, e2.y + (h - 1) * e3.y, 0)
-        vertex(e3.x + (h - 1) * e2.x, e3.y + (h - 1) * e2.y, 0)
-        vertex(e3.x + (h - 1) * e1.x, e3.y + (h - 1) * e1.y, 0)
-        endShape(CLOSE)
-      }
-      if (h > 2 && h <= 3) {
-        beginShape()
-        vertex(e1.x + e2.x + (h - 2) * e3.x, e1.y + e2.y + (h - 2) * e3.y, 0)
-        vertex(e1.x + e3.x + (h - 2) * e2.x, e1.y + e3.y + (h - 2) * e2.y, 0)
-        vertex(e2.x + e3.x + (h - 2) * e1.x, e2.y + e3.y + (h - 2) * e1.y, 0)
-        endShape(CLOSE)
-      }
-      pop()
-    }
+    slide10.show()
   }
 
   //slicing 4D with 3D

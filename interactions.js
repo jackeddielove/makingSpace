@@ -35,12 +35,7 @@ function mouseWheel(event) {
   }
 
   if (counter == 10) {
-    if (event.delta > 0) {
-      cubeSliceTimer += cubeSliceSpeed
-    }
-    if (event.delta < 0) {
-      cubeSliceTimer -= cubeSliceSpeed
-    }
+    slide10.handleMouseWheel(event)
   }
 
   if (counter == 11) {
