@@ -11,58 +11,35 @@ let slide0,
 let unit, size
 
 {
-  //slide 8 -- projecting 3D to 2D
-  {
-  }
+  cubeSliceTimer = 0
+  cubeSliceSpeed = 4
 
-  //slide 9 -- slicing 3D with 2D
-  {
-    cubeSliceTimer = 0
-    cubeSliceSpeed = 4
-  }
+  //edge poset
+  p_0 = [0, 0, 0, 0]
+  gr_0 = [p_0]
+  p_1 = [0, 0, 0, 1]
+  p_2 = [0, 0, 1, 0]
+  p_3 = [0, 1, 0, 0]
+  p_4 = [1, 0, 0, 0]
+  gr_1 = [p_1, p_2, p_3, p_4]
+  p_5 = [0, 0, 1, 1]
+  p_6 = [0, 1, 0, 1]
+  p_7 = [0, 1, 1, 0]
+  p_8 = [1, 0, 0, 1]
+  p_9 = [1, 0, 1, 0]
+  p_10 = [1, 1, 0, 0]
+  gr_2 = [p_5, p_6, p_7, p_8, p_9, p_10]
+  p_11 = [0, 1, 1, 1]
+  p_12 = [1, 0, 1, 1]
+  p_13 = [1, 1, 0, 1]
+  p_14 = [1, 1, 1, 0]
+  gr_3 = [p_11, p_12, p_13, p_14]
+  p_15 = [1, 1, 1, 1]
+  gr_4 = [p_15]
+  grs = [gr_0, gr_1, gr_2, gr_3, gr_4]
 
   //slide 10 -- projecting 4D to 3D
   {
-    //intialize button states
-    xyButton = false
-    xzButton = false
-    xwButton = false
-    yzButton = false
-    ywButton = false
-    zwButton = false
-
-    //initialize angles
-    xyTheta = 0
-    xzTheta = 0
-    xwTheta = 0
-    yzTheta = 0
-    ywTheta = 0
-    zwTheta = 0
-
-    //edge poset
-    p_0 = [0, 0, 0, 0]
-    gr_0 = [p_0]
-    p_1 = [0, 0, 0, 1]
-    p_2 = [0, 0, 1, 0]
-    p_3 = [0, 1, 0, 0]
-    p_4 = [1, 0, 0, 0]
-    gr_1 = [p_1, p_2, p_3, p_4]
-    p_5 = [0, 0, 1, 1]
-    p_6 = [0, 1, 0, 1]
-    p_7 = [0, 1, 1, 0]
-    p_8 = [1, 0, 0, 1]
-    p_9 = [1, 0, 1, 0]
-    p_10 = [1, 1, 0, 0]
-    gr_2 = [p_5, p_6, p_7, p_8, p_9, p_10]
-    p_11 = [0, 1, 1, 1]
-    p_12 = [1, 0, 1, 1]
-    p_13 = [1, 1, 0, 1]
-    p_14 = [1, 1, 1, 0]
-    gr_3 = [p_11, p_12, p_13, p_14]
-    p_15 = [1, 1, 1, 1]
-    gr_4 = [p_15]
-    grs = [gr_0, gr_1, gr_2, gr_3, gr_4]
-
     //this is used on title slide
     P = [
       p_0,
@@ -82,8 +59,6 @@ let unit, size
       p_14,
       p_15,
     ]
-
-    rotationSpeed = 0.05
   }
 
   //slide 11 -- slicing 4D with 3D
@@ -224,21 +199,6 @@ let unit, size
       origin = createVector(0, 0, 0)
     }
 
-    //setup for 4D projections
-    {
-      //initialize a_i vectors; they keep track of the e_i during rotation
-      a_1 = [0, 0, 0, 0]
-      a_2 = [0, 0, 0, 0]
-      a_3 = [0, 0, 0]
-      a_4 = [0, 0, 0, 0]
-
-      //unit vectors
-      e_1 = [0, 0, 0, size]
-      e_2 = [0, 0, size, 0]
-      e_3 = [0, size, 0, 0]
-      e_4 = [size, 0, 0, 0]
-    }
-
     //setup for 4d slices
     {
       //constants for basis vectors
@@ -324,188 +284,7 @@ function draw() {
 
   //projecting 4D to 3D
   if (counter == 9) {
-    //buttons
-    {
-      rectMode(CENTER)
-      textAlign(CENTER)
-
-      //shape
-      stroke("white")
-      strokeWeight(0.02 * unit)
-
-      noFill()
-      if (xyButton == true) {
-        fill("white")
-      }
-      rect(-6 * unit, -3.125 * unit, 2 * unit, 0.75 * unit, 0.25 * unit)
-
-      noFill()
-      if (xzButton == true) {
-        fill("white")
-      }
-      rect(-6 * unit, -1.875 * unit, 2 * unit, 0.75 * unit, 0.25 * unit)
-
-      noFill()
-      if (xwButton == true) {
-        fill("white")
-      }
-      rect(-6 * unit, -0.625 * unit, 2 * unit, 0.75 * unit, 0.25 * unit)
-
-      noFill()
-      if (yzButton == true) {
-        fill("white")
-      }
-      rect(-6 * unit, 0.625 * unit, 2 * unit, 0.75 * unit, 0.25 * unit)
-
-      noFill()
-      if (ywButton == true) {
-        fill("white")
-      }
-      rect(-6 * unit, 1.875 * unit, 2 * unit, 0.75 * unit, 0.25 * unit)
-
-      noFill()
-      if (zwButton == true) {
-        fill("white")
-      }
-      rect(-6 * unit, 3.125 * unit, 2 * unit, 0.75 * unit, 0.25 * unit)
-
-      //labels
-      textSize(0.35 * unit)
-      fill("white")
-      if (xyButton == true) {
-        fill("black")
-      }
-      text("rotate XY", -6 * unit, -3.025 * unit)
-
-      fill("white")
-      if (xzButton == true) {
-        fill("black")
-      }
-      text("rotate XZ", -6 * unit, -1.775 * unit)
-
-      fill("white")
-      if (xwButton == true) {
-        fill("black")
-      }
-      text("rotate XW", -6 * unit, -0.525 * unit)
-
-      fill("white")
-      if (yzButton == true) {
-        fill("black")
-      }
-      text("rotate YZ", -6 * unit, 0.725 * unit)
-
-      fill("white")
-      if (ywButton == true) {
-        fill("black")
-      }
-      text("rotate YW", -6 * unit, 1.975 * unit)
-
-      fill("white")
-      if (zwButton == true) {
-        fill("black")
-      }
-      text("rotate ZW", -6 * unit, 3.225 * unit)
-    }
-
-    //3D drawing template
-    push()
-    rotateX(PI / 3)
-    rotateZ(PI / 6)
-    scale(1, -1, 1)
-
-    //x-y-z axes
-    stroke("white")
-    strokeWeight(1)
-    line(-10 * unit, 0, 0, 10 * unit, 0, 0)
-    line(0, -10 * unit, 0, 0, 10 * unit, 0)
-    line(0, 0, -10 * unit, 0, 0, 10 * unit)
-
-    //rotated unit vectors
-    {
-      d_1 = R_xy(
-        xyTheta,
-        R_xz(
-          xzTheta,
-          R_xw(xwTheta, R_yz(yzTheta, R_yw(ywTheta, R_zw(zwTheta, e_1))))
-        )
-      )
-
-      d_2 = R_xy(
-        xyTheta,
-        R_xz(
-          xzTheta,
-          R_xw(xwTheta, R_yz(yzTheta, R_yw(ywTheta, R_zw(zwTheta, e_2))))
-        )
-      )
-
-      d_3 = R_xy(
-        xyTheta,
-        R_xz(
-          xzTheta,
-          R_xw(xwTheta, R_yz(yzTheta, R_yw(ywTheta, R_zw(zwTheta, e_3))))
-        )
-      )
-
-      d_4 = R_xy(
-        xyTheta,
-        R_xz(
-          xzTheta,
-          R_xw(xwTheta, R_yz(yzTheta, R_yw(ywTheta, R_zw(zwTheta, e_4))))
-        )
-      )
-    }
-
-    //cube vertices
-    {
-      //grade 0
-      v_0000 = [0, 0, 0, 0]
-      grade_0 = [v_0000]
-
-      //grade 1
-      v_0001 = d_1
-      v_0010 = d_2
-      v_0100 = d_3
-      v_1000 = d_4
-      grade_1 = [v_0001, v_0010, v_0100, v_1000]
-
-      //grade 2
-      v_0011 = arrSum(d_1, d_2)
-      v_0101 = arrSum(d_1, d_3)
-      v_0110 = arrSum(d_2, d_3)
-      v_1001 = arrSum(d_1, d_4)
-      v_1010 = arrSum(d_2, d_4)
-      v_1100 = arrSum(d_3, d_4)
-      grade_2 = [v_0011, v_0101, v_0110, v_1001, v_1010, v_1100]
-
-      //grade 3
-      v_0111 = arrSum(arrSum(d_1, d_2), d_3)
-      v_1011 = arrSum(arrSum(d_1, d_2), d_4)
-      v_1101 = arrSum(arrSum(d_1, d_3), d_4)
-      v_1110 = arrSum(arrSum(d_2, d_3), d_4)
-      grade_3 = [v_0111, v_1011, v_1101, v_1110]
-
-      //grade 4
-      v_1111 = arrSum(arrSum(arrSum(d_1, d_2), d_3), d_4)
-      grade_4 = [v_1111]
-    }
-
-    grades = [grade_0, grade_1, grade_2, grade_3, grade_4]
-
-    strokeWeight(0.05 * unit)
-    stroke("lime")
-
-    for (let i = 0; i < grades.length - 1; i++) {
-      for (let j = 0; j < grades[i].length; j++) {
-        for (let k = 0; k < grades[i + 1].length; k++) {
-          if (arrComp(grs[i][j], grs[i + 1][k]) == true) {
-            edge(grades[i][j], grades[i + 1][k])
-          }
-        }
-      }
-    }
-
-    pop()
+    slide9.show()
   }
 
   //slicing 3D with 2D
