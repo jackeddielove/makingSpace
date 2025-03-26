@@ -9,7 +9,8 @@ let slide0,
   slide8,
   slide9,
   slide10,
-  slide11
+  slide11,
+  slide12
 let unit, size
 
 {
@@ -132,6 +133,7 @@ function setup() {
   slide9 = new Slide9()
   slide10 = new Slide10()
   slide11 = new Slide11()
+  slide12 = new Slide12()
 
   frameRate(100)
 }
@@ -224,30 +226,7 @@ function draw() {
 
   //part 3 title slide
   if (counter == 12) {
-    push()
-    translate(-7.0 * unit, 0.0 * unit)
-    textAlign(LEFT)
-    fill("white")
-
-    textSize(1.5 * unit)
-    text("Part 3", 0, 0)
-
-    textSize(1 * unit)
-    text("The math metaphor", 0, 1.5 * unit)
-
-    textSize(0.75 * unit)
-    text("mathematical vs physical space", 0, 2.625 * unit)
-
-    //     textSize(1.5 * unit);
-    //     text("Part 3", 0,0);
-
-    //     textSize(1 * unit);
-    //     text("The map and", 0,1.5*unit);
-    //     text("the territory", -0,2.5*unit);
-
-    //     textSize(0.75 * unit);
-    //     text("mathematical vs physical space", 0, 3.625 * unit);
-    pop()
+    slide12.show()
   }
 
   //RGB space
