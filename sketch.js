@@ -1,4 +1,13 @@
-let slide0, slide1, slide2, slide3, slide4, slide5, slide6, slide7, slide8
+let slide0,
+  slide1,
+  slide2,
+  slide3,
+  slide4,
+  slide5,
+  slide6,
+  slide7,
+  slide8,
+  slide9
 let unit, size
 
 {
@@ -195,6 +204,7 @@ let unit, size
     slide6 = new Slide6()
     slide7 = new Slide7()
     slide8 = new Slide8()
+    slide9 = new Slide9()
 
     frameRate(100)
 
