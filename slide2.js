@@ -6,7 +6,7 @@ class Slide2 {
     this.coefficients = [1, 1, 4]
   }
 
-  handleMouseWheel() {
+  handleMouseWheel(event) {
     //adjust coefficients in line equation
 
     //adjust a

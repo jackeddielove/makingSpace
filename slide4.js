@@ -23,7 +23,7 @@ class Slide4 {
     }
   }
 
-  handleMouseWheel() {
+  handleMouseWheel(event) {
     //adjust point coordinates
     //adjust first coordinate
     if (

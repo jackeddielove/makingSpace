@@ -15,20 +15,15 @@ function keyPressed() {
 
 function mouseWheel(event) {
   if (counter == 2) {
-    slide2.handleMouseWheel()
+    slide2.handleMouseWheel(event)
   }
 
   if (counter == 4) {
-    slide4.handleMouseWheel()
+    slide4.handleMouseWheel(event)
   }
 
   if (counter == 6) {
-    if (event.delta > 0) {
-      h -= hSpeed
-    }
-    if (event.delta < 0) {
-      h += hSpeed
-    }
+    slide6.handleMouseWheel(event)
   }
 
   if (counter == 8) {
