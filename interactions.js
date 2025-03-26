@@ -405,12 +405,7 @@ function mouseClicked() {
   }
 
   if (counter == 3) {
-    //turns bullet points on in slide 2
-    for (let i = 0; i < 3; i++) {
-      if (dist(0.5 * unit, (2.2 + 2 * i) * unit, mouseX, mouseY) < unit / 4) {
-        bullets[i] = !bullets[i]
-      }
-    }
+    slide3.handleMouseClicked()
   }
 
   if (counter == 4) {

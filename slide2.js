@@ -1,16 +1,9 @@
 class Slide2 {
   constructor() {
-    this.gridPts = this.createGridPts()
+    this.gridPts = new Array(187).fill(false)
+    this.sqColor = color(255, 0, 255, 128) // fuchsia
   }
 
-  createGridPts() {
-    //set all grid points to false
-    const gridPts = []
-    for (let i = 0; i < 187; i++) {
-      gridPts.push(false)
-    }
-    return gridPts
-  }
   show() {
     //buttons
 
@@ -176,10 +169,8 @@ class Slide2 {
     //unit square
 
     if (buttons_2d[2] % 3 != 0) {
-      sqColor = color("fuchsia")
       noStroke()
-      sqColor.setAlpha(128)
-      fill(sqColor)
+      fill(this.sqColor)
       rectMode(CENTER)
       rect(0.5 * unit, -0.5 * unit, unit)
 
