@@ -42,6 +42,7 @@ class Slide2 {
       }
     }
   }
+
   handleMouseWheel(event) {
     //adjust coefficients in line equation
 
