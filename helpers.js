@@ -14,7 +14,7 @@ function vecSum(a, b) {
 }
 
 function arrComp(a, b) {
-  score = 0
+  let score = 0
   for (let n = 0; n < a.length; n++) {
     if (a[n] != b[n]) {
       score++
