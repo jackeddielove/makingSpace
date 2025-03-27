@@ -31,6 +31,15 @@ class Slide9 {
     this.e_2 = [0, 0, size, 0]
     this.e_3 = [0, size, 0, 0]
     this.e_4 = [size, 0, 0, 0]
+
+    // arrays of edge posets
+    this.gr_0 = [p_0]
+    this.gr_1 = [p_1, p_2, p_3, p_4]
+    this.gr_2 = [p_5, p_6, p_7, p_8, p_9, p_10]
+    this.gr_3 = [p_11, p_12, p_13, p_14]
+    this.gr_4 = [p_15]
+
+    this.grs = [this.gr_0, this.gr_1, this.gr_2, this.gr_3, this.gr_4]
   }
 
   handleMouseWheel(event) {
@@ -596,7 +605,7 @@ class Slide9 {
     for (let i = 0; i < grades.length - 1; i++) {
       for (let j = 0; j < grades[i].length; j++) {
         for (let k = 0; k < grades[i + 1].length; k++) {
-          if (arrComp(grs[i][j], grs[i + 1][k]) == true) {
+          if (arrComp(this.grs[i][j], this.grs[i + 1][k]) == true) {
             edge(grades[i][j], grades[i + 1][k])
           }
         }

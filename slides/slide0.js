@@ -4,6 +4,24 @@ class Slide0 {
     this.phi_x = 0
     this.phi_y = 0
     this.phi_z = 0
+    this.P = [
+      p_0,
+      p_1,
+      p_2,
+      p_3,
+      p_4,
+      p_5,
+      p_6,
+      p_7,
+      p_8,
+      p_9,
+      p_10,
+      p_11,
+      p_12,
+      p_13,
+      p_14,
+      p_15,
+    ]
   }
   //rotates a point in 4-space (v) in the xy plane by a radians, the xz plane by b radians, and the yz plane by c radians
   titleRotation(a, b, c, v) {
@@ -47,10 +65,10 @@ class Slide0 {
     strokeWeight(0.01 * unit)
     for (let j = 0; j < 15; j++) {
       for (let i = j + 1; i < 16; i++) {
-        if (arrComp(P[j], P[i]) == true) {
+        if (arrComp(this.P[j], this.P[i]) == true) {
           edge(
-            this.titleRotation(this.phi_x, this.phi_y, this.phi_z, P[j]),
-            this.titleRotation(this.phi_x, this.phi_y, this.phi_z, P[i])
+            this.titleRotation(this.phi_x, this.phi_y, this.phi_z, this.P[j]),
+            this.titleRotation(this.phi_x, this.phi_y, this.phi_z, this.P[i])
           )
         }
       }
