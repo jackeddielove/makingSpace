@@ -48,88 +48,75 @@ function setup() {
   slide14 = new Slide14()
 
   frameRate(100)
+
+  // textFont("Arial Black");
+  textFont(font)
 }
 
 function draw() {
   // if (keyIsPressed && keyCode === SHIFT) {
   //   orbitControl();
   // }
-
-  // textFont("Arial Black");
-  textFont(font)
-
-  //title slide
-  if (counter == 0) {
-    slide0.show()
-  }
-
-  //part 1 title slide
-  if (counter == 1) {
-    slide1.show()
-  }
-
-  //2D
-  if (counter == 2) {
-    slide2.show()
-  }
-
-  //2D table
-  if (counter == 3) {
-    slide3.show()
-  }
-
-  //3D
-  if (counter == 4) {
-    slide4.show()
-  }
-
-  //3D table
-  if (counter == 5) {
-    slide5.show()
-  }
-
-  //general table
-  if (counter == 6) {
-    slide6.show()
-  }
-
-  //part 2 title slide
-  if (counter == 7) {
-    slide7.show()
-  }
-
-  //projecting 3D to 2D
-  if (counter == 8) {
-    slide8.show()
-  }
-
-  //projecting 4D to 3D
-  if (counter == 9) {
-    slide9.show()
-  }
-
-  //slicing 3D with 2D
-  if (counter == 10) {
-    slide10.show()
-  }
-
-  //slicing 4D with 3D
-  if (counter == 11) {
-    slide11.show()
-  }
-
-  //part 3 title slide
-  if (counter == 12) {
-    slide12.show()
-  }
-
-  //RGB space
-  if (counter == 13) {
-    slide13.show()
-  }
-
-  //CMYK space
-  if (counter == 14) {
-    slide14.show()
+  switch (counter) {
+    //title slide
+    case 0:
+      slide0.show()
+      break
+    //part 1 title slide
+    case 1:
+      slide1.show()
+      break
+    //2D
+    case 2:
+      slide2.show()
+      break
+    //2D table
+    case 3:
+      slide3.show()
+      break
+    //3D
+    case 4:
+      slide4.show()
+      break
+    //3D table
+    case 5:
+      slide5.show()
+      break
+    //general table
+    case 6:
+      slide6.show()
+      break
+    //part 2 title slide
+    case 7:
+      slide7.show()
+      break
+    //projecting 3D to 2D
+    case 8:
+      slide8.show()
+      break
+    //projecting 4D to 3D
+    case 9:
+      slide9.show()
+      break
+    //slicing 3D with 2D
+    case 10:
+      slide10.show()
+      break
+    //slicing 4D with 3D
+    case 11:
+      slide11.show()
+      break
+    //part 3 title slide
+    case 12:
+      slide12.show()
+      break
+    //RGB space
+    case 13:
+      slide13.show()
+      break
+    //CMYK space
+    case 14:
+      slide14.show()
+      break
   }
 }
