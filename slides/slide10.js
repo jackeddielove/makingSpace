@@ -181,7 +181,7 @@ class Slide10 {
         endShape(CLOSE)
       }
 
-      //facthis.e2(0,1,3)
+      //face2(0,1,3)
       {
         beginShape()
         vertex(0, 0, 0 - this.cubeSliceTimer)
@@ -195,7 +195,7 @@ class Slide10 {
         endShape(CLOSE)
       }
 
-      //facthis.e3(0,2,3)
+      //face3(0,2,3)
       {
         beginShape()
         vertex(0, 0, 0 - this.cubeSliceTimer)
