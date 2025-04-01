@@ -13,6 +13,13 @@ function keyPressed() {
   return false
 }
 
+// if (contro.pressed('r')) counter++;
+// if (contro.pressed('l')) counter--;
+
+
+
+
+
 function mouseWheel(event) {
   switch (counter) {
     case 2:
