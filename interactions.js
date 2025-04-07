@@ -13,8 +13,8 @@ function keyPressed() {
   return false
 }
 
-// if (contro.pressed('r')) counter++;
-// if (contro.pressed('l')) counter--;
+if (contro.pressed('r')) counter++;
+if (contro.pressed('l')) counter--;
 
 
 
