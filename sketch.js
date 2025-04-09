@@ -1229,7 +1229,7 @@
     createCanvas(w, r * w, WEBGL);
     // createCanvas(windowWidth, windowHeight, WEBGL);
 
-    frameRate(100);
+    // frameRate(100);
 
     unit = width / 16;
 
