@@ -800,6 +800,24 @@
         }
 
         if (counter == 2) {
+          //reset
+          if (
+            dist(
+              -6,
+              -3.75,
+              mouseToWorld(mouseX, mouseY)[0],
+              mouseToWorld(mouseX, mouseY)[1]
+            ) < 0.5
+          ) {
+              buttons_2d = [0, 0, 0];
+              ptCoords_2d = [5, 3];
+              coefficients = [1, 1, 4];
+              for (i = 0; i < 187; i++) {
+                gridPts[i]=false;
+              }              
+            }
+
+
           //turns buttons on slide 1 on and off
           for (i = 0; i < 3; i++) {
             if (
@@ -846,6 +864,20 @@
         }
 
         if (counter == 4) {
+          //reset
+          if (
+            dist(
+              -6,
+              -3.75,
+              mouseToWorld(mouseX, mouseY)[0],
+              mouseToWorld(mouseX, mouseY)[1]
+            ) < 0.5
+          ) {
+              buttons = [0, 0, 0];
+              ptCoords = [3, 0, 0];
+              plCoefficients = [1, 1, -1, 0];           
+            }
+
           //turns buttons on slide 3 on and off
           for (i = 0; i < 3; i++) {
             if (
@@ -961,6 +993,26 @@
         }
 
         if (counter == 9) {
+          //reset button
+          if (
+            dist(
+              mouseToWorld(mouseX, mouseY)[0],
+              mouseToWorld(mouseX, mouseY)[1],
+              6,
+              4
+            ) < 0.75
+          ) {
+            e_1 = [0, 0, 0, size];
+            e_2 = [0, 0, size, 0];
+            e_3 = [0, size, 0, 0];
+            e_4 = [size, 0, 0, 0];
+            xyTheta = 0;
+            xzTheta = 0;
+            xwTheta = 0;
+            yzTheta = 0;
+            ywTheta = 0;
+            zwTheta = 0;
+          }
           //xyButton
           {
             if (
@@ -1271,13 +1323,13 @@
     //setup for 3D slices
     {
       //constants for basis vectors
-      // a = sqrt(2);
-      // b1 = sqrt(3);
+      a = sqrt(2);
+      b1 = sqrt(3);
       //basis vectors
-      // e1 = createVector(size * (1 / a), size * (-1 / (a * b1)), size * (1 / b1));
-      // e2 = createVector(size * (-1 / a), size * (-1 / (a * b1)), size * (1 / b1));
-      // e3 = createVector(size * 0, size * (a / b1), size * (1 / b1));
-      // origin = createVector(0, 0, 0);
+      e1 = createVector(size * (1 / a), size * (-1 / (a * b1)), size * (1 / b1));
+      e2 = createVector(size * (-1 / a), size * (-1 / (a * b1)), size * (1 / b1));
+      e3 = createVector(size * 0, size * (a / b1), size * (1 / b1));
+      origin = createVector(0, 0, 0);
     }
 
     //setup for 4D projections
@@ -1402,6 +1454,17 @@ function draw() {
       rectMode(CENTER);
       textAlign(CENTER);
       textSize(unit / 3);
+
+      //reset button
+      //button shape
+      noFill();
+      stroke("white");
+      strokeWeight(unit / 50);
+      rect(-6 * unit, 3.75 * unit, 1.5 * unit, 0.75 * unit, 0.25 * unit);
+
+      //button label
+      fill("white");
+      text("reset", -6 * unit, 3.85 * unit);
 
       //point button (buttons_2d[0])
       //button shape
@@ -1671,6 +1734,18 @@ function draw() {
     {
       rectMode(CENTER);
       textAlign(CENTER);
+
+      //reset button
+      //button shape
+      noFill();
+      strokeWeight(unit / 50);
+      stroke("white");
+      rect(-6 * unit, 3.75 * unit, 1.5 * unit, 0.75 * unit, 0.25 * unit);
+
+      //button label
+      fill("white");
+      textSize(unit / 3);
+      text("reset", -6 * unit, 3.85 * unit);
 
       //point button (buttons[0])
       //button shape
@@ -2447,6 +2522,9 @@ function draw() {
       strokeWeight(0.02 * unit);
 
       noFill();
+      rect(6 * unit, -4 * unit, 2 * unit, 0.75 * unit, 0.25 * unit)
+
+      noFill();
       if (xyButton == true) {
         fill("white");
       }
@@ -2484,6 +2562,10 @@ function draw() {
 
       //labels
       textSize(0.35 * unit);
+
+      fill("white");
+      text("reset", 6 * unit, -3.9 * unit);
+
       fill("white");
       if (xyButton == true) {
         fill("black");
@@ -2925,7 +3007,14 @@ function draw() {
     ];
 
     fill("aqua");
-    stroke("magenta");
+    // stroke("magenta");
+
+    stroke("lime");
+    strokeWeight(unit / 20);
+    faceColor = color("lime");
+    faceColor.setAlpha(128);
+    fill(faceColor);
+
     strokeWeight(unit / 20);
 
     if (grade == 1) {
