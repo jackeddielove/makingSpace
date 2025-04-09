@@ -791,6 +791,14 @@
     //mouseClicked functions
     {
       function mouseClicked() {
+        if (mouseToWorld(mouseX, mouseY)[1] < -3.75 && mouseToWorld(mouseX, mouseY)[0] > 7) {
+          counter++
+        }
+
+        if (mouseToWorld(mouseX, mouseY)[1] < -3.75 && mouseToWorld(mouseX, mouseY)[0] < -7) {
+          counter--
+        }
+
         if (counter == 2) {
           //turns buttons on slide 1 on and off
           for (i = 0; i < 3; i++) {
@@ -1302,6 +1310,12 @@ function draw() {
     // textFont("Arial Black");
     textFont(font);
   }
+
+  stroke(255)
+  line(width/2 - 0.5*unit, height/2 - 0.75*unit, width/2 - 0.25*unit, height/2 - 0.5*unit)
+  line(width/2 - 0.5*unit, height/2 - 0.25*unit, width/2 - 0.25*unit, height/2 - 0.5*unit)
+  line(-width/2 + 0.5*unit, height/2 - 0.75*unit, -width/2 + 0.25*unit, height/2 - 0.5*unit)
+  line(-width/2 + 0.5*unit, height/2 - 0.25*unit, -width/2 + 0.25*unit, height/2 - 0.5*unit)
 
   //title slide
   if (counter == 0) {
