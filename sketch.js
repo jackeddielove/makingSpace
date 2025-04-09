@@ -874,6 +874,25 @@
         }
 
         if (counter == 8) {
+
+          //reset button
+          if (
+            dist(
+              mouseToWorld(mouseX, mouseY)[0],
+              mouseToWorld(mouseX, mouseY)[1],
+              6,
+              4
+            ) < 0.75
+          ) {
+            u1 = createVector(size, 0, 0);
+            u2 = createVector(0, size, 0);
+            u3 = createVector(0, 0, size);
+            xTheta = 0;
+            yTheta = 0;
+            zTheta = 0;
+          }
+
+
           //Xbutton
           if (
             dist(
@@ -883,7 +902,7 @@
               -1.25
             ) < 0.75
           ) {
-            if (Xbutton == true && rotated == true) {
+            if (Xbutton == true && rotated_1 == true) {
               u1 = a1;
               u2 = a2;
               u3 = a3;
@@ -905,7 +924,7 @@
               -2.25
             ) < 0.75
           ) {
-            if (Ybutton == true && rotated == true) {
+            if (Ybutton == true && rotated_1 == true) {
               u1 = a1;
               u2 = a2;
               u3 = a3;
@@ -927,7 +946,7 @@
               -3.25
             ) < 0.75
           ) {
-            if (Zbutton == true && rotated == true) {
+            if (Zbutton == true && rotated_1 == true) {
               u1 = a1;
               u2 = a2;
               u3 = a3;
@@ -1252,13 +1271,13 @@
     //setup for 3D slices
     {
       //constants for basis vectors
-      a = sqrt(2);
-      b1 = sqrt(3);
+      // a = sqrt(2);
+      // b1 = sqrt(3);
       //basis vectors
-      e1 = createVector(size * (1 / a), size * (-1 / (a * b1)), size * (1 / b1));
-      e2 = createVector(size * (-1 / a), size * (-1 / (a * b1)), size * (1 / b1));
-      e3 = createVector(size * 0, size * (a / b1), size * (1 / b1));
-      origin = createVector(0, 0, 0);
+      // e1 = createVector(size * (1 / a), size * (-1 / (a * b1)), size * (1 / b1));
+      // e2 = createVector(size * (-1 / a), size * (-1 / (a * b1)), size * (1 / b1));
+      // e3 = createVector(size * 0, size * (a / b1), size * (1 / b1));
+      // origin = createVector(0, 0, 0);
     }
 
     //setup for 4D projections
@@ -1311,6 +1330,7 @@ function draw() {
     textFont(font);
   }
 
+  //slide advancing arrows
   stroke(255)
   line(width/2 - 0.5*unit, height/2 - 0.75*unit, width/2 - 0.25*unit, height/2 - 0.5*unit)
   line(width/2 - 0.5*unit, height/2 - 0.25*unit, width/2 - 0.25*unit, height/2 - 0.5*unit)
@@ -1348,10 +1368,12 @@ function draw() {
     }
     pop();
 
+    let slowDown = 100
+
     titleTimer++;
-    phi_x = sin(titleTimer / 40);
-    phi_y = cos(1.5 * titleTimer / 40);
-    phi_z = sin(titleTimer / 40) * cos(titleTimer / 40);
+    phi_x = sin(titleTimer / slowDown);
+    phi_y = cos(1.5 * titleTimer / slowDown);
+    phi_z = sin(titleTimer / slowDown) * cos(titleTimer / slowDown);
   }
 
   //part 1 title slide
@@ -2086,6 +2108,7 @@ function draw() {
       v5 = vecSum(d1, d3);
       v6 = vecSum(vecSum(d1, d2), d3);
       v7 = vecSum(d2, d3);
+
     }
 
     //buttons
@@ -2096,6 +2119,9 @@ function draw() {
       //shape
       stroke("white");
       strokeWeight(0.02 * unit);
+
+      noFill();
+      rect(6 * unit, -4 * unit, 2 * unit, 0.75 * unit, 0.25 * unit)
 
       noFill();
       if (Xbutton == true) {
@@ -2115,21 +2141,25 @@ function draw() {
 
       //label
       textSize(0.35 * unit);
+
+      fill("white");
+      text("reset", 6 * unit, -3.9 * unit);
+
       fill("white");
       if (Xbutton == true) {
         fill("black");
       }
-      text("rotate X", -6 * unit, 1.35 * unit);
+      text("rotate YZ", -6 * unit, 1.35 * unit);
       fill("white");
       if (Ybutton == true) {
         fill("black");
       }
-      text("rotate Y", -6 * unit, 2.35 * unit);
+      text("rotate XZ", -6 * unit, 2.35 * unit);
       fill("white");
       if (Zbutton == true) {
         fill("black");
       }
-      text("rotate Z", -6 * unit, 3.35 * unit);
+      text("rotate XY", -6 * unit, 3.35 * unit);
     }
 
     //3D drawing template
@@ -2177,6 +2207,59 @@ function draw() {
       rotateX(PI / 3);
       rotateZ(PI / 6);
       scale(1, -1, 1);
+
+      // if (
+      //   dist(
+      //     mouseToWorld(mouseX, mouseY)[0],
+      //     mouseToWorld(mouseX, mouseY)[1],
+      //     -6,
+      //     -1.25
+      //   ) < 0.5
+      // ) {
+      //   noStroke()
+      //   fill(25, 200, 130, 128)
+      //   beginShape()
+      //   vertex(0, 5*unit, 5*unit)
+      //   vertex(0, -5*unit, 5*unit)
+      //   vertex(0, -5*unit, -5*unit)
+      //   vertex(0, 5*unit, -5*unit)
+      //   endShape(CLOSE)
+      // }
+
+      // if (
+      //   dist(
+      //     mouseToWorld(mouseX, mouseY)[0],
+      //     mouseToWorld(mouseX, mouseY)[1],
+      //     -6,
+      //     -2.25
+      //   ) < 0.5
+      // ) {        
+      //   noStroke()
+      //   fill(25, 200, 130, 128)
+      //   beginShape()
+      //   vertex(5*unit, 0, 5*unit)
+      //   vertex(-5*unit, 0, 5*unit)
+      //   vertex(-5*unit, 0, -5*unit)
+      //   vertex(5*unit, 0, -5*unit)
+      //   endShape(CLOSE)
+      // }
+
+      // if (
+      //   dist(
+      //     mouseToWorld(mouseX, mouseY)[0],
+      //     mouseToWorld(mouseX, mouseY)[1],
+      //     -6,
+      //     -3.25
+      //   ) < 0.5
+      // ) {        noStroke()
+      //   fill(25, 200, 130, 128)
+      //   beginShape()
+      //   vertex(5*unit, 5*unit, 0)
+      //   vertex(-5*unit, 5*unit, 0)
+      //   vertex(-5*unit, -5*unit, 0)
+      //   vertex(5*unit, -5*unit, 0)
+      //   endShape(CLOSE)
+      // }
 
       //cube
       {
