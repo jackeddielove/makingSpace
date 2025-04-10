@@ -76,6 +76,7 @@
     for (i = 0; i < 187; i++) {
       gridPts.push(false);
     }
+    angle = 0;
     //return the y-coordinate for the line ax+by+c=0 on slide 1 given an x-coordinate
     function f(x) {
       return (-coefficients[0] * x + coefficients[2]) / coefficients[1];
@@ -481,6 +482,16 @@
               coefficients[2]++;
             }
           }
+
+          //rotate square
+          if (buttons_2d[0] == 0 && buttons_2d[1] == 0 && buttons_2d[2] == 1) {
+            if (event.delta > 0) {
+              angle--;
+            }
+            if (event.delta < 0) {
+              angle++;
+            }
+          }
         }
 
         if (counter == 4) {
@@ -791,6 +802,7 @@
     //mouseClicked functions
     {
       function mouseClicked() {
+        //arrows for changing slides
         if (mouseToWorld(mouseX, mouseY)[1] < -3.75 && mouseToWorld(mouseX, mouseY)[0] > 7) {
           counter++
         }
@@ -814,7 +826,8 @@
               coefficients = [1, 1, 4];
               for (i = 0; i < 187; i++) {
                 gridPts[i]=false;
-              }              
+              }
+              angle = 0;
             }
 
 
@@ -1626,6 +1639,8 @@ function draw() {
       sqColor = color("fuchsia");
       noStroke();
       sqColor.setAlpha(128);
+      push();
+      rotate(angle/10);
       fill(sqColor);
       rectMode(CENTER);
       rect(0.5 * unit, -0.5 * unit, unit);
@@ -1634,6 +1649,7 @@ function draw() {
       stroke("fuchsia");
       strokeWeight(unit / 20);
       rect(0.5 * unit, -0.5 * unit, unit);
+      pop();
     }
 
     if (buttons_2d[2] % 3 == 2) {
