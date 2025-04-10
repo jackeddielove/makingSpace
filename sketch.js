@@ -429,868 +429,864 @@
   //mouse functions
   {
     //mouseWheel functions
-    {
-      function mouseWheel(event) {
-        if (counter == 2) {
-          //adjust coefficients in line equation
+    function mouseWheel(event) {
+      if (counter == 2) {
+        //adjust coefficients in line equation
 
-          //adjust a
-          if (
-            dist(
-              mouseToWorld(mouseX, mouseY)[0],
-              mouseToWorld(mouseX, mouseY)[1],
-              2.5 + 2.25 * 0,
-              3.5
-            ) < 0.25
-          ) {
-            if (event.delta > 0) {
-              coefficients[0]--;
-            }
-            if (event.delta < 0) {
-              coefficients[0]++;
-            }
-          }
-          //adjust b
-          if (
-            dist(
-              mouseToWorld(mouseX, mouseY)[0],
-              mouseToWorld(mouseX, mouseY)[1],
-              2.5 + 2.25 * 1,
-              3.5
-            ) < 0.25
-          ) {
-            if (event.delta > 0) {
-              coefficients[1]--;
-            }
-            if (event.delta < 0) {
-              coefficients[1]++;
-            }
-          }
-          //adjust c
-          if (
-            dist(
-              mouseToWorld(mouseX, mouseY)[0],
-              mouseToWorld(mouseX, mouseY)[1],
-              2.5 + 2.25 * 2,
-              3.5
-            ) < 0.25
-          ) {
-            if (event.delta > 0) {
-              coefficients[2]--;
-            }
-            if (event.delta < 0) {
-              coefficients[2]++;
-            }
-          }
-
-          //rotate square
-          if (buttons_2d[0] == 0 && buttons_2d[1] == 0 && buttons_2d[2] == 1) {
-            if (event.delta > 0) {
-              angle--;
-            }
-            if (event.delta < 0) {
-              angle++;
-            }
-          }
-        }
-
-        if (counter == 4) {
-          //adjust point coordinates
-          {
-            //adjust first coordinate
-            if (
-              dist(
-                mouseToWorld(mouseX, mouseY)[0],
-                mouseToWorld(mouseX, mouseY)[1],
-                -6.75 + 0.75 * 0,
-                2.8
-              ) < 0.25
-            ) {
-              if (event.delta > 0) {
-                ptCoords[0]--;
-              }
-              if (event.delta < 0) {
-                ptCoords[0]++;
-              }
-            }
-
-            //adjust second coordinate
-            if (
-              dist(
-                mouseToWorld(mouseX, mouseY)[0],
-                mouseToWorld(mouseX, mouseY)[1],
-                -6.75 + 0.75 * 1,
-                2.8
-              ) < 0.25
-            ) {
-              if (event.delta > 0) {
-                ptCoords[1]--;
-              }
-              if (event.delta < 0) {
-                ptCoords[1]++;
-              }
-            }
-
-            //adjust third coordinate
-            if (
-              dist(
-                mouseToWorld(mouseX, mouseY)[0],
-                mouseToWorld(mouseX, mouseY)[1],
-                -6.75 + 0.75 * 2,
-                2.8
-              ) < 0.25
-            ) {
-              if (event.delta > 0) {
-                ptCoords[2]--;
-              }
-              if (event.delta < 0) {
-                ptCoords[2]++;
-              }
-            }
-          }
-
-          //adjust plane equation coefficients
-          {
-            //adjust first coefficient
-            if (
-              dist(
-                mouseToWorld(mouseX, mouseY)[0],
-                mouseToWorld(mouseX, mouseY)[1],
-                -6 + (4 / 3) * 0,
-                2.1
-              ) < 0.25
-            ) {
-              if (event.delta > 0) {
-                plCoefficients[0]--;
-              }
-              if (event.delta < 0) {
-                plCoefficients[0]++;
-              }
-            }
-
-            //adjust second coefficient
-            if (
-              dist(
-                mouseToWorld(mouseX, mouseY)[0],
-                mouseToWorld(mouseX, mouseY)[1],
-                -6 + (4 / 3) * 1,
-                2.1
-              ) < 0.25
-            ) {
-              if (event.delta > 0) {
-                plCoefficients[1]--;
-              }
-              if (event.delta < 0) {
-                plCoefficients[1]++;
-              }
-            }
-
-            //adjust third coefficient
-            if (
-              dist(
-                mouseToWorld(mouseX, mouseY)[0],
-                mouseToWorld(mouseX, mouseY)[1],
-                -6 + (4 / 3) * 2,
-                2.1
-              ) < 0.25
-            ) {
-              if (event.delta > 0) {
-                plCoefficients[2]--;
-              }
-              if (event.delta < 0) {
-                plCoefficients[2]++;
-              }
-            }
-
-            //adjust fourth coefficient
-            if (
-              dist(
-                mouseToWorld(mouseX, mouseY)[0],
-                mouseToWorld(mouseX, mouseY)[1],
-                -6 + (4 / 3) * 3,
-                2.1
-              ) < 0.25
-            ) {
-              if (event.delta > 0) {
-                plCoefficients[3]--;
-              }
-              if (event.delta < 0) {
-                plCoefficients[3]++;
-              }
-            }
-          }
-        }
-
-        if (counter == 6) {
+        //adjust a
+        if (
+          dist(
+            mouseToWorld(mouseX, mouseY)[0],
+            mouseToWorld(mouseX, mouseY)[1],
+            2.5 + 2.25 * 0,
+            3.5
+          ) < 0.25
+        ) {
           if (event.delta > 0) {
-            h -= hSpeed;
+            coefficients[0]--;
           }
           if (event.delta < 0) {
-            h += hSpeed;
+            coefficients[0]++;
           }
         }
-
-        if (counter == 8) {
-          if (Xbutton == true) {
-            if (event.delta > 0) {
-              xTheta--;
-              rotated_1 = true;
-            }
-            if (event.delta < 0) {
-              xTheta++;
-              rotated_1 = true;
-            }
-            a1 = Rx(xTheta, u1);
-            a2 = Rx(xTheta, u2);
-            a3 = Rx(xTheta, u3);
-          }
-
-          if (Ybutton == true) {
-            if (event.delta > 0) {
-              yTheta--;
-              rotated_1 = true;
-            }
-            if (event.delta < 0) {
-              yTheta++;
-              rotated_1 = true;
-            }
-            a1 = Ry(yTheta, u1);
-            a2 = Ry(yTheta, u2);
-            a3 = Ry(yTheta, u3);
-          }
-
-          if (Zbutton == true) {
-            if (event.delta > 0) {
-              zTheta--;
-              rotated_1 = true;
-            }
-            if (event.delta < 0) {
-              zTheta++;
-              rotated_1 = true;
-            }
-            a1 = Rz(zTheta, u1);
-            a2 = Rz(zTheta, u2);
-            a3 = Rz(zTheta, u3);
-          }
-        }
-
-        if (counter == 10) {
+        //adjust b
+        if (
+          dist(
+            mouseToWorld(mouseX, mouseY)[0],
+            mouseToWorld(mouseX, mouseY)[1],
+            2.5 + 2.25 * 1,
+            3.5
+          ) < 0.25
+        ) {
           if (event.delta > 0) {
-            cubeSliceTimer += cubeSliceSpeed;
+            coefficients[1]--;
           }
           if (event.delta < 0) {
-            cubeSliceTimer -= cubeSliceSpeed;
+            coefficients[1]++;
           }
         }
-
-        if (counter == 9) {
-          if (xyButton == true) {
-            if (event.delta > 0) {
-              xyTheta -= rotationSpeed;
-              rotated = true;
-            }
-            if (event.delta < 0) {
-              xyTheta += rotationSpeed;
-              rotated = true;
-            }
-            a_1 = R_xy(xyTheta, e_1);
-            a_2 = R_xy(xyTheta, e_2);
-            a_3 = R_xy(xyTheta, e_3);
-            a_4 = R_xy(xyTheta, e_4);
-          }
-
-          if (xzButton == true) {
-            if (event.delta > 0) {
-              xzTheta -= rotationSpeed;
-              rotated = true;
-            }
-            if (event.delta < 0) {
-              xzTheta += rotationSpeed;
-              rotated = true;
-            }
-            a_1 = R_xz(xzTheta, e_1);
-            a_2 = R_xz(xzTheta, e_2);
-            a_3 = R_xz(xzTheta, e_3);
-            a_4 = R_xz(xzTheta, e_4);
-          }
-
-          if (xwButton == true) {
-            if (event.delta > 0) {
-              xwTheta -= rotationSpeed;
-              rotated = true;
-            }
-            if (event.delta < 0) {
-              xwTheta += rotationSpeed;
-              rotated = true;
-            }
-            a_1 = R_xw(xwTheta, e_1);
-            a_2 = R_xw(xwTheta, e_2);
-            a_3 = R_xw(xwTheta, e_3);
-            a_4 = R_xw(xwTheta, e_4);
-          }
-
-          if (yzButton == true) {
-            if (event.delta > 0) {
-              yzTheta -= rotationSpeed;
-              rotated = true;
-            }
-            if (event.delta < 0) {
-              yzTheta += rotationSpeed;
-              rotated = true;
-            }
-            a_1 = R_yz(yzTheta, e_1);
-            a_2 = R_yz(yzTheta, e_2);
-            a_3 = R_yz(yzTheta, e_3);
-            a_4 = R_yz(yzTheta, e_4);
-          }
-
-          if (ywButton == true) {
-            if (event.delta > 0) {
-              ywTheta -= rotationSpeed;
-              rotated = true;
-            }
-            if (event.delta < 0) {
-              ywTheta += rotationSpeed;
-              rotated = true;
-            }
-            a_1 = R_yw(ywTheta, e_1);
-            a_2 = R_yw(ywTheta, e_2);
-            a_3 = R_yw(ywTheta, e_3);
-            a_4 = R_yw(ywTheta, e_4);
-          }
-
-          if (zwButton == true) {
-            if (event.delta > 0) {
-              zwTheta -= rotationSpeed;
-              rotated = true;
-            }
-            if (event.delta < 0) {
-              zwTheta += rotationSpeed;
-              rotated = true;
-            }
-            a_1 = R_zw(zwTheta, e_1);
-            a_2 = R_zw(zwTheta, e_2);
-            a_3 = R_zw(zwTheta, e_3);
-            a_4 = R_zw(zwTheta, e_4);
-          }
-        }
-
-        if (counter == 11) {
+        //adjust c
+        if (
+          dist(
+            mouseToWorld(mouseX, mouseY)[0],
+            mouseToWorld(mouseX, mouseY)[1],
+            2.5 + 2.25 * 2,
+            3.5
+          ) < 0.25
+        ) {
           if (event.delta > 0) {
-            t -= s;
+            coefficients[2]--;
           }
           if (event.delta < 0) {
-            t += s;
+            coefficients[2]++;
           }
         }
 
-        if (counter == 13) {
-          if (curve1 == true || curve2 == true || curve3 == true) {
-            if (event.delta > 0 && rgbTimer > 0) {
-              rgbTimer -= rgbSpeed;
-            }
-            if (event.delta < 0 && rgbTimer < 1) {
-              rgbTimer += rgbSpeed;
-            }
+        //rotate square
+        if (buttons_2d[0]%3 == 0 && buttons_2d[1]%3 == 0 && buttons_2d[2]%3 == 1) {
+          if (event.delta > 0) {
+            angle--;
+          }
+          if (event.delta < 0) {
+            angle++;
           }
         }
-
-        return false;
       }
+
+      if (counter == 4) {
+        //adjust point coordinates
+        {
+          //adjust first coordinate
+          if (
+            dist(
+              mouseToWorld(mouseX, mouseY)[0],
+              mouseToWorld(mouseX, mouseY)[1],
+              -6.75 + 0.75 * 0,
+              2.8
+            ) < 0.25
+          ) {
+            if (event.delta > 0) {
+              ptCoords[0]--;
+            }
+            if (event.delta < 0) {
+              ptCoords[0]++;
+            }
+          }
+
+          //adjust second coordinate
+          if (
+            dist(
+              mouseToWorld(mouseX, mouseY)[0],
+              mouseToWorld(mouseX, mouseY)[1],
+              -6.75 + 0.75 * 1,
+              2.8
+            ) < 0.25
+          ) {
+            if (event.delta > 0) {
+              ptCoords[1]--;
+            }
+            if (event.delta < 0) {
+              ptCoords[1]++;
+            }
+          }
+
+          //adjust third coordinate
+          if (
+            dist(
+              mouseToWorld(mouseX, mouseY)[0],
+              mouseToWorld(mouseX, mouseY)[1],
+              -6.75 + 0.75 * 2,
+              2.8
+            ) < 0.25
+          ) {
+            if (event.delta > 0) {
+              ptCoords[2]--;
+            }
+            if (event.delta < 0) {
+              ptCoords[2]++;
+            }
+          }
+        }
+
+        //adjust plane equation coefficients
+        {
+          //adjust first coefficient
+          if (
+            dist(
+              mouseToWorld(mouseX, mouseY)[0],
+              mouseToWorld(mouseX, mouseY)[1],
+              -6 + (4 / 3) * 0,
+              2.1
+            ) < 0.25
+          ) {
+            if (event.delta > 0) {
+              plCoefficients[0]--;
+            }
+            if (event.delta < 0) {
+              plCoefficients[0]++;
+            }
+          }
+
+          //adjust second coefficient
+          if (
+            dist(
+              mouseToWorld(mouseX, mouseY)[0],
+              mouseToWorld(mouseX, mouseY)[1],
+              -6 + (4 / 3) * 1,
+              2.1
+            ) < 0.25
+          ) {
+            if (event.delta > 0) {
+              plCoefficients[1]--;
+            }
+            if (event.delta < 0) {
+              plCoefficients[1]++;
+            }
+          }
+
+          //adjust third coefficient
+          if (
+            dist(
+              mouseToWorld(mouseX, mouseY)[0],
+              mouseToWorld(mouseX, mouseY)[1],
+              -6 + (4 / 3) * 2,
+              2.1
+            ) < 0.25
+          ) {
+            if (event.delta > 0) {
+              plCoefficients[2]--;
+            }
+            if (event.delta < 0) {
+              plCoefficients[2]++;
+            }
+          }
+
+          //adjust fourth coefficient
+          if (
+            dist(
+              mouseToWorld(mouseX, mouseY)[0],
+              mouseToWorld(mouseX, mouseY)[1],
+              -6 + (4 / 3) * 3,
+              2.1
+            ) < 0.25
+          ) {
+            if (event.delta > 0) {
+              plCoefficients[3]--;
+            }
+            if (event.delta < 0) {
+              plCoefficients[3]++;
+            }
+          }
+        }
+      }
+
+      if (counter == 6) {
+        if (event.delta > 0) {
+          h -= hSpeed;
+        }
+        if (event.delta < 0) {
+          h += hSpeed;
+        }
+      }
+
+      if (counter == 8) {
+        if (Xbutton == true) {
+          if (event.delta > 0) {
+            xTheta--;
+            rotated_1 = true;
+          }
+          if (event.delta < 0) {
+            xTheta++;
+            rotated_1 = true;
+          }
+          a1 = Rx(xTheta, u1);
+          a2 = Rx(xTheta, u2);
+          a3 = Rx(xTheta, u3);
+        }
+
+        if (Ybutton == true) {
+          if (event.delta > 0) {
+            yTheta--;
+            rotated_1 = true;
+          }
+          if (event.delta < 0) {
+            yTheta++;
+            rotated_1 = true;
+          }
+          a1 = Ry(yTheta, u1);
+          a2 = Ry(yTheta, u2);
+          a3 = Ry(yTheta, u3);
+        }
+
+        if (Zbutton == true) {
+          if (event.delta > 0) {
+            zTheta--;
+            rotated_1 = true;
+          }
+          if (event.delta < 0) {
+            zTheta++;
+            rotated_1 = true;
+          }
+          a1 = Rz(zTheta, u1);
+          a2 = Rz(zTheta, u2);
+          a3 = Rz(zTheta, u3);
+        }
+      }
+
+      if (counter == 10) {
+        if (event.delta > 0) {
+          cubeSliceTimer += cubeSliceSpeed;
+        }
+        if (event.delta < 0) {
+          cubeSliceTimer -= cubeSliceSpeed;
+        }
+      }
+
+      if (counter == 9) {
+        if (xyButton == true) {
+          if (event.delta > 0) {
+            xyTheta -= rotationSpeed;
+            rotated = true;
+          }
+          if (event.delta < 0) {
+            xyTheta += rotationSpeed;
+            rotated = true;
+          }
+          a_1 = R_xy(xyTheta, e_1);
+          a_2 = R_xy(xyTheta, e_2);
+          a_3 = R_xy(xyTheta, e_3);
+          a_4 = R_xy(xyTheta, e_4);
+        }
+
+        if (xzButton == true) {
+          if (event.delta > 0) {
+            xzTheta -= rotationSpeed;
+            rotated = true;
+          }
+          if (event.delta < 0) {
+            xzTheta += rotationSpeed;
+            rotated = true;
+          }
+          a_1 = R_xz(xzTheta, e_1);
+          a_2 = R_xz(xzTheta, e_2);
+          a_3 = R_xz(xzTheta, e_3);
+          a_4 = R_xz(xzTheta, e_4);
+        }
+
+        if (xwButton == true) {
+          if (event.delta > 0) {
+            xwTheta -= rotationSpeed;
+            rotated = true;
+          }
+          if (event.delta < 0) {
+            xwTheta += rotationSpeed;
+            rotated = true;
+          }
+          a_1 = R_xw(xwTheta, e_1);
+          a_2 = R_xw(xwTheta, e_2);
+          a_3 = R_xw(xwTheta, e_3);
+          a_4 = R_xw(xwTheta, e_4);
+        }
+
+        if (yzButton == true) {
+          if (event.delta > 0) {
+            yzTheta -= rotationSpeed;
+            rotated = true;
+          }
+          if (event.delta < 0) {
+            yzTheta += rotationSpeed;
+            rotated = true;
+          }
+          a_1 = R_yz(yzTheta, e_1);
+          a_2 = R_yz(yzTheta, e_2);
+          a_3 = R_yz(yzTheta, e_3);
+          a_4 = R_yz(yzTheta, e_4);
+        }
+
+        if (ywButton == true) {
+          if (event.delta > 0) {
+            ywTheta -= rotationSpeed;
+            rotated = true;
+          }
+          if (event.delta < 0) {
+            ywTheta += rotationSpeed;
+            rotated = true;
+          }
+          a_1 = R_yw(ywTheta, e_1);
+          a_2 = R_yw(ywTheta, e_2);
+          a_3 = R_yw(ywTheta, e_3);
+          a_4 = R_yw(ywTheta, e_4);
+        }
+
+        if (zwButton == true) {
+          if (event.delta > 0) {
+            zwTheta -= rotationSpeed;
+            rotated = true;
+          }
+          if (event.delta < 0) {
+            zwTheta += rotationSpeed;
+            rotated = true;
+          }
+          a_1 = R_zw(zwTheta, e_1);
+          a_2 = R_zw(zwTheta, e_2);
+          a_3 = R_zw(zwTheta, e_3);
+          a_4 = R_zw(zwTheta, e_4);
+        }
+      }
+
+      if (counter == 11) {
+        if (event.delta > 0) {
+          t -= s;
+        }
+        if (event.delta < 0) {
+          t += s;
+        }
+      }
+
+      if (counter == 13) {
+        if (curve1 == true || curve2 == true || curve3 == true) {
+          if (event.delta > 0 && rgbTimer > 0) {
+            rgbTimer -= rgbSpeed;
+          }
+          if (event.delta < 0 && rgbTimer < 1) {
+            rgbTimer += rgbSpeed;
+          }
+        }
+      }
+
+      return false;
     }
 
     //mouseClicked functions
-    {
-      function mouseClicked() {
-        //arrows for changing slides
-        if (mouseToWorld(mouseX, mouseY)[1] < -3.75 && mouseToWorld(mouseX, mouseY)[0] > 7) {
-          counter++
-        }
+    function mouseClicked() {
+      //arrows for changing slides
+      if (mouseToWorld(mouseX, mouseY)[1] < -3.75 && mouseToWorld(mouseX, mouseY)[0] > 7) {
+        counter++
+      }
 
-        if (mouseToWorld(mouseX, mouseY)[1] < -3.75 && mouseToWorld(mouseX, mouseY)[0] < -7) {
-          counter--
-        }
+      if (mouseToWorld(mouseX, mouseY)[1] < -3.75 && mouseToWorld(mouseX, mouseY)[0] < -7) {
+        counter--
+      }
 
-        if (counter == 2) {
-          //reset
+      if (counter == 2) {
+        //reset
+        if (
+          dist(
+            -6,
+            -3.75,
+            mouseToWorld(mouseX, mouseY)[0],
+            mouseToWorld(mouseX, mouseY)[1]
+          ) < 0.5
+        ) {
+            buttons_2d = [0, 0, 0];
+            ptCoords_2d = [5, 3];
+            coefficients = [1, 1, 4];
+            for (i = 0; i < 187; i++) {
+              gridPts[i]=false;
+            }
+            angle = 0;
+          }
+
+
+        //turns buttons on slide 1 on and off
+        for (i = 0; i < 3; i++) {
           if (
             dist(
-              -6,
-              -3.75,
+              -6 + 2 * i,
+              3.75,
               mouseToWorld(mouseX, mouseY)[0],
               mouseToWorld(mouseX, mouseY)[1]
             ) < 0.5
           ) {
-              buttons_2d = [0, 0, 0];
-              ptCoords_2d = [5, 3];
-              coefficients = [1, 1, 4];
-              for (i = 0; i < 187; i++) {
-                gridPts[i]=false;
-              }
-              angle = 0;
-            }
+            buttons_2d[i]++;
+          }
+        }
 
-
-          //turns buttons on slide 1 on and off
-          for (i = 0; i < 3; i++) {
+        // turns on and off green points on line on slide 1
+        for (i = -8; i < 9; i++) {
+          for (j = -5; j < 6; j++) {
             if (
               dist(
-                -6 + 2 * i,
-                3.75,
+                i,
+                j,
                 mouseToWorld(mouseX, mouseY)[0],
                 mouseToWorld(mouseX, mouseY)[1]
-              ) < 0.5
+              ) < 0.1
             ) {
-              buttons_2d[i]++;
-            }
-          }
-
-          // turns on and off green points on line on slide 1
-          for (i = -8; i < 9; i++) {
-            for (j = -5; j < 6; j++) {
-              if (
-                dist(
-                  i,
-                  j,
-                  mouseToWorld(mouseX, mouseY)[0],
-                  mouseToWorld(mouseX, mouseY)[1]
-                ) < 0.1
-              ) {
-                gridPts[(i + 8) * 11 + (j + 5)] = !gridPts[
-                  (i + 8) * 11 + (j + 5)
-                ];
-              }
+              gridPts[(i + 8) * 11 + (j + 5)] = !gridPts[
+                (i + 8) * 11 + (j + 5)
+              ];
             }
           }
         }
+      }
 
-        if (counter == 3) {
-          //turns bullet points on in slide 2
-          for (i = 0; i < 3; i++) {
-            if (
-              dist(0.5 * unit, (2.2 + 2 * i) * unit, mouseX, mouseY) <
-              unit / 4
-            ) {
-              bullets[i] = !bullets[i];
-            }
+      if (counter == 3) {
+        //turns bullet points on in slide 2
+        for (i = 0; i < 3; i++) {
+          if (
+            dist(0.5 * unit, (2.2 + 2 * i) * unit, mouseX, mouseY) <
+            unit / 4
+          ) {
+            bullets[i] = !bullets[i];
           }
         }
+      }
 
-        if (counter == 4) {
-          //reset
+      if (counter == 4) {
+        //reset
+        if (
+          dist(
+            -6,
+            -3.75,
+            mouseToWorld(mouseX, mouseY)[0],
+            mouseToWorld(mouseX, mouseY)[1]
+          ) < 0.5
+        ) {
+            buttons = [0, 0, 0];
+            ptCoords = [3, 0, 0];
+            plCoefficients = [1, 1, -1, 0];           
+          }
+
+        //turns buttons on slide 3 on and off
+        for (i = 0; i < 3; i++) {
           if (
             dist(
-              -6,
-              -3.75,
+              -6 + 2 * i,
+              3.75,
               mouseToWorld(mouseX, mouseY)[0],
               mouseToWorld(mouseX, mouseY)[1]
             ) < 0.5
           ) {
-              buttons = [0, 0, 0];
-              ptCoords = [3, 0, 0];
-              plCoefficients = [1, 1, -1, 0];           
-            }
-
-          //turns buttons on slide 3 on and off
-          for (i = 0; i < 3; i++) {
-            if (
-              dist(
-                -6 + 2 * i,
-                3.75,
-                mouseToWorld(mouseX, mouseY)[0],
-                mouseToWorld(mouseX, mouseY)[1]
-              ) < 0.5
-            ) {
-              buttons[i]++;
-            }
+            buttons[i]++;
           }
         }
+      }
 
-        if (counter == 5) {
-          //turns bullet points on in slide 4
-          for (i = 0; i < 3; i++) {
-            if (
-              dist(0.5 * unit, (2.2 + 2 * i) * unit, mouseX, mouseY) <
-              unit / 4
-            ) {
-              bullets_3d[i] = !bullets_3d[i];
-            }
-          }
-        }
-
-        if (counter == 8) {
-
-          //reset button
+      if (counter == 5) {
+        //turns bullet points on in slide 4
+        for (i = 0; i < 3; i++) {
           if (
-            dist(
-              mouseToWorld(mouseX, mouseY)[0],
-              mouseToWorld(mouseX, mouseY)[1],
-              6,
-              4
-            ) < 0.75
+            dist(0.5 * unit, (2.2 + 2 * i) * unit, mouseX, mouseY) <
+            unit / 4
           ) {
-            u1 = createVector(size, 0, 0);
-            u2 = createVector(0, size, 0);
-            u3 = createVector(0, 0, size);
+            bullets_3d[i] = !bullets_3d[i];
+          }
+        }
+      }
+
+      if (counter == 8) {
+
+        //reset button
+        if (
+          dist(
+            mouseToWorld(mouseX, mouseY)[0],
+            mouseToWorld(mouseX, mouseY)[1],
+            6,
+            4
+          ) < 0.75
+        ) {
+          u1 = createVector(size, 0, 0);
+          u2 = createVector(0, size, 0);
+          u3 = createVector(0, 0, size);
+          xTheta = 0;
+          yTheta = 0;
+          zTheta = 0;
+        }
+
+
+        //Xbutton
+        if (
+          dist(
+            mouseToWorld(mouseX, mouseY)[0],
+            mouseToWorld(mouseX, mouseY)[1],
+            -6,
+            -1.25
+          ) < 0.75
+        ) {
+          if (Xbutton == true && rotated_1 == true) {
+            u1 = a1;
+            u2 = a2;
+            u3 = a3;
             xTheta = 0;
             yTheta = 0;
             zTheta = 0;
           }
-
-
-          //Xbutton
-          if (
-            dist(
-              mouseToWorld(mouseX, mouseY)[0],
-              mouseToWorld(mouseX, mouseY)[1],
-              -6,
-              -1.25
-            ) < 0.75
-          ) {
-            if (Xbutton == true && rotated_1 == true) {
-              u1 = a1;
-              u2 = a2;
-              u3 = a3;
-              xTheta = 0;
-              yTheta = 0;
-              zTheta = 0;
-            }
-            if (Ybutton == false && Zbutton == false) {
-              Xbutton = !Xbutton;
-            }
+          if (Ybutton == false && Zbutton == false) {
+            Xbutton = !Xbutton;
           }
+        }
 
-          //Ybutton
-          if (
-            dist(
-              mouseToWorld(mouseX, mouseY)[0],
-              mouseToWorld(mouseX, mouseY)[1],
-              -6,
-              -2.25
-            ) < 0.75
-          ) {
-            if (Ybutton == true && rotated_1 == true) {
-              u1 = a1;
-              u2 = a2;
-              u3 = a3;
-              xTheta = 0;
-              yTheta = 0;
-              zTheta = 0;
-            }
-            if (Xbutton == false && Zbutton == false) {
-              Ybutton = !Ybutton;
-            }
+        //Ybutton
+        if (
+          dist(
+            mouseToWorld(mouseX, mouseY)[0],
+            mouseToWorld(mouseX, mouseY)[1],
+            -6,
+            -2.25
+          ) < 0.75
+        ) {
+          if (Ybutton == true && rotated_1 == true) {
+            u1 = a1;
+            u2 = a2;
+            u3 = a3;
+            xTheta = 0;
+            yTheta = 0;
+            zTheta = 0;
           }
+          if (Xbutton == false && Zbutton == false) {
+            Ybutton = !Ybutton;
+          }
+        }
 
-          //Zbutton
+        //Zbutton
+        if (
+          dist(
+            mouseToWorld(mouseX, mouseY)[0],
+            mouseToWorld(mouseX, mouseY)[1],
+            -6,
+            -3.25
+          ) < 0.75
+        ) {
+          if (Zbutton == true && rotated_1 == true) {
+            u1 = a1;
+            u2 = a2;
+            u3 = a3;
+            xTheta = 0;
+            yTheta = 0;
+            zTheta = 0;
+          }
+          if (Xbutton == false && Ybutton == false) {
+            Zbutton = !Zbutton;
+          }
+        }
+      }
+
+      if (counter == 9) {
+        //reset button
+        if (
+          dist(
+            mouseToWorld(mouseX, mouseY)[0],
+            mouseToWorld(mouseX, mouseY)[1],
+            6,
+            4
+          ) < 0.75
+        ) {
+          e_1 = [0, 0, 0, size];
+          e_2 = [0, 0, size, 0];
+          e_3 = [0, size, 0, 0];
+          e_4 = [size, 0, 0, 0];
+          xyTheta = 0;
+          xzTheta = 0;
+          xwTheta = 0;
+          yzTheta = 0;
+          ywTheta = 0;
+          zwTheta = 0;
+        }
+        //xyButton
+        {
           if (
             dist(
               mouseToWorld(mouseX, mouseY)[0],
               mouseToWorld(mouseX, mouseY)[1],
               -6,
-              -3.25
+              3.125
             ) < 0.75
           ) {
-            if (Zbutton == true && rotated_1 == true) {
-              u1 = a1;
-              u2 = a2;
-              u3 = a3;
-              xTheta = 0;
-              yTheta = 0;
-              zTheta = 0;
+            if (xyButton == true && rotated == true) {
+              e_1 = a_1;
+              e_2 = a_2;
+              e_3 = a_3;
+              e_4 = a_4;
+
+              xyTheta = 0;
+              xzTheta = 0;
+              xwTheta = 0;
+              yzTheta = 0;
+              ywTheta = 0;
+              zwTheta = 0;
             }
-            if (Xbutton == false && Ybutton == false) {
-              Zbutton = !Zbutton;
+            if (
+              xzButton == false &&
+              xwButton == false &&
+              yzButton == false &&
+              ywButton == false &&
+              zwButton == false
+            ) {
+              xyButton = !xyButton;
             }
           }
         }
 
-        if (counter == 9) {
-          //reset button
+        //xzButton
+        {
           if (
             dist(
               mouseToWorld(mouseX, mouseY)[0],
               mouseToWorld(mouseX, mouseY)[1],
-              6,
-              4
+              -6,
+              1.875
             ) < 0.75
           ) {
-            e_1 = [0, 0, 0, size];
-            e_2 = [0, 0, size, 0];
-            e_3 = [0, size, 0, 0];
-            e_4 = [size, 0, 0, 0];
-            xyTheta = 0;
-            xzTheta = 0;
-            xwTheta = 0;
-            yzTheta = 0;
-            ywTheta = 0;
-            zwTheta = 0;
-          }
-          //xyButton
-          {
-            if (
-              dist(
-                mouseToWorld(mouseX, mouseY)[0],
-                mouseToWorld(mouseX, mouseY)[1],
-                -6,
-                3.125
-              ) < 0.75
-            ) {
-              if (xyButton == true && rotated == true) {
-                e_1 = a_1;
-                e_2 = a_2;
-                e_3 = a_3;
-                e_4 = a_4;
+            if (xzButton == true && rotated == true) {
+              e_1 = a_1;
+              e_2 = a_2;
+              e_3 = a_3;
+              e_4 = a_4;
 
-                xyTheta = 0;
-                xzTheta = 0;
-                xwTheta = 0;
-                yzTheta = 0;
-                ywTheta = 0;
-                zwTheta = 0;
-              }
-              if (
-                xzButton == false &&
-                xwButton == false &&
-                yzButton == false &&
-                ywButton == false &&
-                zwButton == false
-              ) {
-                xyButton = !xyButton;
-              }
+              xyTheta = 0;
+              xzTheta = 0;
+              xwTheta = 0;
+              yzTheta = 0;
+              ywTheta = 0;
+              zwTheta = 0;
             }
-          }
-
-          //xzButton
-          {
             if (
-              dist(
-                mouseToWorld(mouseX, mouseY)[0],
-                mouseToWorld(mouseX, mouseY)[1],
-                -6,
-                1.875
-              ) < 0.75
+              xyButton == false &&
+              xwButton == false &&
+              yzButton == false &&
+              ywButton == false &&
+              zwButton == false
             ) {
-              if (xzButton == true && rotated == true) {
-                e_1 = a_1;
-                e_2 = a_2;
-                e_3 = a_3;
-                e_4 = a_4;
-
-                xyTheta = 0;
-                xzTheta = 0;
-                xwTheta = 0;
-                yzTheta = 0;
-                ywTheta = 0;
-                zwTheta = 0;
-              }
-              if (
-                xyButton == false &&
-                xwButton == false &&
-                yzButton == false &&
-                ywButton == false &&
-                zwButton == false
-              ) {
-                xzButton = !xzButton;
-              }
-            }
-          }
-
-          //xwButton
-          {
-            if (
-              dist(
-                mouseToWorld(mouseX, mouseY)[0],
-                mouseToWorld(mouseX, mouseY)[1],
-                -6,
-                0.625
-              ) < 0.75
-            ) {
-              if (xwButton == true && rotated == true) {
-                e_1 = a_1;
-                e_2 = a_2;
-                e_3 = a_3;
-                e_4 = a_4;
-
-                xyTheta = 0;
-                xzTheta = 0;
-                xwTheta = 0;
-                yzTheta = 0;
-                ywTheta = 0;
-                zwTheta = 0;
-              }
-              if (
-                xyButton == false &&
-                xzButton == false &&
-                yzButton == false &&
-                ywButton == false &&
-                zwButton == false
-              ) {
-                xwButton = !xwButton;
-              }
-            }
-          }
-
-          //yzButton
-          {
-            if (
-              dist(
-                mouseToWorld(mouseX, mouseY)[0],
-                mouseToWorld(mouseX, mouseY)[1],
-                -6,
-                -0.625
-              ) < 0.75
-            ) {
-              if (yzButton == true && rotated == true) {
-                e_1 = a_1;
-                e_2 = a_2;
-                e_3 = a_3;
-                e_4 = a_4;
-
-                xyTheta = 0;
-                xzTheta = 0;
-                xwTheta = 0;
-                yzTheta = 0;
-                ywTheta = 0;
-                zwTheta = 0;
-              }
-              if (
-                xyButton == false &&
-                xzButton == false &&
-                xwButton == false &&
-                ywButton == false &&
-                zwButton == false
-              ) {
-                yzButton = !yzButton;
-              }
-            }
-          }
-
-          //ywButton
-          {
-            if (
-              dist(
-                mouseToWorld(mouseX, mouseY)[0],
-                mouseToWorld(mouseX, mouseY)[1],
-                -6,
-                -1.875
-              ) < 0.75
-            ) {
-              if (ywButton == true && rotated == true) {
-                e_1 = a_1;
-                e_2 = a_2;
-                e_3 = a_3;
-                e_4 = a_4;
-
-                xyTheta = 0;
-                xzTheta = 0;
-                xwTheta = 0;
-                yzTheta = 0;
-                ywTheta = 0;
-                zwTheta = 0;
-              }
-              if (
-                xyButton == false &&
-                xzButton == false &&
-                xwButton == false &&
-                yzButton == false &&
-                zwButton == false
-              ) {
-                ywButton = !ywButton;
-              }
-            }
-          }
-
-          //zwButton
-          {
-            if (
-              dist(
-                mouseToWorld(mouseX, mouseY)[0],
-                mouseToWorld(mouseX, mouseY)[1],
-                -6,
-                -3.125
-              ) < 0.75
-            ) {
-              if (zwButton == true && rotated == true) {
-                e_1 = a_1;
-                e_2 = a_2;
-                e_3 = a_3;
-                e_4 = a_4;
-
-                xyTheta = 0;
-                xzTheta = 0;
-                xwTheta = 0;
-                yzTheta = 0;
-                ywTheta = 0;
-                zwTheta = 0;
-              }
-              if (
-                xyButton == false &&
-                xzButton == false &&
-                xwButton == false &&
-                yzButton == false &&
-                ywButton == false
-              ) {
-                zwButton = !zwButton;
-              }
+              xzButton = !xzButton;
             }
           }
         }
 
-        if (counter == 13) {
+        //xwButton
+        {
           if (
             dist(
               mouseToWorld(mouseX, mouseY)[0],
               mouseToWorld(mouseX, mouseY)[1],
-              -4.5,
+              -6,
+              0.625
+            ) < 0.75
+          ) {
+            if (xwButton == true && rotated == true) {
+              e_1 = a_1;
+              e_2 = a_2;
+              e_3 = a_3;
+              e_4 = a_4;
+
+              xyTheta = 0;
+              xzTheta = 0;
+              xwTheta = 0;
+              yzTheta = 0;
+              ywTheta = 0;
+              zwTheta = 0;
+            }
+            if (
+              xyButton == false &&
+              xzButton == false &&
+              yzButton == false &&
+              ywButton == false &&
+              zwButton == false
+            ) {
+              xwButton = !xwButton;
+            }
+          }
+        }
+
+        //yzButton
+        {
+          if (
+            dist(
+              mouseToWorld(mouseX, mouseY)[0],
+              mouseToWorld(mouseX, mouseY)[1],
+              -6,
+              -0.625
+            ) < 0.75
+          ) {
+            if (yzButton == true && rotated == true) {
+              e_1 = a_1;
+              e_2 = a_2;
+              e_3 = a_3;
+              e_4 = a_4;
+
+              xyTheta = 0;
+              xzTheta = 0;
+              xwTheta = 0;
+              yzTheta = 0;
+              ywTheta = 0;
+              zwTheta = 0;
+            }
+            if (
+              xyButton == false &&
+              xzButton == false &&
+              xwButton == false &&
+              ywButton == false &&
+              zwButton == false
+            ) {
+              yzButton = !yzButton;
+            }
+          }
+        }
+
+        //ywButton
+        {
+          if (
+            dist(
+              mouseToWorld(mouseX, mouseY)[0],
+              mouseToWorld(mouseX, mouseY)[1],
+              -6,
+              -1.875
+            ) < 0.75
+          ) {
+            if (ywButton == true && rotated == true) {
+              e_1 = a_1;
+              e_2 = a_2;
+              e_3 = a_3;
+              e_4 = a_4;
+
+              xyTheta = 0;
+              xzTheta = 0;
+              xwTheta = 0;
+              yzTheta = 0;
+              ywTheta = 0;
+              zwTheta = 0;
+            }
+            if (
+              xyButton == false &&
+              xzButton == false &&
+              xwButton == false &&
+              yzButton == false &&
+              zwButton == false
+            ) {
+              ywButton = !ywButton;
+            }
+          }
+        }
+
+        //zwButton
+        {
+          if (
+            dist(
+              mouseToWorld(mouseX, mouseY)[0],
+              mouseToWorld(mouseX, mouseY)[1],
+              -6,
+              -3.125
+            ) < 0.75
+          ) {
+            if (zwButton == true && rotated == true) {
+              e_1 = a_1;
+              e_2 = a_2;
+              e_3 = a_3;
+              e_4 = a_4;
+
+              xyTheta = 0;
+              xzTheta = 0;
+              xwTheta = 0;
+              yzTheta = 0;
+              ywTheta = 0;
+              zwTheta = 0;
+            }
+            if (
+              xyButton == false &&
+              xzButton == false &&
+              xwButton == false &&
+              yzButton == false &&
+              ywButton == false
+            ) {
+              zwButton = !zwButton;
+            }
+          }
+        }
+      }
+
+      if (counter == 13) {
+        if (
+          dist(
+            mouseToWorld(mouseX, mouseY)[0],
+            mouseToWorld(mouseX, mouseY)[1],
+            -4.5,
+            -3
+          ) < 0.5
+        ) {
+          rgb = !rgb;
+        }
+
+        if (rgb == true) {
+          if (
+            dist(
+              mouseToWorld(mouseX, mouseY)[0],
+              mouseToWorld(mouseX, mouseY)[1],
+              -1.5,
               -3
             ) < 0.5
           ) {
-            rgb = !rgb;
+            curve1 = !curve1;
+            rd = 0;
+            gr = 0;
+            bl = 0;
           }
 
-          if (rgb == true) {
-            if (
-              dist(
-                mouseToWorld(mouseX, mouseY)[0],
-                mouseToWorld(mouseX, mouseY)[1],
-                -1.5,
-                -3
-              ) < 0.5
-            ) {
-              curve1 = !curve1;
-              rd = 0;
-              gr = 0;
-              bl = 0;
-            }
+          if (
+            dist(
+              mouseToWorld(mouseX, mouseY)[0],
+              mouseToWorld(mouseX, mouseY)[1],
+              1.5,
+              -3
+            ) < 0.5
+          ) {
+            curve2 = !curve2;
+            rd = 0;
+            gr = 0;
+            bl = 0;
+          }
 
-            if (
-              dist(
-                mouseToWorld(mouseX, mouseY)[0],
-                mouseToWorld(mouseX, mouseY)[1],
-                1.5,
-                -3
-              ) < 0.5
-            ) {
-              curve2 = !curve2;
-              rd = 0;
-              gr = 0;
-              bl = 0;
-            }
-
-            if (
-              dist(
-                mouseToWorld(mouseX, mouseY)[0],
-                mouseToWorld(mouseX, mouseY)[1],
-                4.5,
-                -3
-              ) < 0.5
-            ) {
-              curve3 = !curve3;
-              rd = 0;
-              gr = 0;
-              bl = 0;
-            }
+          if (
+            dist(
+              mouseToWorld(mouseX, mouseY)[0],
+              mouseToWorld(mouseX, mouseY)[1],
+              4.5,
+              -3
+            ) < 0.5
+          ) {
+            curve3 = !curve3;
+            rd = 0;
+            gr = 0;
+            bl = 0;
           }
         }
       }
@@ -1307,6 +1303,9 @@
   }
 
   function setup() {
+
+    pixelDensity(1.25);
+
     //set aspect ratio and screen width
     r = 9 / 16;
     w = windowWidth;
