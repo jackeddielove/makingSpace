@@ -800,23 +800,21 @@
     //mouseClicked functions
     function mouseClicked() {
       //arrows for changing slides
-      if (mouseToWorld(mouseX, mouseY)[1] < -3.75 && mouseToWorld(mouseX, mouseY)[0] > 7) {
+      if (mouseToWorld(mouseX, mouseY)[1] < -3.75 && mouseToWorld(mouseX, mouseY)[0] > 7.5) {
         counter++
       }
 
-      if (mouseToWorld(mouseX, mouseY)[1] < -3.75 && mouseToWorld(mouseX, mouseY)[0] < -7) {
+      if (mouseToWorld(mouseX, mouseY)[1] < -3.75 && mouseToWorld(mouseX, mouseY)[0] < -7.5) {
         counter--
       }
 
       if (counter == 2) {
         //reset
         if (
-          dist(
-            -6,
-            -3.75,
-            mouseToWorld(mouseX, mouseY)[0],
-            mouseToWorld(mouseX, mouseY)[1]
-          ) < 0.5
+          mouseToWorld(mouseX, mouseY)[0] > -6.75
+          && mouseToWorld(mouseX, mouseY)[0] < -5.25
+          && mouseToWorld(mouseX, mouseY)[1] > -4.125
+          && mouseToWorld(mouseX, mouseY)[1] < -3.375
         ) {
             buttons_2d = [0, 0, 0];
             ptCoords_2d = [5, 3];
@@ -831,12 +829,10 @@
         //turns buttons on slide 1 on and off
         for (i = 0; i < 3; i++) {
           if (
-            dist(
-              -6 + 2 * i,
-              3.75,
-              mouseToWorld(mouseX, mouseY)[0],
-              mouseToWorld(mouseX, mouseY)[1]
-            ) < 0.5
+            mouseToWorld(mouseX, mouseY)[0] > -6.75 + 2*i
+            && mouseToWorld(mouseX, mouseY)[0] < -5.25 + 2*i
+            && mouseToWorld(mouseX, mouseY)[1] > 3.375
+            && mouseToWorld(mouseX, mouseY)[1] < 4.125
           ) {
             buttons_2d[i]++;
           }
@@ -846,12 +842,10 @@
         for (i = -8; i < 9; i++) {
           for (j = -5; j < 6; j++) {
             if (
-              dist(
-                i,
-                j,
-                mouseToWorld(mouseX, mouseY)[0],
-                mouseToWorld(mouseX, mouseY)[1]
-              ) < 0.1
+              mouseToWorld(mouseX, mouseY)[0] > i - 0.1
+              && mouseToWorld(mouseX, mouseY)[0] < i + 0.1
+              && mouseToWorld(mouseX, mouseY)[1] > j - 0.1
+              && mouseToWorld(mouseX, mouseY)[1] < j + 0.1
             ) {
               gridPts[(i + 8) * 11 + (j + 5)] = !gridPts[
                 (i + 8) * 11 + (j + 5)
@@ -876,12 +870,10 @@
       if (counter == 4) {
         //reset
         if (
-          dist(
-            -6,
-            -3.75,
-            mouseToWorld(mouseX, mouseY)[0],
-            mouseToWorld(mouseX, mouseY)[1]
-          ) < 0.5
+          mouseToWorld(mouseX, mouseY)[0] > -6.75
+          && mouseToWorld(mouseX, mouseY)[0] < -5.25
+          && mouseToWorld(mouseX, mouseY)[1] > -4.125
+          && mouseToWorld(mouseX, mouseY)[1] < -3.375
         ) {
             buttons = [0, 0, 0];
             ptCoords = [3, 0, 0];
@@ -891,12 +883,10 @@
         //turns buttons on slide 3 on and off
         for (i = 0; i < 3; i++) {
           if (
-            dist(
-              -6 + 2 * i,
-              3.75,
-              mouseToWorld(mouseX, mouseY)[0],
-              mouseToWorld(mouseX, mouseY)[1]
-            ) < 0.5
+            mouseToWorld(mouseX, mouseY)[0] > -6.75 + 2*i
+            && mouseToWorld(mouseX, mouseY)[0] < -5.25 + 2*i
+            && mouseToWorld(mouseX, mouseY)[1] > 3.375
+            && mouseToWorld(mouseX, mouseY)[1] < 4.125
           ) {
             buttons[i]++;
           }
@@ -919,12 +909,10 @@
 
         //reset button
         if (
-          dist(
-            mouseToWorld(mouseX, mouseY)[0],
-            mouseToWorld(mouseX, mouseY)[1],
-            6,
-            4
-          ) < 0.75
+          mouseToWorld(mouseX, mouseY)[0] > 5
+          && mouseToWorld(mouseX, mouseY)[0] < 7
+          && mouseToWorld(mouseX, mouseY)[1] > 3.625
+          && mouseToWorld(mouseX, mouseY)[1] < 4.375
         ) {
           u1 = createVector(size, 0, 0);
           u2 = createVector(0, size, 0);
@@ -937,12 +925,10 @@
 
         //Xbutton
         if (
-          dist(
-            mouseToWorld(mouseX, mouseY)[0],
-            mouseToWorld(mouseX, mouseY)[1],
-            -6,
-            -1.25
-          ) < 0.75
+          mouseToWorld(mouseX, mouseY)[0] > -7
+          && mouseToWorld(mouseX, mouseY)[0] < -5
+          && mouseToWorld(mouseX, mouseY)[1] > -1.625
+          && mouseToWorld(mouseX, mouseY)[1] < -0.875
         ) {
           if (Xbutton == true && rotated_1 == true) {
             u1 = a1;
@@ -959,12 +945,10 @@
 
         //Ybutton
         if (
-          dist(
-            mouseToWorld(mouseX, mouseY)[0],
-            mouseToWorld(mouseX, mouseY)[1],
-            -6,
-            -2.25
-          ) < 0.75
+          mouseToWorld(mouseX, mouseY)[0] > -7
+          && mouseToWorld(mouseX, mouseY)[0] < -5
+          && mouseToWorld(mouseX, mouseY)[1] > -2.625
+          && mouseToWorld(mouseX, mouseY)[1] < -1.875
         ) {
           if (Ybutton == true && rotated_1 == true) {
             u1 = a1;
@@ -981,12 +965,10 @@
 
         //Zbutton
         if (
-          dist(
-            mouseToWorld(mouseX, mouseY)[0],
-            mouseToWorld(mouseX, mouseY)[1],
-            -6,
-            -3.25
-          ) < 0.75
+          mouseToWorld(mouseX, mouseY)[0] > -7
+          && mouseToWorld(mouseX, mouseY)[0] < -5
+          && mouseToWorld(mouseX, mouseY)[1] > -3.625
+          && mouseToWorld(mouseX, mouseY)[1] < -2.875
         ) {
           if (Zbutton == true && rotated_1 == true) {
             u1 = a1;
@@ -1005,12 +987,10 @@
       if (counter == 9) {
         //reset button
         if (
-          dist(
-            mouseToWorld(mouseX, mouseY)[0],
-            mouseToWorld(mouseX, mouseY)[1],
-            6,
-            4
-          ) < 0.75
+          mouseToWorld(mouseX, mouseY)[0] > 5
+          && mouseToWorld(mouseX, mouseY)[0] < 7
+          && mouseToWorld(mouseX, mouseY)[1] > 3.625
+          && mouseToWorld(mouseX, mouseY)[1] < 4.375
         ) {
           e_1 = [0, 0, 0, size];
           e_2 = [0, 0, size, 0];
@@ -1026,12 +1006,10 @@
         //xyButton
         {
           if (
-            dist(
-              mouseToWorld(mouseX, mouseY)[0],
-              mouseToWorld(mouseX, mouseY)[1],
-              -6,
-              3.125
-            ) < 0.75
+            mouseToWorld(mouseX, mouseY)[0] > -7
+            && mouseToWorld(mouseX, mouseY)[0] < -5
+            && mouseToWorld(mouseX, mouseY)[1] > 2.75
+            && mouseToWorld(mouseX, mouseY)[1] < 3.5
           ) {
             if (xyButton == true && rotated == true) {
               e_1 = a_1;
@@ -1061,12 +1039,10 @@
         //xzButton
         {
           if (
-            dist(
-              mouseToWorld(mouseX, mouseY)[0],
-              mouseToWorld(mouseX, mouseY)[1],
-              -6,
-              1.875
-            ) < 0.75
+            mouseToWorld(mouseX, mouseY)[0] > -7
+            && mouseToWorld(mouseX, mouseY)[0] < -5
+            && mouseToWorld(mouseX, mouseY)[1] > 1.5
+            && mouseToWorld(mouseX, mouseY)[1] < 2.25
           ) {
             if (xzButton == true && rotated == true) {
               e_1 = a_1;
@@ -1096,12 +1072,10 @@
         //xwButton
         {
           if (
-            dist(
-              mouseToWorld(mouseX, mouseY)[0],
-              mouseToWorld(mouseX, mouseY)[1],
-              -6,
-              0.625
-            ) < 0.75
+            mouseToWorld(mouseX, mouseY)[0] > -7
+            && mouseToWorld(mouseX, mouseY)[0] < -5
+            && mouseToWorld(mouseX, mouseY)[1] > 0.25
+            && mouseToWorld(mouseX, mouseY)[1] < 1
           ) {
             if (xwButton == true && rotated == true) {
               e_1 = a_1;
@@ -1131,12 +1105,10 @@
         //yzButton
         {
           if (
-            dist(
-              mouseToWorld(mouseX, mouseY)[0],
-              mouseToWorld(mouseX, mouseY)[1],
-              -6,
-              -0.625
-            ) < 0.75
+            mouseToWorld(mouseX, mouseY)[0] > -7
+            && mouseToWorld(mouseX, mouseY)[0] < -5
+            && mouseToWorld(mouseX, mouseY)[1] > -1
+            && mouseToWorld(mouseX, mouseY)[1] < -0.25
           ) {
             if (yzButton == true && rotated == true) {
               e_1 = a_1;
@@ -1166,12 +1138,10 @@
         //ywButton
         {
           if (
-            dist(
-              mouseToWorld(mouseX, mouseY)[0],
-              mouseToWorld(mouseX, mouseY)[1],
-              -6,
-              -1.875
-            ) < 0.75
+            mouseToWorld(mouseX, mouseY)[0] > -7
+            && mouseToWorld(mouseX, mouseY)[0] < -5
+            && mouseToWorld(mouseX, mouseY)[1] > -2.25
+            && mouseToWorld(mouseX, mouseY)[1] < -1.5
           ) {
             if (ywButton == true && rotated == true) {
               e_1 = a_1;
@@ -1201,12 +1171,10 @@
         //zwButton
         {
           if (
-            dist(
-              mouseToWorld(mouseX, mouseY)[0],
-              mouseToWorld(mouseX, mouseY)[1],
-              -6,
-              -3.125
-            ) < 0.75
+            mouseToWorld(mouseX, mouseY)[0] > -7
+            && mouseToWorld(mouseX, mouseY)[0] < -5
+            && mouseToWorld(mouseX, mouseY)[1] > -3.5
+            && mouseToWorld(mouseX, mouseY)[1] < -2.75
           ) {
             if (zwButton == true && rotated == true) {
               e_1 = a_1;
