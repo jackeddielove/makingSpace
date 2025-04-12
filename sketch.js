@@ -895,10 +895,10 @@
 
       if (counter == 5) {
         //turns bullet points on in slide 4
-        for (i = 0; i < 3; i++) {
+        for (i = 0; i < 4; i++) {
           if (
-            dist(0.5 * unit, (2.2 + 2 * i) * unit, mouseX, mouseY) <
-            unit / 4
+            mouseX < 0.6 * unit && mouseX > 0.4 * unit
+            && mouseY < (2.3 + 1.5 * i) * unit && mouseY > (2.1 + 1.5 * i) * unit
           ) {
             bullets_3d[i] = !bullets_3d[i];
           }
@@ -1719,18 +1719,9 @@ function draw() {
       circle(-width / 2 + 0.5 * unit, 2.2 * unit, 0.25 * unit);
 
       text(
-        "r     -s\ns      r",
+        "cos(t)     -sin(t)\nsin(t)      cos(t)",
         4.5 * unit,
         3.3 * unit,
-        6 * unit,
-        2 * unit
-      );
-
-      textSize(0.8 * unit);
-      text(
-        "(     )",
-        4.1 * unit,
-        3.6 * unit,
         6 * unit,
         2 * unit
       );
@@ -1977,53 +1968,68 @@ function draw() {
     stroke("white");
 
     circle(-width / 2 + 0.5 * unit, -2.3 * unit, 0.25 * unit);
-    circle(-width / 2 + 0.5 * unit, -0.3 * unit, 0.25 * unit);
-    circle(-width / 2 + 0.5 * unit, 1.7 * unit, 0.25 * unit);
+    circle(-width / 2 + 0.5 * unit, -0.8 * unit, 0.25 * unit);
+    circle(-width / 2 + 0.5 * unit, 0.7 * unit, 0.25 * unit);
+    circle(-width / 2 + 0.5 * unit, 2.2 * unit, 0.25 * unit);
 
     //rows
-    textSize(unit / 2.5);
+    textSize(unit / 3);
     noStroke();
     fill("white");
 
     //row 1
-    text("point", -4 * unit, -1.15 * unit, 6 * unit, 2 * unit);
+    text("point", -4 * unit, -1.2 * unit, 6 * unit, 2 * unit);
 
     if (bullets_3d[0] === true) {
       circle(-width / 2 + 0.5 * unit, -2.3 * unit, 0.25 * unit);
       text(
-        "a triple of numbers (x, y, z)",
-        4 * unit,
-        -1.15 * unit,
+        "(x, y, z)",
+        4.5 * unit,
+        -1.2 * unit,
         6 * unit,
         2 * unit
       );
     }
 
     //row 2
-    text("plane", -4 * unit, 0.8 * unit, 6 * unit, 2 * unit);
+    text("plane", -4 * unit, 0.3 * unit, 6 * unit, 2 * unit);
     if (bullets_3d[1] === true) {
-      circle(-width / 2 + 0.5 * unit, -0.3 * unit, 0.25 * unit);
+      circle(-width / 2 + 0.5 * unit, -0.8 * unit, 0.25 * unit);
 
       text(
-        "triples (x, y, z) that fit a linear condition                      ax + by + cz = d",
-        4 * unit,
-        0.4 * unit,
+        "ax + by + cz = d",
+        4.5 * unit,
+        0.3 * unit,
         6 * unit,
         2 * unit
       );
     }
 
     //row 3
-    text("unit cube", -4 * unit, 2.8 * unit, 6 * unit, 2 * unit);
+    text("unit cube", -4 * unit, 1.8 * unit, 6 * unit, 2 * unit);
     if (bullets_3d[2] === true) {
-      circle(-width / 2 + 0.5 * unit, 1.7 * unit, 0.25 * unit);
+      circle(-width / 2 + 0.5 * unit, 0.7 * unit, 0.25 * unit);
 
       text(
-        "has vertices      (0, 0, 0)   (0, 0, 1)   (0, 1, 0)   (0, 1, 1)  (1, 0, 0)   (1, 0, 1)   (1, 1, 0)   (1, 1, 1)",
-        2.9 * unit,
-        2.8 * unit,
-        3.75 * unit,
-        2.5 * unit
+        "(0, 0, 0)   (0, 0, 1)   (0, 1, 0)   (0, 1, 1)\n(1, 0, 0)   (1, 0, 1)   (1, 1, 0)   (1, 1, 1)",
+        3.9 * unit,
+        1.8 * unit,
+        6.5 * unit,
+        2 * unit
+      );
+    }
+
+    //row 4
+    text("rotation", -4 * unit, 3.3 * unit, 6 * unit, 2 * unit);
+    if (bullets_3d[3] === true) {
+      circle(-width / 2 + 0.5 * unit, 2.2 * unit, 0.25 * unit);
+
+      text(
+        "cos(t)     -sin(t)\nsin(t)      cos(t)",
+        4.5 * unit,
+        3.3 * unit,
+        6 * unit,
+        2 * unit
       );
     }
   }
