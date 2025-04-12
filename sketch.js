@@ -1653,6 +1653,7 @@ function draw() {
     textSize(unit);
     textAlign(LEFT);
     stroke("white");
+    fill("white");
     text("2D Space", -6.5 * unit, -3.5 * unit);
     text("Numbers", 1.5 * unit, -3.5 * unit);
 
@@ -1725,6 +1726,10 @@ function draw() {
         6 * unit,
         2 * unit
       );
+
+      noFill()
+      stroke(255)
+      rect(2.725 * unit, 2.45 * unit, 2.7 * unit, 1.2 * unit)
     }
   }
 
@@ -1984,7 +1989,7 @@ function draw() {
       circle(-width / 2 + 0.5 * unit, -2.3 * unit, 0.25 * unit);
       text(
         "(x, y, z)",
-        4.5 * unit,
+        3.5 * unit,
         -1.2 * unit,
         6 * unit,
         2 * unit
@@ -1998,7 +2003,7 @@ function draw() {
 
       text(
         "ax + by + cz = d",
-        4.5 * unit,
+        3.5 * unit,
         0.3 * unit,
         6 * unit,
         2 * unit
@@ -2012,8 +2017,8 @@ function draw() {
 
       text(
         "(0, 0, 0)   (0, 0, 1)   (0, 1, 0)   (0, 1, 1)\n(1, 0, 0)   (1, 0, 1)   (1, 1, 0)   (1, 1, 1)",
-        3.9 * unit,
-        1.8 * unit,
+        3.7 * unit,
+        1.5 * unit,
         6.5 * unit,
         2 * unit
       );
@@ -2024,13 +2029,32 @@ function draw() {
     if (bullets_3d[3] === true) {
       circle(-width / 2 + 0.5 * unit, 2.2 * unit, 0.25 * unit);
 
+      textSize(0.3 * unit)
       text(
-        "cos(t)     -sin(t)\nsin(t)      cos(t)",
-        4.5 * unit,
-        3.3 * unit,
+        "cos(t)     -sin(t)     0\nsin(t)      cos(t)     0\n0             0            1",
+        3.5 * unit,
+        3 * unit,
         6 * unit,
         2 * unit
       );
+
+      text(
+        "cos(t)     0     -sin(t)\n0            1     0\ncos(t)     0     sin(t)",
+        7.5 * unit,
+        3 * unit,
+        6 * unit,
+        2 * unit
+      );
+
+      text(
+        "1      0            0\n0      cos(t)     -sin(t)\n0      sin(t)      cos(t)",
+        3.5 * unit,
+        4.5 * unit,
+        6 * unit,
+        2 * unit
+      );
+
+
     }
   }
 
