@@ -86,7 +86,7 @@
   //slide 3 -- 2D table
   {
     //bullet points state
-    bullets = [false, false, false];
+    bullets = [false, false, false, false];
   }
 
   //slide 4 -- 3D
@@ -857,10 +857,10 @@
 
       if (counter == 3) {
         //turns bullet points on in slide 2
-        for (i = 0; i < 3; i++) {
+        for (i = 0; i < 4; i++) {
           if (
-            dist(0.5 * unit, (2.2 + 2 * i) * unit, mouseX, mouseY) <
-            unit / 4
+            mouseX < 0.6 * unit && mouseX > 0.4 * unit
+            && mouseY < (2.3 + 1.5 * i) * unit && mouseY > (2.1 + 1.5 * i) * unit
           ) {
             bullets[i] = !bullets[i];
           }
@@ -920,6 +920,7 @@
           xTheta = 0;
           yTheta = 0;
           zTheta = 0;
+          rotated_1 = false;
         }
 
 
@@ -1002,6 +1003,7 @@
           yzTheta = 0;
           ywTheta = 0;
           zwTheta = 0;
+          rotated = false;
         }
         //xyButton
         {
@@ -1660,52 +1662,76 @@ function draw() {
     stroke("white");
 
     circle(-width / 2 + 0.5 * unit, -2.3 * unit, 0.25 * unit);
-    circle(-width / 2 + 0.5 * unit, -0.3 * unit, 0.25 * unit);
-    circle(-width / 2 + 0.5 * unit, 1.7 * unit, 0.25 * unit);
+    circle(-width / 2 + 0.5 * unit, -0.8 * unit, 0.25 * unit);
+    circle(-width / 2 + 0.5 * unit, 0.7 * unit, 0.25 * unit);
+    circle(-width / 2 + 0.5 * unit, 2.2 * unit, 0.25 * unit);
 
     //rows
-    textSize(unit / 2.5);
+    textSize(unit / 3);
     noStroke();
     fill("white");
 
     //row 1
-    text("point", -4 * unit, -1.15 * unit, 6 * unit, 2 * unit);
+    text("point", -4 * unit, -1.2 * unit, 6 * unit, 2 * unit);
 
     if (bullets[0] === true) {
       circle(-width / 2 + 0.5 * unit, -2.3 * unit, 0.25 * unit);
       text(
-        "a pair of numbers (x, y)",
-        4 * unit,
-        -1.15 * unit,
+        "(x, y)",
+        4.5 * unit,
+        -1.2 * unit,
         6 * unit,
         2 * unit
       );
     }
 
     //row 2
-    text("line", -4 * unit, 0.8 * unit, 6 * unit, 2 * unit);
+    text("line", -4 * unit, 0.3 * unit, 6 * unit, 2 * unit);
     if (bullets[1] === true) {
-      circle(-width / 2 + 0.5 * unit, -0.3 * unit, 0.25 * unit);
+      circle(-width / 2 + 0.5 * unit, -0.8 * unit, 0.25 * unit);
 
       text(
-        "pairs (x, y) that fit a linear condition ax + by = c",
-        4 * unit,
-        0.8 * unit,
+        "ax + by = c",
+        4.5 * unit,
+        0.3 * unit,
         6 * unit,
         2 * unit
       );
     }
 
     //row 3
-    text("unit square", -4 * unit, 2.8 * unit, 6 * unit, 2 * unit);
+    text("unit square", -4 * unit, 1.8 * unit, 6 * unit, 2 * unit);
     if (bullets[2] === true) {
-      circle(-width / 2 + 0.5 * unit, 1.7 * unit, 0.25 * unit);
+      circle(-width / 2 + 0.5 * unit, 0.7 * unit, 0.25 * unit);
 
       text(
-        "has vertices (0, 0)   (0, 1)   (1, 0)   (1, 1)",
-        4 * unit,
-        2.8 * unit,
-        3 * unit,
+        "(0, 0)   (0, 1)   (1, 0)   (1, 1)",
+        4.5 * unit,
+        1.8 * unit,
+        6 * unit,
+        2 * unit
+      );
+    }
+
+    //row 4
+    text("rotation", -4 * unit, 3.3 * unit, 6 * unit, 2 * unit);
+    if (bullets[3] === true) {
+      circle(-width / 2 + 0.5 * unit, 2.2 * unit, 0.25 * unit);
+
+      text(
+        "r     -s\ns      r",
+        4.5 * unit,
+        3.3 * unit,
+        6 * unit,
+        2 * unit
+      );
+
+      textSize(0.8 * unit);
+      text(
+        "(     )",
+        4.1 * unit,
+        3.6 * unit,
+        6 * unit,
         2 * unit
       );
     }
