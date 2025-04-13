@@ -97,6 +97,10 @@
     ptCoords = [3, 0, 0];
     //starting coefficients of plane
     plCoefficients = [1, 1, -1, 0];
+    //rotating cube
+    cubeX = 0;
+    cubeY = 0;
+    cubeZ = 0;
   }
 
   //slide 5 -- 3D table
@@ -483,7 +487,11 @@
         }
 
         //rotate square
-        if (buttons_2d[0]%3 == 0 && buttons_2d[1]%3 == 0 && buttons_2d[2]%3 == 1) {
+        if (mouseX < width/2 + 0.5 * unit
+          && mouseX > width/2 - 0.5 * unit
+          && mouseY < height/2 + 0.5 * unit
+          && mouseY > height/2 - 0.5 * unit
+          && buttons_2d[2]%3 == 1) {
           if (event.delta > 0) {
             angle--;
           }
@@ -615,6 +623,36 @@
             }
             if (event.delta < 0) {
               plCoefficients[3]++;
+            }
+          }
+        }
+
+        //rotate cube
+        {
+          if (keyIsPressed === true && key === "x") {
+            if (event.delta > 0) {
+              cubeX--;
+            }
+            if (event.delta < 0) {
+              cubeX++;
+            }
+          }
+
+          if (keyIsPressed === true && key === "y") {
+            if (event.delta > 0) {
+              cubeY--;
+            }
+            if (event.delta < 0) {
+              cubeY++;
+            }
+          }
+
+          if (keyIsPressed === true && key === "z") {
+            if (event.delta > 0) {
+              cubeZ--;
+            }
+            if (event.delta < 0) {
+              cubeZ++;
             }
           }
         }
@@ -816,7 +854,7 @@
           && mouseToWorld(mouseX, mouseY)[1] > -4.125
           && mouseToWorld(mouseX, mouseY)[1] < -3.375
         ) {
-            buttons_2d = [0, 0, 0];
+            // buttons_2d = [0, 0, 0];
             ptCoords_2d = [5, 3];
             coefficients = [1, 1, 4];
             for (i = 0; i < 187; i++) {
@@ -875,9 +913,12 @@
           && mouseToWorld(mouseX, mouseY)[1] > -4.125
           && mouseToWorld(mouseX, mouseY)[1] < -3.375
         ) {
-            buttons = [0, 0, 0];
+            // buttons = [0, 0, 0];
             ptCoords = [3, 0, 0];
-            plCoefficients = [1, 1, -1, 0];           
+            plCoefficients = [1, 1, -1, 0];
+            cubeX = 0;
+            cubeY = 0;
+            cubeZ = 0;         
           }
 
         //turns buttons on slide 3 on and off
@@ -1342,7 +1383,6 @@
 }
 
 function draw() {
-
   //general
   {
     // if (keyIsPressed && keyCode === SHIFT) {
@@ -1652,7 +1692,6 @@ function draw() {
     //headers
     textSize(unit);
     textAlign(LEFT);
-    stroke("white");
     fill("white");
     text("2D Space", -6.5 * unit, -3.5 * unit);
     text("Numbers", 1.5 * unit, -3.5 * unit);
@@ -1729,7 +1768,7 @@ function draw() {
 
       noFill()
       stroke(255)
-      rect(2.725 * unit, 2.45 * unit, 2.7 * unit, 1.2 * unit)
+      rect(2.725 * unit, 2.45 * unit, 2.8 * unit, 1.1 * unit)
     }
   }
 
@@ -1917,6 +1956,9 @@ function draw() {
       cubeColor.setAlpha(128);
       fill(cubeColor);
       push();
+      rotateX(cubeX / 10);
+      rotateY(cubeY / 10);
+      rotateZ(cubeZ / 10);
       translate(unit / 2, unit / 2, unit / 2);
       box(unit);
       noFill();
@@ -1943,7 +1985,7 @@ function draw() {
             rotateX(-PI / 2);
             translate(-0.5 * unit + i * 2 * unit, -j * unit, k * unit);
             fill("white");
-            text("(" + i + "," + j + "," + k + ")", 0, 0);
+            text("(" + i + "," + k + "," + j + ")", 0, 0);
             pop();
           }
         }
@@ -1963,7 +2005,7 @@ function draw() {
     //headers
     textSize(unit);
     textAlign(LEFT);
-    stroke("white");
+    fill("white");
     text("3D Space", -6.5 * unit, -3.5 * unit);
     text("Numbers", 1.5 * unit, -3.5 * unit);
 
@@ -2037,7 +2079,7 @@ function draw() {
         6 * unit,
         2 * unit
       );
-
+ 
       text(
         "cos(t)     0     -sin(t)\n0            1     0\ncos(t)     0     sin(t)",
         7.5 * unit,
@@ -2047,12 +2089,18 @@ function draw() {
       );
 
       text(
-        "1      0            0\n0      cos(t)     -sin(t)\n0      sin(t)      cos(t)",
+        "1     0            0\n0     cos(t)     -sin(t)\n0     sin(t)      cos(t)",
         3.5 * unit,
         4.5 * unit,
         6 * unit,
         2 * unit
       );
+
+      noFill()
+      stroke("white")
+      rect(1.9 * unit, 2.25 * unit, 3.1 * unit, 1.3 * unit)
+      rect(5.9 * unit, 2.25 * unit, 3.1 * unit, 1.3 * unit)
+      rect(1.9 * unit, 3.75 * unit, 3.1 * unit, 1.3 * unit)
 
 
     }
@@ -2083,6 +2131,7 @@ function draw() {
 
     //columns
     textSize(unit);
+    fill("white")
     text("Space", -6 * unit, -3.5 * unit);
     text("Numbers", 2 * unit, -3.5 * unit);
 
