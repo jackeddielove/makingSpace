@@ -1385,9 +1385,13 @@
 function draw() {
   //general
   {
-    // if (keyIsPressed && keyCode === SHIFT) {
-    //   orbitControl();
-    // }
+    if (keyIsPressed && keyCode === SHIFT) {
+      orbitControl();
+    }
+
+    if (keyIsPressed && key === "q") {
+      camera();
+    }
 
     if (counter == 13) {
       background(rd, gr, bl);
