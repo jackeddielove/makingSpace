@@ -1956,9 +1956,9 @@ function draw() {
       cubeColor.setAlpha(128);
       fill(cubeColor);
       push();
-      rotateX(cubeX / 10);
-      rotateY(cubeY / 10);
-      rotateZ(cubeZ / 10);
+      rotateX(cubeX / 5);
+      rotateY(cubeY / 5);
+      rotateZ(cubeZ / 5);
       translate(unit / 2, unit / 2, unit / 2);
       box(unit);
       noFill();
@@ -2097,6 +2097,7 @@ function draw() {
       );
 
       noFill()
+      strokeWeight(unit / 50);
       stroke("white")
       rect(1.9 * unit, 2.25 * unit, 3.1 * unit, 1.3 * unit)
       rect(5.9 * unit, 2.25 * unit, 3.1 * unit, 1.3 * unit)
