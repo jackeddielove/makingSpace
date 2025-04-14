@@ -991,9 +991,11 @@
             yTheta = 0;
             zTheta = 0;
           }
-          if (Ybutton == false && Zbutton == false) {
-            Xbutton = !Xbutton;
-          }
+          // if (Ybutton == false && Zbutton == false) {
+          //   Xbutton = !Xbutton;
+          // }
+          Xbutton = !Xbutton;
+
         }
 
         //Ybutton
@@ -1011,9 +1013,10 @@
             yTheta = 0;
             zTheta = 0;
           }
-          if (Xbutton == false && Zbutton == false) {
-            Ybutton = !Ybutton;
-          }
+          // if (Xbutton == false && Zbutton == false) {
+          //   Ybutton = !Ybutton;
+          // }
+          Ybutton = !Ybutton;
         }
 
         //Zbutton
@@ -1031,9 +1034,10 @@
             yTheta = 0;
             zTheta = 0;
           }
-          if (Xbutton == false && Ybutton == false) {
-            Zbutton = !Zbutton;
-          }
+          // if (Xbutton == false && Ybutton == false) {
+          //   Zbutton = !Zbutton;
+          // }
+          Zbutton = !Zbutton;
         }
       }
 
@@ -1078,15 +1082,17 @@
               ywTheta = 0;
               zwTheta = 0;
             }
-            if (
-              xzButton == false &&
-              xwButton == false &&
-              yzButton == false &&
-              ywButton == false &&
-              zwButton == false
-            ) {
-              xyButton = !xyButton;
-            }
+            // if (
+            //   xzButton == false &&
+            //   xwButton == false &&
+            //   yzButton == false &&
+            //   ywButton == false &&
+            //   zwButton == false
+            // ) {
+            //   xyButton = !xyButton;
+            // }
+            xyButton = !xyButton;
+
           }
         }
 
@@ -1111,15 +1117,16 @@
               ywTheta = 0;
               zwTheta = 0;
             }
-            if (
-              xyButton == false &&
-              xwButton == false &&
-              yzButton == false &&
-              ywButton == false &&
-              zwButton == false
-            ) {
-              xzButton = !xzButton;
-            }
+            // if (
+            //   xyButton == false &&
+            //   xwButton == false &&
+            //   yzButton == false &&
+            //   ywButton == false &&
+            //   zwButton == false
+            // ) {
+            //   xzButton = !xzButton;
+            // }
+            xzButton = !xzButton;
           }
         }
 
@@ -1144,15 +1151,16 @@
               ywTheta = 0;
               zwTheta = 0;
             }
-            if (
-              xyButton == false &&
-              xzButton == false &&
-              yzButton == false &&
-              ywButton == false &&
-              zwButton == false
-            ) {
-              xwButton = !xwButton;
-            }
+            // if (
+            //   xyButton == false &&
+            //   xzButton == false &&
+            //   yzButton == false &&
+            //   ywButton == false &&
+            //   zwButton == false
+            // ) {
+            //   xwButton = !xwButton;
+            // }
+            xwButton = !xwButton;
           }
         }
 
@@ -1177,15 +1185,16 @@
               ywTheta = 0;
               zwTheta = 0;
             }
-            if (
-              xyButton == false &&
-              xzButton == false &&
-              xwButton == false &&
-              ywButton == false &&
-              zwButton == false
-            ) {
-              yzButton = !yzButton;
-            }
+            // if (
+            //   xyButton == false &&
+            //   xzButton == false &&
+            //   xwButton == false &&
+            //   ywButton == false &&
+            //   zwButton == false
+            // ) {
+            //   yzButton = !yzButton;
+            // }
+            yzButton = !yzButton;
           }
         }
 
@@ -1210,15 +1219,16 @@
               ywTheta = 0;
               zwTheta = 0;
             }
-            if (
-              xyButton == false &&
-              xzButton == false &&
-              xwButton == false &&
-              yzButton == false &&
-              zwButton == false
-            ) {
-              ywButton = !ywButton;
-            }
+            // if (
+            //   xyButton == false &&
+            //   xzButton == false &&
+            //   xwButton == false &&
+            //   yzButton == false &&
+            //   zwButton == false
+            // ) {
+            //   ywButton = !ywButton;
+            // }
+            ywButton = !ywButton;
           }
         }
 
@@ -1243,15 +1253,16 @@
               ywTheta = 0;
               zwTheta = 0;
             }
-            if (
-              xyButton == false &&
-              xzButton == false &&
-              xwButton == false &&
-              yzButton == false &&
-              ywButton == false
-            ) {
-              zwButton = !zwButton;
-            }
+            // if (
+            //   xyButton == false &&
+            //   xzButton == false &&
+            //   xwButton == false &&
+            //   yzButton == false &&
+            //   ywButton == false
+            // ) {
+            //   zwButton = !zwButton;
+            // }
+            zwButton = !zwButton;
           }
         }
       }
