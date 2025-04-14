@@ -363,9 +363,20 @@
     s = 5;
   }
 
-  //slide 12 -- part 3 title
+  //slide 12 -- short version summary
+  {
+    //bullet points state
+    summaryBullets = [false, false, false, false];
+  }
 
-  //slide 13 -- RGB space
+  //slide 13 -- short version final slide
+  {
+
+  }
+
+  //slide 14 -- part 3 title
+
+  //slide 15 -- RGB space
   {
     rd = 0;
     gr = 0;
@@ -391,7 +402,7 @@
     }
   }
 
-  //slide 14 -- CMYK space
+  //slide 16 -- CMYK space
   {
     cy = 1;
     mg = 1;
@@ -821,7 +832,7 @@
         }
       }
 
-      if (counter == 13) {
+      if (counter == 15) {
         if (curve1 == true || curve2 == true || curve3 == true) {
           if (event.delta > 0 && rgbTimer > 0) {
             rgbTimer -= rgbSpeed;
@@ -1245,7 +1256,29 @@
         }
       }
 
-      if (counter == 13) {
+      if (counter == 12) {
+        //turns bullet points on in summary slide
+          if (
+            mouseX < 1.1 * unit && mouseX > 0.9 * unit
+            && mouseY < 2.6 * unit && mouseY > 2.4 * unit
+          ) {
+            summaryBullets[0] = !summaryBullets[0];
+          }
+
+          for (let i = 1; i < 4; i++) {
+            if (
+              mouseX < 1.1 * unit && mouseX > 0.9 * unit
+              && mouseY < (3.7 + 1.75 * (i-1)) * unit && mouseY > (3.5 + 1.75 * (i-1)) * unit
+            ) {
+              summaryBullets[i] = !summaryBullets[i];
+            }
+          }
+
+
+        
+      }
+
+      if (counter == 15) {
         if (
           dist(
             mouseToWorld(mouseX, mouseY)[0],
@@ -1393,14 +1426,14 @@ function draw() {
       camera();
     }
 
-    if (counter == 13) {
+    if (counter == 15) {
       background(rd, gr, bl);
     }
 
-    if (counter == 14) {
+    if (counter == 16) {
       background(cmykToRgb(cy, mg, yw, bk)[0], cmykToRgb(cy, mg, yw, bk)[1], cmykToRgb(cy, mg, yw, bk)[2]);
     }
-    if (counter != 13 && counter != 14) {
+    if (counter != 15 && counter != 16) {
       background("black");
     }
 
@@ -3268,8 +3301,91 @@ function draw() {
     pop();
   }
 
-  //part 3 title slide
+  //short version summary
   if (counter == 12) {
+
+    noFill();
+    strokeWeight(unit / 50);
+    stroke("white");
+
+    circle(-7.0 * unit, -2 * unit, 0.25 * unit);
+    circle(-7.0 * unit, -0.9 * unit, 0.25 * unit);
+    circle(-7.0 * unit, 0.85 * unit, 0.25 * unit);
+    circle(-7.0 * unit, 2.6 * unit, 0.25 * unit);
+
+    push();
+    translate(-7.0 * unit, 0.0 * unit);
+    textAlign(LEFT);
+    noStroke();
+    fill("white");
+
+    textSize(1 * unit);
+    text("Summary", unit, -3 * unit);
+
+    textSize(0.5 * unit);
+    if (summaryBullets[0] === true) {
+      circle(0, -2 * unit, 0.25 * unit);
+      text("Higher dimensions exist", unit, -1.85 * unit);
+    }
+    if (summaryBullets[1] === true) {
+      circle(0, -0.9 * unit, 0.25 * unit);
+      text("There are high-dimensional versions of\n2D and 3D objects", unit, -0.75 * unit);
+    }    
+    if (summaryBullets[2] === true) {
+      circle(0, 0.85 * unit, 0.25 * unit);
+      text("We can \"see\" higher dimensions by\nlooking at slices and shadows", unit, 1 * unit);
+    }
+    if (summaryBullets[3] === true) {
+      circle(0, 2.6 * unit, 0.25 * unit);
+      text("Mathematics is a creative process that connects\nour world and our imagination", unit, 2.75 * unit);
+    }
+    pop();
+  }
+
+  //short version final slide
+  if (counter == 13) {
+    push();
+    translate(-7.0 * unit, 0.0 * unit);
+    textAlign(LEFT);
+    fill("white");
+
+    textSize(1.8 * unit);
+    text("Thank you!", 0, 0);
+
+    textSize(0.5 * unit);
+    text("jackeddielove.github.io", 0, 4 * unit);
+
+    // textSize(0.75 * unit);
+    // text("The mathematics of", 0, 1.125 * unit);
+    // text("higher dimensions", 0, 1.895 * unit);
+    pop();
+
+    push();
+    scale(2.5 * unit, 2.5 * unit, 2.5 * unit);
+    translate(-0.25, 0);
+    rotateX(PI / 3);
+    rotateZ(PI / 6);
+    stroke('white');
+    strokeWeight(0.01 * unit);
+    for (j = 0; j < 15; j++) {
+      for (i = j + 1; i < 16; i++) {
+        if (arrComp(P[j], P[i]) == true) {
+          edge(titleRotation(phi_x, phi_y, phi_z, P[j]), titleRotation(phi_x, phi_y, phi_z, P[i]));
+        }
+      }
+    }
+    pop();
+
+    let slowDown = 100
+
+    titleTimer++;
+    phi_x = sin(titleTimer / slowDown);
+    phi_y = cos(1.5 * titleTimer / slowDown);
+    phi_z = sin(titleTimer / slowDown) * cos(titleTimer / slowDown);
+  }
+
+  //part 3 title slide
+  if (counter == 14) {
     push();
     translate(-7.0 * unit, 0.0 * unit);
     textAlign(LEFT);
@@ -3283,21 +3399,11 @@ function draw() {
 
     textSize(0.75 * unit);
     text("mathematical vs physical space", 0, 2.625 * unit);
-
-    //     textSize(1.5 * unit);
-    //     text("Part 3", 0,0);
-
-    //     textSize(1 * unit);
-    //     text("The map and", 0,1.5*unit);
-    //     text("the territory", -0,2.5*unit);
-
-    //     textSize(0.75 * unit);
-    //     text("mathematical vs physical space", 0, 3.625 * unit);
     pop();
   }
 
   //RGB space
-  if (counter == 13) {
+  if (counter == 15) {
     if (rgbTimer < 0) {
       rgbTimer = 0;
     }
@@ -3612,7 +3718,7 @@ function draw() {
   }
 
   //CMYK space
-  if (counter == 14) {
+  if (counter == 16) {
     // //buttons
     // {
     //   rectMode(CENTER);
