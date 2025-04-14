@@ -673,7 +673,7 @@
         if (event.delta > 0) {
           h -= hSpeed;
         }
-        if (event.delta < 0) {
+        if (event.delta < 0 && h < 0) {
           h += hSpeed;
         }
       }
@@ -2159,10 +2159,10 @@ function draw() {
     //borders
     stroke("white");
     strokeWeight(0.08 * unit);
-    line(-width / 2, -3.1 * unit, width / 2, -3.1 * unit);
+    line(-width / 2, -3.1 * unit, 12 * width / 2, -3.1 * unit);
     line(-4 * unit, -height / 2, -4 * unit, height / 2);
     strokeWeight(0.04 * unit);
-    line(-4 * unit, -2.5 * unit, width / 2, -2.5 * unit);
+    line(-4 * unit, -2.5 * unit, 12 * width / 2, -2.5 * unit);
 
     //headers
     textAlign(CENTER);
@@ -2182,7 +2182,7 @@ function draw() {
     //scrolling part of table
     push();
     translate(h, 0, -0.15);
-    for (i = 0; i < 5; i++) {
+    for (i = 0; i < 20; i++) {
       line(
         -4 * unit + i * 6 * unit,
         -3.1 * unit,
@@ -2192,6 +2192,23 @@ function draw() {
       dim = i + 2;
       text(dim + "D", -unit + i * 6 * unit, -2.65 * unit);
     }
+
+    for (i = 4; i < 20; i++) {
+      line(
+        -4 * unit + i * 6 * unit,
+        -3.1 * unit,
+        -4 * unit + i * 6 * unit,
+        5 * unit
+      );
+      dim = i + 2;
+      text(dim + " numbers", -unit + i * 6 * unit, -1.5 * unit);
+      text("equation in "+dim + " variables", -unit + i * 6 * unit, 0.75 * unit);
+      text("2   vertices", -unit + i * 6 * unit, 3 * unit);
+      textSize(0.25 * unit);
+      text(dim, -1.75 * unit + i * 6 * unit, 2.8 * unit);
+      textSize(0.4 * unit);
+    }
+
     //2D column
     text("(x, y)", -unit, -1.5 * unit);
     text("ax + by = c", -unit, 0.75 * unit);
