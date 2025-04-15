@@ -3380,8 +3380,8 @@ function draw() {
     textSize(1.8 * unit);
     text("Thank you!", 0, 0);
 
-    textSize(0.5 * unit);
-    text("jackeddielove.github.io", 0, 4 * unit);
+    // textSize(0.5 * unit);
+    // text("jackeddielove.github.io", 0, 4 * unit);
 
     // textSize(0.75 * unit);
     // text("The mathematics of", 0, 1.125 * unit);
