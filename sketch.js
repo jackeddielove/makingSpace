@@ -1,24 +1,48 @@
 //////////////////////////
 //////////////////////////
 //////////////////////////
+//There are two versions.
+//A short version is played when 'version' is set to false
+//A long version is played when 'version' is set to true
+//In the short version we have
+//slide 12: summary
+//slide 13: final
+//slide 14: part 3 title
+//slide 15: rgb space
+//slide 16: cmyk space
+//In the long version we have
+//slide 12: part 3 title
+//slide 13: rgb space
+//slide 14: cmyk space
+//slide 15: summary
+//slide 16: final
+
+//////////////////////////
+//////////////////////////
+//////////////////////////
 //preamble
 {
   //general
   {
     //slide counter
     counter = 0;
+    //version tracker
+    version = false;
 
-    //advance slides
+    //advance slides and set version
     function keyPressed() {
       if (keyCode === RIGHT_ARROW) {
         counter++;
       }
-      if (keyCode === LEFT_ARROW && counter > 0) {
+      if (keyCode === LEFT_ARROW && counter > -1) {
         counter--;
       }
       if (key === "f") {
         let fs = fullscreen();
         fullscreen(!fs);
+      }
+      if (counter == -1 && key === "v") {
+        version = !version;
       }
       return false;
     }
@@ -60,8 +84,6 @@
 
     //also used here are edge, arrComp, and p_i from slide 10
   }
-
-  //slide 1 -- part 1 title
 
   //slide 2 -- 2D
   {
@@ -115,8 +137,6 @@
     h = 0;
     hSpeed = 20;
   }
-
-  //slide 7 -- part 2 title
 
   //slide 8 -- projecting 3D to 2D
   {
@@ -363,20 +383,13 @@
     s = 5;
   }
 
-  //slide 12 -- short version summary
+  //summary slide (short version 12; long version 15)
   {
     //bullet points state
     summaryBullets = [false, false, false, false];
   }
 
-  //slide 13 -- short version final slide
-  {
-
-  }
-
-  //slide 14 -- part 3 title
-
-  //slide 15 -- RGB space
+  //RGB space (short version 15; long version 13)
   {
     rd = 0;
     gr = 0;
@@ -402,7 +415,7 @@
     }
   }
 
-  //slide 16 -- CMYK space
+  //CMYK space (short version 16; long version 14)
   {
     cy = 1;
     mg = 1;
@@ -832,7 +845,19 @@
         }
       }
 
-      if (counter == 15) {
+      //rgb slides. short version 15; long version 13
+      if (counter == 15 && version == false) {
+        if (curve1 == true || curve2 == true || curve3 == true) {
+          if (event.delta > 0 && rgbTimer > 0) {
+            rgbTimer -= rgbSpeed;
+          }
+          if (event.delta < 0 && rgbTimer < 1) {
+            rgbTimer += rgbSpeed;
+          }
+        }
+      }
+
+      if (counter == 13 && version == true) {
         if (curve1 == true || curve2 == true || curve3 == true) {
           if (event.delta > 0 && rgbTimer > 0) {
             rgbTimer -= rgbSpeed;
@@ -1267,7 +1292,8 @@
         }
       }
 
-      if (counter == 12) {
+      //summary slides. short version 12; long version 15
+      if (counter == 12 && version == false) {
         //turns bullet points on in summary slide
           if (
             mouseX < 1.1 * unit && mouseX > 0.9 * unit
@@ -1289,7 +1315,87 @@
         
       }
 
-      if (counter == 15) {
+      if (counter == 15 && version == true) {
+        //turns bullet points on in summary slide
+          if (
+            mouseX < 1.1 * unit && mouseX > 0.9 * unit
+            && mouseY < 2.6 * unit && mouseY > 2.4 * unit
+          ) {
+            summaryBullets[0] = !summaryBullets[0];
+          }
+
+          for (let i = 1; i < 4; i++) {
+            if (
+              mouseX < 1.1 * unit && mouseX > 0.9 * unit
+              && mouseY < (3.7 + 1.75 * (i-1)) * unit && mouseY > (3.5 + 1.75 * (i-1)) * unit
+            ) {
+              summaryBullets[i] = !summaryBullets[i];
+            }
+          }
+
+
+        
+      }
+
+      //rgb slides. short version 15; long version 13
+      if (counter == 15 && version == false) {
+        if (
+          dist(
+            mouseToWorld(mouseX, mouseY)[0],
+            mouseToWorld(mouseX, mouseY)[1],
+            -4.5,
+            -3
+          ) < 0.5
+        ) {
+          rgb = !rgb;
+        }
+
+        if (rgb == true) {
+          if (
+            dist(
+              mouseToWorld(mouseX, mouseY)[0],
+              mouseToWorld(mouseX, mouseY)[1],
+              -1.5,
+              -3
+            ) < 0.5
+          ) {
+            curve1 = !curve1;
+            rd = 0;
+            gr = 0;
+            bl = 0;
+          }
+
+          if (
+            dist(
+              mouseToWorld(mouseX, mouseY)[0],
+              mouseToWorld(mouseX, mouseY)[1],
+              1.5,
+              -3
+            ) < 0.5
+          ) {
+            curve2 = !curve2;
+            rd = 0;
+            gr = 0;
+            bl = 0;
+          }
+
+          if (
+            dist(
+              mouseToWorld(mouseX, mouseY)[0],
+              mouseToWorld(mouseX, mouseY)[1],
+              4.5,
+              -3
+            ) < 0.5
+          ) {
+            curve3 = !curve3;
+            rd = 0;
+            gr = 0;
+            bl = 0;
+          }
+        }
+      }
+
+      if (counter == 13 && version == true) {
         if (
           dist(
             mouseToWorld(mouseX, mouseY)[0],
@@ -1437,14 +1543,27 @@ function draw() {
       camera();
     }
 
-    if (counter == 15) {
+    if (counter == 15 && version == false) {
       background(rd, gr, bl);
     }
 
-    if (counter == 16) {
+    if (counter == 13 && version == true) {
+      background(rd, gr, bl);
+    }
+
+    if (counter == 16 && version == false) {
       background(cmykToRgb(cy, mg, yw, bk)[0], cmykToRgb(cy, mg, yw, bk)[1], cmykToRgb(cy, mg, yw, bk)[2]);
     }
-    if (counter != 15 && counter != 16) {
+
+    if (counter == 14 && version == true) {
+      background(cmykToRgb(cy, mg, yw, bk)[0], cmykToRgb(cy, mg, yw, bk)[1], cmykToRgb(cy, mg, yw, bk)[2]);
+    }
+
+    if (version == false && counter != 15 && counter != 16) {
+      background("black");
+    }
+
+    if (version == true && counter != 13 && counter != 14) {
       background("black");
     }
 
@@ -1458,6 +1577,17 @@ function draw() {
   line(width/2 - 0.5*unit, height/2 - 0.25*unit, width/2 - 0.25*unit, height/2 - 0.5*unit)
   line(-width/2 + 0.5*unit, height/2 - 0.75*unit, -width/2 + 0.25*unit, height/2 - 0.5*unit)
   line(-width/2 + 0.5*unit, height/2 - 0.25*unit, -width/2 + 0.25*unit, height/2 - 0.5*unit)
+
+  //version slide
+  if (counter == -1) {
+    textSize(unit);
+    if (version == false) {
+      text("0", 0, 0);
+    }
+    if (version == true) {
+      text("1", 0, 0);
+    }
+  }
 
   //title slide
   if (counter == 0) {
@@ -3329,767 +3459,1334 @@ function draw() {
     pop();
   }
 
-  //short version summary
+  //short version summary; long version Part 3 title
   if (counter == 12) {
-
-    noFill();
-    strokeWeight(unit / 50);
-    stroke("white");
-
-    circle(-7.0 * unit, -2 * unit, 0.25 * unit);
-    circle(-7.0 * unit, -0.9 * unit, 0.25 * unit);
-    circle(-7.0 * unit, 0.85 * unit, 0.25 * unit);
-    circle(-7.0 * unit, 2.6 * unit, 0.25 * unit);
-
-    push();
-    translate(-7.0 * unit, 0.0 * unit);
-    textAlign(LEFT);
-    noStroke();
-    fill("white");
-
-    textSize(1 * unit);
-    text("Summary", unit, -3 * unit);
-
-    textSize(0.5 * unit);
-    if (summaryBullets[0] === true) {
-      circle(0, -2 * unit, 0.25 * unit);
-      text("Higher dimensions exist", unit, -1.85 * unit);
-    }
-    if (summaryBullets[1] === true) {
-      circle(0, -0.9 * unit, 0.25 * unit);
-      text("There are high-dimensional versions of\n2D and 3D objects", unit, -0.75 * unit);
-    }    
-    if (summaryBullets[2] === true) {
-      circle(0, 0.85 * unit, 0.25 * unit);
-      text("We can \"see\" higher dimensions by\nlooking at slices and shadows", unit, 1 * unit);
-    }
-    if (summaryBullets[3] === true) {
-      circle(0, 2.6 * unit, 0.25 * unit);
-      text("Mathematics is a creative process that connects\nour world and our imagination", unit, 2.75 * unit);
-    }
-    pop();
-  }
-
-  //short version final slide
-  if (counter == 13) {
-    push();
-    translate(-7.0 * unit, 0.0 * unit);
-    textAlign(LEFT);
-    fill("white");
-
-    textSize(1.8 * unit);
-    text("Thank you!", 0, 0);
-
-    // textSize(0.5 * unit);
-    // text("jackeddielove.github.io", 0, 4 * unit);
-
-    // textSize(0.75 * unit);
-    // text("The mathematics of", 0, 1.125 * unit);
-    // text("higher dimensions", 0, 1.895 * unit);
-    pop();
-
-    push();
-    scale(2.5 * unit, 2.5 * unit, 2.5 * unit);
-    translate(-0.25, 0);
-    rotateX(PI / 3);
-    rotateZ(PI / 6);
-    stroke('white');
-    strokeWeight(0.01 * unit);
-    for (j = 0; j < 15; j++) {
-      for (i = j + 1; i < 16; i++) {
-        if (arrComp(P[j], P[i]) == true) {
-          edge(titleRotation(phi_x, phi_y, phi_z, P[j]), titleRotation(phi_x, phi_y, phi_z, P[i]));
-        }
-      }
-    }
-    pop();
-
-    let slowDown = 100
-
-    titleTimer++;
-    phi_x = sin(titleTimer / slowDown);
-    phi_y = cos(1.5 * titleTimer / slowDown);
-    phi_z = sin(titleTimer / slowDown) * cos(titleTimer / slowDown);
-  }
-
-  //part 3 title slide
-  if (counter == 14) {
-    push();
-    translate(-7.0 * unit, 0.0 * unit);
-    textAlign(LEFT);
-    fill("white");
-
-    textSize(1.5 * unit);
-    text("Part 3", 0, 0);
-
-    textSize(1 * unit);
-    text("The math metaphor", 0, 1.5 * unit);
-
-    textSize(0.75 * unit);
-    text("mathematical vs physical space", 0, 2.625 * unit);
-    pop();
-  }
-
-  //RGB space
-  if (counter == 15) {
-    if (rgbTimer < 0) {
-      rgbTimer = 0;
-    }
-
-    //buttons
-    {
-      rectMode(CENTER);
-      textAlign(CENTER);
-      textSize(unit / 3);
-
-      //rgb space button
-      //button shape
+    if (version == false) {
       noFill();
-      if ((rd + gr + bl) / 3 < 128) {
-        stroke("white");
-      }
-      if ((rd + gr + bl) / 3 >= 128) {
-        stroke("black");
-      }
       strokeWeight(unit / 50);
-      rect(-4.5 * unit, 3 * unit, 2.25 * unit, 0.75 * unit, 0.25 * unit);
+      stroke("white");
 
-      //button label
-      if ((rd + gr + bl) / 3 < 128) {
-        fill("white");
-      }
-      if ((rd + gr + bl) / 3 >= 128) {
-        fill("black");
-      } text("RGB space", -4.5 * unit, 3.1 * unit);
+      circle(-7.0 * unit, -2 * unit, 0.25 * unit);
+      circle(-7.0 * unit, -0.9 * unit, 0.25 * unit);
+      circle(-7.0 * unit, 0.85 * unit, 0.25 * unit);
+      circle(-7.0 * unit, 2.6 * unit, 0.25 * unit);
 
-      //curve 1 button
-      //button shape
-      noFill();
-      if ((rd + gr + bl) / 3 < 128) {
-        stroke("white");
-      }
-      if ((rd + gr + bl) / 3 >= 128) {
-        stroke("black");
-      } strokeWeight(unit / 50);
-      rect(-1.5 * unit, 3 * unit, 2.25 * unit, 0.75 * unit, 0.25 * unit);
-
-      //button label
-      if ((rd + gr + bl) / 3 < 128) {
-        fill("white");
-      }
-      if ((rd + gr + bl) / 3 >= 128) {
-        fill("black");
-      } text("curve 1", -1.5 * unit, 3.1 * unit);
-
-      //curve 2 button
-      //button shape
-      noFill();
-      if ((rd + gr + bl) / 3 < 128) {
-        stroke("white");
-      }
-      if ((rd + gr + bl) / 3 >= 128) {
-        stroke("black");
-      } strokeWeight(unit / 50);
-      rect(1.5 * unit, 3 * unit, 2.25 * unit, 0.75 * unit, 0.25 * unit);
-
-      //button label
-      if ((rd + gr + bl) / 3 < 128) {
-        fill("white");
-      }
-      if ((rd + gr + bl) / 3 >= 128) {
-        fill("black");
-      } text("curve 2", 1.5 * unit, 3.1 * unit);
-
-      //curve 3 button
-      //button shape
-      noFill();
-      if ((rd + gr + bl) / 3 < 128) {
-        stroke("white");
-      }
-      if ((rd + gr + bl) / 3 >= 128) {
-        stroke("black");
-      } strokeWeight(unit / 50);
-      rect(4.5 * unit, 3 * unit, 2.25 * unit, 0.75 * unit, 0.25 * unit);
-
-      //button label
-      if ((rd + gr + bl) / 3 < 128) {
-        fill("white");
-      }
-      if ((rd + gr + bl) / 3 >= 128) {
-        fill("black");
-      } text("curve 3", 4.5 * unit, 3.1 * unit);
-    }
-
-    //sliders
-    {
-      rectMode(CENTER);
-      stroke(255);
-      strokeWeight(0.05 * unit);
-
-      //bars
-      fill(255, 0, 0);
-      rect(-5.5 * unit, -1 * unit, 3 * unit, 0.1 * unit, 0.1 * unit);
-
-      fill(0, 255, 0);
-      rect(-5.5 * unit, 0 * unit, 3 * unit, 0.1 * unit, 0.1 * unit);
-
-      fill(0, 0, 255);
-      rect(-5.5 * unit, 1 * unit, 3 * unit, 0.1 * unit, 0.1 * unit);
-
-      //handles
       push();
-      translate(0, 0, 1);
-      strokeWeight(0.025 * unit);
-      fill(128);
-      rect(rgbToSlider(rd) * unit, -1 * unit, 0.2 * unit, 0.5 * unit, 0.1 * unit);
-      rect(rgbToSlider(gr) * unit, 0 * unit, 0.2 * unit, 0.5 * unit, 0.1 * unit);
-      rect(rgbToSlider(bl) * unit, 1 * unit, 0.2 * unit, 0.5 * unit, 0.1 * unit);
+      translate(-7.0 * unit, 0.0 * unit);
+      textAlign(LEFT);
+      noStroke();
+      fill("white");
+
+      textSize(1 * unit);
+      text("Summary", unit, -3 * unit);
+
+      textSize(0.5 * unit);
+      if (summaryBullets[0] === true) {
+        circle(0, -2 * unit, 0.25 * unit);
+        text("Higher dimensions exist", unit, -1.85 * unit);
+      }
+      if (summaryBullets[1] === true) {
+        circle(0, -0.9 * unit, 0.25 * unit);
+        text("There are high-dimensional versions of\n2D and 3D objects", unit, -0.75 * unit);
+      }    
+      if (summaryBullets[2] === true) {
+        circle(0, 0.85 * unit, 0.25 * unit);
+        text("We can \"see\" higher dimensions by\nlooking at slices and shadows", unit, 1 * unit);
+      }
+      if (summaryBullets[3] === true) {
+        circle(0, 2.6 * unit, 0.25 * unit);
+        text("Mathematics is a creative process that connects\nour world and our imagination", unit, 2.75 * unit);
+      }
+      pop();
+    }
+    if (version == true) {
+      push();
+      translate(-7.0 * unit, 0.0 * unit);
+      textAlign(LEFT);
+      fill("white");
+  
+      textSize(1.5 * unit);
+      text("Part 3", 0, 0);
+  
+      textSize(1 * unit);
+      text("The math metaphor", 0, 1.5 * unit);
+  
+      textSize(0.75 * unit);
+      text("mathematical vs physical space", 0, 2.625 * unit);
+      pop();
+    }
+  }
+
+  //short version final; long version rgb space
+  if (counter == 13) {
+    if (version == false) {
+      push();
+      translate(-7.0 * unit, 0.0 * unit);
+      textAlign(LEFT);
+      fill("white");
+
+      textSize(1.8 * unit);
+      text("Thank you!", 0, 0);
+
+    
       pop();
 
-      //text
-      textSize(0.5 * unit);
-      if ((rd + gr + bl) / 3 < 128) {
-        fill("white");
-      }
-      if ((rd + gr + bl) / 3 >= 128) {
-        fill("black");
-      }
-      textAlign(LEFT);
-      text(round(rd, 0), -3.5 * unit, -0.8 * unit);
-      text(round(gr, 0), -3.5 * unit, 0.2 * unit);
-      text(round(bl, 0), -3.5 * unit, 1.2 * unit);
-    }
-
-    //controls
-    {
-      if (curve1 == false && curve2 == false && curve3 == false) {
-        //red
-        {
-          if (
-            dist(
-              rgbToSlider(rd),
-              1,
-              mouseToWorld(mouseX, mouseY)[0],
-              mouseToWorld(mouseX, mouseY)[1]
-            ) < 0.5 &&
-            mouseIsPressed
-          ) {
-            if (mouseToWorld(mouseX, mouseY)[0] < -7) {
-              rd = 0;
-            }
-            if (mouseToWorld(mouseX, mouseY)[0] > -4) {
-              rd = 255;
-            }
-            if (
-              mouseToWorld(mouseX, mouseY)[0] >= -7 &&
-              mouseToWorld(mouseX, mouseY)[0] <= -4
-            ) {
-              rd = sliderToRgb(mouseToWorld(mouseX, mouseY)[0]);
-            }
-          }
-        }
-
-        //green
-        {
-          if (
-            dist(
-              rgbToSlider(gr),
-              0,
-              mouseToWorld(mouseX, mouseY)[0],
-              mouseToWorld(mouseX, mouseY)[1]
-            ) < 0.5 &&
-            mouseIsPressed
-          ) {
-            if (mouseToWorld(mouseX, mouseY)[0] < -7) {
-              gr = 0;
-            }
-            if (mouseToWorld(mouseX, mouseY)[0] > -4) {
-              gr = 255;
-            }
-            if (
-              mouseToWorld(mouseX, mouseY)[0] >= -7 &&
-              mouseToWorld(mouseX, mouseY)[0] <= -4
-            ) {
-              gr = sliderToRgb(mouseToWorld(mouseX, mouseY)[0]);
-            }
-          }
-        }
-
-        //blue
-        {
-          if (
-            dist(
-              rgbToSlider(bl),
-              -1,
-              mouseToWorld(mouseX, mouseY)[0],
-              mouseToWorld(mouseX, mouseY)[1]
-            ) < 0.5 &&
-            mouseIsPressed
-          ) {
-            if (mouseToWorld(mouseX, mouseY)[0] < -7) {
-              bl = 0;
-            }
-            if (mouseToWorld(mouseX, mouseY)[0] > -4) {
-              bl = 255;
-            }
-            if (
-              mouseToWorld(mouseX, mouseY)[0] >= -7 &&
-              mouseToWorld(mouseX, mouseY)[0] <= -4
-            ) {
-              bl = sliderToRgb(mouseToWorld(mouseX, mouseY)[0]);
-            }
-          }
-        }
-      }
-    }
-
-    //graph
-    {
       push();
+      scale(2.5 * unit, 2.5 * unit, 2.5 * unit);
+      translate(-0.25, 0);
       rotateX(PI / 3);
       rotateZ(PI / 6);
-      translate(1 * unit, 1 * unit, 0);
-      scale(2.5, -2.5, 2.5);
-
-      if (rgb == true) {
-        //cube
-        {
-          if ((rd + gr + bl) / 3 < 128) {
-            stroke("white");
-          }
-          if ((rd + gr + bl) / 3 >= 128) {
-            stroke("black");
-          }
-          strokeWeight(0.04 * unit);
-          //front
-          line(0, 0, 0, 0, 0, unit);
-          line(0, 0, 0, unit, 0, 0);
-          line(unit, 0, 0, unit, 0, unit);
-          line(unit, 0, unit, 0, 0, unit);
-
-          //back
-          line(0, unit, 0, 0, unit, unit);
-          line(0, unit, 0, unit, unit, 0);
-          line(unit, unit, 0, unit, unit, unit);
-          line(unit, unit, unit, 0, unit, unit);
-
-          //connectors
-          line(unit, 0, 0, unit, unit, 0);
-          line(unit, 0, unit, unit, unit, unit);
-          line(0, 0, unit, 0, unit, unit);
-          line(0, 0, 0, 0, unit, 0);
-
-          if (curve1 == false && curve2 == false && curve3 == false) {
-            push();
-            translate(
-              (rd / 255) * unit,
-              (gr / 255) * unit,
-              (bl / 255) * unit
-            );
-            sphere(0.05 * unit);
-            pop();
+      stroke('white');
+      strokeWeight(0.01 * unit);
+      for (j = 0; j < 15; j++) {
+        for (i = j + 1; i < 16; i++) {
+          if (arrComp(P[j], P[i]) == true) {
+            edge(titleRotation(phi_x, phi_y, phi_z, P[j]), titleRotation(phi_x, phi_y, phi_z, P[i]));
           }
         }
-      }
-
-      if (curve1 == true) {
-        for (p = 0; p < 1; p += 0.001) {
-          point(p * unit, p * unit, p * unit);
-        }
-        push();
-        translate(rgbTimer * unit, rgbTimer * unit, rgbTimer * unit);
-        sphere(0.05 * unit);
-        pop();
-        rd = rgbTimer * 255;
-        gr = rgbTimer * 255;
-        bl = rgbTimer * 255;
-      }
-
-      if (curve2 == true) {
-        for (p = 0; p < 1; p += 0.001) {
-          point(p * unit, p ** 2 * unit, p ** 3 * unit);
-        }
-        push();
-        translate(rgbTimer * unit, rgbTimer ** 2 * unit, rgbTimer ** 3 * unit);
-        sphere(0.05 * unit);
-        pop();
-
-        rd = rgbTimer * 255;
-        gr = ((rgbTimer) ** 2) * 255;
-        bl = ((rgbTimer) ** 3) * 255;
-
-      }
-
-      if (curve3 == true) {
-        for (p = 0; p < 1; p += 0.001) {
-          point(
-            p * unit,
-            unit * ((sin(p * 2 * PI) + 1) / 2),
-            unit * ((cos(p * 2 * PI) + 1) / 2)
-          );
-        }
-        push();
-        translate(
-          rgbTimer * unit,
-          unit * ((sin(rgbTimer * 2 * PI) + 1) / 2),
-          unit * ((cos(rgbTimer * 2 * PI) + 1) / 2)
-        );
-        sphere(0.05 * unit);
-        pop();
-
-        gr = ((sin(rgbTimer * 2 * PI) + 1) / 2) * 255;
-        bl = ((cos(rgbTimer * 2 * PI) + 1) / 2) * 255;
-        rd = rgbTimer * 255;
       }
       pop();
+
+      let slowDown = 100
+
+      titleTimer++;
+      phi_x = sin(titleTimer / slowDown);
+      phi_y = cos(1.5 * titleTimer / slowDown);
+      phi_z = sin(titleTimer / slowDown) * cos(titleTimer / slowDown);
     }
-  }
-
-  //CMYK space
-  if (counter == 16) {
-    // //buttons
-    // {
-    //   rectMode(CENTER);
-    //   textAlign(CENTER);
-    //   textSize(unit / 3);
-
-    //   //cmyk space button
-    //   {
-    //     //button shape
-    //     noFill();
-    //     if ((cmykToRgb(cy, mg, yw, bk)[0] + cmykToRgb(cy, mg, yw, bk)[1] + cmykToRgb(cy, mg, yw, bk)[2]) / 3 < 128) {
-    //       stroke("white");
-    //     }
-    //     if ((cmykToRgb(cy, mg, yw, bk)[0] + cmykToRgb(cy, mg, yw, bk)[1] + cmykToRgb(cy, mg, yw, bk)[2]) / 3 >= 128) {
-    //       stroke("black");
-    //     }
-    //     strokeWeight(unit / 50);
-    //     rect(-4.5 * unit, 3 * unit, 2.25 * unit, 0.75 * unit, 0.25 * unit);
-
-    //     //button label
-    //     if ((cmykToRgb(cy, mg, yw, bk)[0] + cmykToRgb(cy, mg, yw, bk)[1] + cmykToRgb(cy, mg, yw, bk)[2]) / 3 < 128) {
-    //       fill("white");
-    //     }
-    //     if ((cmykToRgb(cy, mg, yw, bk)[0] + cmykToRgb(cy, mg, yw, bk)[1] + cmykToRgb(cy, mg, yw, bk)[2]) / 3 >= 128) {
-    //       fill("black");
-    //     }
-    //   } text("CMYK space", -4.5 * unit, 3.1 * unit);
-
-
-    //   //   //curve 1 button
-    //   //   {
-    //   //   //button shape
-    //   //   noFill();
-    //   //   if ((rd + gr + bl) / 3 < 128) {
-    //   //       stroke("white");
-    //   //   }
-    //   //   if ((rd + gr + bl) / 3 >= 128) {
-    //   //       stroke("black");
-    //   //   } strokeWeight(unit / 50);
-    //   //   rect(-1.5 * unit, 3 * unit, 2.25 * unit, 0.75 * unit, 0.25 * unit);
-
-    //   //   //button label
-    //   //   if ((rd + gr + bl) / 3 < 128) {
-    //   //       fill("white");
-    //   //   }
-    //   //   if ((rd + gr + bl) / 3 >= 128) {
-    //   //       fill("black");
-    //   //   } text("curve 1", -1.5 * unit, 3.1 * unit);
-    //   // }
-
-    //   //   //curve 2 button
-    //   //   {
-    //   //   //button shape
-    //   //   noFill();
-    //   //   if ((rd + gr + bl) / 3 < 128) {
-    //   //       stroke("white");
-    //   //   }
-    //   //   if ((rd + gr + bl) / 3 >= 128) {
-    //   //       stroke("black");
-    //   //   } strokeWeight(unit / 50);
-    //   //   rect(1.5 * unit, 3 * unit, 2.25 * unit, 0.75 * unit, 0.25 * unit);
-
-    //   //   //button label
-    //   //   if ((rd + gr + bl) / 3 < 128) {
-    //   //       fill("white");
-    //   //   }
-    //   //   if ((rd + gr + bl) / 3 >= 128) {
-    //   //       fill("black");
-    //   //   } text("curve 2", 1.5 * unit, 3.1 * unit);
-    //   // }
-
-    //   //   //curve 3 button
-    //   //   {
-    //   //   //button shape
-    //   //   noFill();
-    //   //   if ((rd + gr + bl) / 3 < 128) {
-    //   //       stroke("white");
-    //   //   }
-    //   //   if ((rd + gr + bl) / 3 >= 128) {
-    //   //       stroke("black");
-    //   //   } strokeWeight(unit / 50);
-    //   //   rect(4.5 * unit, 3 * unit, 2.25 * unit, 0.75 * unit, 0.25 * unit);
-
-    //   //   //button label
-    //   //   if ((rd + gr + bl) / 3 < 128) {
-    //   //       fill("white");
-    //   //   }
-    //   //   if ((rd + gr + bl) / 3 >= 128) {
-    //   //       fill("black");
-    //   //   } text("curve 3", 4.5 * unit, 3.1 * unit);
-    //   // }
-    // }
-
-    //sliders
-    {
-      rectMode(CENTER);
-      stroke(255);
-      strokeWeight(0.05 * unit);
-
-      //bars
-      fill(0, 255, 255);
-      rect(-5.5 * unit, -1.5 * unit, 3 * unit, 0.1 * unit, 0.1 * unit);
-
-      fill(255, 0, 255);
-      rect(-5.5 * unit, -0.5 * unit, 3 * unit, 0.1 * unit, 0.1 * unit);
-
-      fill(255, 255, 0);
-      rect(-5.5 * unit, 0.5 * unit, 3 * unit, 0.1 * unit, 0.1 * unit);
-
-      fill(0, 0, 0);
-      rect(-5.5 * unit, 1.5 * unit, 3 * unit, 0.1 * unit, 0.1 * unit);
-
-      //handles
-      push();
-      translate(0, 0, 1);
-      strokeWeight(0.025 * unit);
-      fill(128);
-      rect(cmykToSlider(cy) * unit, -1.5 * unit, 0.2 * unit, 0.5 * unit, 0.1 * unit);
-      rect(cmykToSlider(mg) * unit, -0.5 * unit, 0.2 * unit, 0.5 * unit, 0.1 * unit);
-      rect(cmykToSlider(yw) * unit, 0.5 * unit, 0.2 * unit, 0.5 * unit, 0.1 * unit);
-      rect(cmykToSlider(bk) * unit, 1.5 * unit, 0.2 * unit, 0.5 * unit, 0.1 * unit);
-      pop();
-
-      //text
-      textSize(0.5 * unit);
-      if ((cmykToRgb(cy, mg, yw, bk)[0] + cmykToRgb(cy, mg, yw, bk)[1] + cmykToRgb(cy, mg, yw, bk)[2]) / 3 < 128) {
-        fill("white");
+    if (version == true) {
+      if (rgbTimer < 0) {
+        rgbTimer = 0;
       }
-      if ((cmykToRgb(cy, mg, yw, bk)[0] + cmykToRgb(cy, mg, yw, bk)[1] + cmykToRgb(cy, mg, yw, bk)[2]) / 3 >= 128) {
-        fill("black");
-      }
-      textAlign(LEFT);
-      text(round(cy, 3), -3.5 * unit, -1.3 * unit);
-      text(round(mg, 3), -3.5 * unit, -0.3 * unit);
-      text(round(yw, 3), -3.5 * unit, 0.7 * unit);
-      text(round(bk, 3), -3.5 * unit, 1.7 * unit);
-    }
-
-    //controls
-    {
-      //cyan
+  
+      //buttons
       {
-        if (
-          dist(
-            cmykToSlider(cy),
-            1.5,
-            mouseToWorld(mouseX, mouseY)[0],
-            mouseToWorld(mouseX, mouseY)[1]
-          ) < 0.5 &&
-          mouseIsPressed
-        ) {
-          if (mouseToWorld(mouseX, mouseY)[0] < -7) {
-            cy = 0;
-          }
-          if (mouseToWorld(mouseX, mouseY)[0] > -4) {
-            cy = 1;
-          }
-          if (
-            mouseToWorld(mouseX, mouseY)[0] >= -7 &&
-            mouseToWorld(mouseX, mouseY)[0] <= -4
-          ) {
-            cy = sliderToCmyk(mouseToWorld(mouseX, mouseY)[0]);
-          }
+        rectMode(CENTER);
+        textAlign(CENTER);
+        textSize(unit / 3);
+  
+        //rgb space button
+        //button shape
+        noFill();
+        if ((rd + gr + bl) / 3 < 128) {
+          stroke("white");
         }
+        if ((rd + gr + bl) / 3 >= 128) {
+          stroke("black");
+        }
+        strokeWeight(unit / 50);
+        rect(-4.5 * unit, 3 * unit, 2.25 * unit, 0.75 * unit, 0.25 * unit);
+  
+        //button label
+        if ((rd + gr + bl) / 3 < 128) {
+          fill("white");
+        }
+        if ((rd + gr + bl) / 3 >= 128) {
+          fill("black");
+        } text("RGB space", -4.5 * unit, 3.1 * unit);
+  
+        //curve 1 button
+        //button shape
+        noFill();
+        if ((rd + gr + bl) / 3 < 128) {
+          stroke("white");
+        }
+        if ((rd + gr + bl) / 3 >= 128) {
+          stroke("black");
+        } strokeWeight(unit / 50);
+        rect(-1.5 * unit, 3 * unit, 2.25 * unit, 0.75 * unit, 0.25 * unit);
+  
+        //button label
+        if ((rd + gr + bl) / 3 < 128) {
+          fill("white");
+        }
+        if ((rd + gr + bl) / 3 >= 128) {
+          fill("black");
+        } text("curve 1", -1.5 * unit, 3.1 * unit);
+  
+        //curve 2 button
+        //button shape
+        noFill();
+        if ((rd + gr + bl) / 3 < 128) {
+          stroke("white");
+        }
+        if ((rd + gr + bl) / 3 >= 128) {
+          stroke("black");
+        } strokeWeight(unit / 50);
+        rect(1.5 * unit, 3 * unit, 2.25 * unit, 0.75 * unit, 0.25 * unit);
+  
+        //button label
+        if ((rd + gr + bl) / 3 < 128) {
+          fill("white");
+        }
+        if ((rd + gr + bl) / 3 >= 128) {
+          fill("black");
+        } text("curve 2", 1.5 * unit, 3.1 * unit);
+  
+        //curve 3 button
+        //button shape
+        noFill();
+        if ((rd + gr + bl) / 3 < 128) {
+          stroke("white");
+        }
+        if ((rd + gr + bl) / 3 >= 128) {
+          stroke("black");
+        } strokeWeight(unit / 50);
+        rect(4.5 * unit, 3 * unit, 2.25 * unit, 0.75 * unit, 0.25 * unit);
+  
+        //button label
+        if ((rd + gr + bl) / 3 < 128) {
+          fill("white");
+        }
+        if ((rd + gr + bl) / 3 >= 128) {
+          fill("black");
+        } text("curve 3", 4.5 * unit, 3.1 * unit);
       }
-
-      //magenta
+  
+      //sliders
       {
-        if (
-          dist(
-            cmykToSlider(mg),
-            0.5,
-            mouseToWorld(mouseX, mouseY)[0],
-            mouseToWorld(mouseX, mouseY)[1]
-          ) < 0.5 &&
-          mouseIsPressed
-        ) {
-          if (mouseToWorld(mouseX, mouseY)[0] < -7) {
-            mg = 0;
-          }
-          if (mouseToWorld(mouseX, mouseY)[0] > -4) {
-            mg = 1;
-          }
-          if (
-            mouseToWorld(mouseX, mouseY)[0] >= -7 &&
-            mouseToWorld(mouseX, mouseY)[0] <= -4
-          ) {
-            mg = sliderToCmyk(mouseToWorld(mouseX, mouseY)[0]);
-          }
+        rectMode(CENTER);
+        stroke(255);
+        strokeWeight(0.05 * unit);
+  
+        //bars
+        fill(255, 0, 0);
+        rect(-5.5 * unit, -1 * unit, 3 * unit, 0.1 * unit, 0.1 * unit);
+  
+        fill(0, 255, 0);
+        rect(-5.5 * unit, 0 * unit, 3 * unit, 0.1 * unit, 0.1 * unit);
+  
+        fill(0, 0, 255);
+        rect(-5.5 * unit, 1 * unit, 3 * unit, 0.1 * unit, 0.1 * unit);
+  
+        //handles
+        push();
+        translate(0, 0, 1);
+        strokeWeight(0.025 * unit);
+        fill(128);
+        rect(rgbToSlider(rd) * unit, -1 * unit, 0.2 * unit, 0.5 * unit, 0.1 * unit);
+        rect(rgbToSlider(gr) * unit, 0 * unit, 0.2 * unit, 0.5 * unit, 0.1 * unit);
+        rect(rgbToSlider(bl) * unit, 1 * unit, 0.2 * unit, 0.5 * unit, 0.1 * unit);
+        pop();
+  
+        //text
+        textSize(0.5 * unit);
+        if ((rd + gr + bl) / 3 < 128) {
+          fill("white");
         }
+        if ((rd + gr + bl) / 3 >= 128) {
+          fill("black");
+        }
+        textAlign(LEFT);
+        text(round(rd, 0), -3.5 * unit, -0.8 * unit);
+        text(round(gr, 0), -3.5 * unit, 0.2 * unit);
+        text(round(bl, 0), -3.5 * unit, 1.2 * unit);
       }
-
-      //yellow
+  
+      //controls
       {
-        if (
-          dist(
-            cmykToSlider(yw),
-            -0.5,
-            mouseToWorld(mouseX, mouseY)[0],
-            mouseToWorld(mouseX, mouseY)[1]
-          ) < 0.5 &&
-          mouseIsPressed
-        ) {
-          if (mouseToWorld(mouseX, mouseY)[0] < -7) {
-            yw = 0;
-          }
-          if (mouseToWorld(mouseX, mouseY)[0] > -4) {
-            yw = 1;
-          }
-          if (
-            mouseToWorld(mouseX, mouseY)[0] >= -7 &&
-            mouseToWorld(mouseX, mouseY)[0] <= -4
-          ) {
-            yw = sliderToCmyk(mouseToWorld(mouseX, mouseY)[0]);
-          }
-        }
-      }
-
-      //black
-      {
-        if (
-          dist(
-            cmykToSlider(bk),
-            -1.5,
-            mouseToWorld(mouseX, mouseY)[0],
-            mouseToWorld(mouseX, mouseY)[1]
-          ) < 0.5 &&
-          mouseIsPressed
-        ) {
-          if (mouseToWorld(mouseX, mouseY)[0] < -7) {
-            bk = 0;
-          }
-          if (mouseToWorld(mouseX, mouseY)[0] > -4) {
-            bk = 1;
-          }
-          if (
-            mouseToWorld(mouseX, mouseY)[0] >= -7 &&
-            mouseToWorld(mouseX, mouseY)[0] <= -4
-          ) {
-            bk = sliderToCmyk(mouseToWorld(mouseX, mouseY)[0]);
-          }
-        }
-      }
-    }
-
-    //graph
-    {
-      //cube
-      {
-        //set edgelength
-        edgeLength = 2.5 * unit;
-
-        //stroke settings
-        {
-          if ((cmykToRgb(cy, mg, yw, bk)[0] + cmykToRgb(cy, mg, yw, bk)[1] + cmykToRgb(cy, mg, yw, bk)[2]) / 3 < 128) {
-            stroke("white");
-          }
-          if ((cmykToRgb(cy, mg, yw, bk)[0] + cmykToRgb(cy, mg, yw, bk)[1] + cmykToRgb(cy, mg, yw, bk)[2]) / 3 >= 128) {
-            stroke("black");
-          }
-          strokeWeight(0.04 * unit);
-        }
-
-        //black = 0 face and dotted connectors and (c,m,y,k) point
-        {
-          push();
-
-          rotateX(PI / 3);
-          rotateZ(PI / 6);
-          scale(1, -1, 1);
-          translate(0.5 * unit, -2.5 * unit, -0.5 * unit);
-
-          //front
-          line(0, 0, 0, 0, 0, edgeLength);
-          line(0, 0, 0, edgeLength, 0, 0);
-          line(edgeLength, 0, 0, edgeLength, 0, edgeLength);
-          line(edgeLength, 0, edgeLength, 0, 0, edgeLength);
-
-          //back
-          line(0, edgeLength, 0, 0, edgeLength, edgeLength);
-          line(0, edgeLength, 0, edgeLength, edgeLength, 0);
-          line(edgeLength, edgeLength, 0, edgeLength, edgeLength, edgeLength);
-          line(edgeLength, edgeLength, edgeLength, 0, edgeLength, edgeLength);
-
-          //connectors
-          line(edgeLength, 0, 0, edgeLength, edgeLength, 0);
-          line(edgeLength, 0, edgeLength, edgeLength, edgeLength, edgeLength);
-          line(0, 0, edgeLength, 0, edgeLength, edgeLength);
-          line(0, 0, 0, 0, edgeLength, 0);
-
-
-          //dotted connectors
-          n = 20;
-          strokeWeight(0.05 * unit);
-          cubeVerts = [[0, 0, 0], [0, 0, 1], [0, 1, 0], [0, 1, 1], [1, 0, 0], [1, 0, 1], [1, 1, 0], [1, 1, 1]];
-          for (j = 0; j < 8; j++) {
-            for (i = 1; i < n; i++) {
-              point(cubeVerts[j][0] * edgeLength + (i / n) * 1 * unit, cubeVerts[j][1] * edgeLength + (i / n) * 1.5 * unit, cubeVerts[j][2] * edgeLength + (i / n) * 1.25 * unit);
+        if (curve1 == false && curve2 == false && curve3 == false) {
+          //red
+          {
+            if (
+              dist(
+                rgbToSlider(rd),
+                1,
+                mouseToWorld(mouseX, mouseY)[0],
+                mouseToWorld(mouseX, mouseY)[1]
+              ) < 0.5 &&
+              mouseIsPressed
+            ) {
+              if (mouseToWorld(mouseX, mouseY)[0] < -7) {
+                rd = 0;
+              }
+              if (mouseToWorld(mouseX, mouseY)[0] > -4) {
+                rd = 255;
+              }
+              if (
+                mouseToWorld(mouseX, mouseY)[0] >= -7 &&
+                mouseToWorld(mouseX, mouseY)[0] <= -4
+              ) {
+                rd = sliderToRgb(mouseToWorld(mouseX, mouseY)[0]);
+              }
             }
           }
-
-          //(c,m,y,k) point
-          push();
-          translate(cy * edgeLength + bk * 1 * unit, mg * edgeLength + bk * 1.5 * unit, yw * edgeLength + bk * 1.25 * unit);
-          sphere(0.1 * unit);
-          pop();
-          pop();
+  
+          //green
+          {
+            if (
+              dist(
+                rgbToSlider(gr),
+                0,
+                mouseToWorld(mouseX, mouseY)[0],
+                mouseToWorld(mouseX, mouseY)[1]
+              ) < 0.5 &&
+              mouseIsPressed
+            ) {
+              if (mouseToWorld(mouseX, mouseY)[0] < -7) {
+                gr = 0;
+              }
+              if (mouseToWorld(mouseX, mouseY)[0] > -4) {
+                gr = 255;
+              }
+              if (
+                mouseToWorld(mouseX, mouseY)[0] >= -7 &&
+                mouseToWorld(mouseX, mouseY)[0] <= -4
+              ) {
+                gr = sliderToRgb(mouseToWorld(mouseX, mouseY)[0]);
+              }
+            }
+          }
+  
+          //blue
+          {
+            if (
+              dist(
+                rgbToSlider(bl),
+                -1,
+                mouseToWorld(mouseX, mouseY)[0],
+                mouseToWorld(mouseX, mouseY)[1]
+              ) < 0.5 &&
+              mouseIsPressed
+            ) {
+              if (mouseToWorld(mouseX, mouseY)[0] < -7) {
+                bl = 0;
+              }
+              if (mouseToWorld(mouseX, mouseY)[0] > -4) {
+                bl = 255;
+              }
+              if (
+                mouseToWorld(mouseX, mouseY)[0] >= -7 &&
+                mouseToWorld(mouseX, mouseY)[0] <= -4
+              ) {
+                bl = sliderToRgb(mouseToWorld(mouseX, mouseY)[0]);
+              }
+            }
+          }
         }
-
-        //black = 1 face
-        {
-          strokeWeight(0.04 * unit);
-
-          push();
-
-          rotateX(PI / 3);
-          rotateZ(PI / 6);
-          scale(1, -1, 1);
-          translate(1.5 * unit, -1.0 * unit, 0.75 * unit);
-
-          //front
-          line(0, 0, 0, 0, 0, edgeLength);
-          line(0, 0, 0, edgeLength, 0, 0);
-          line(edgeLength, 0, 0, edgeLength, 0, edgeLength);
-          line(edgeLength, 0, edgeLength, 0, 0, edgeLength);
-
-          //back
-          line(0, edgeLength, 0, 0, edgeLength, edgeLength);
-          line(0, edgeLength, 0, edgeLength, edgeLength, 0);
-          line(edgeLength, edgeLength, 0, edgeLength, edgeLength, edgeLength);
-          line(edgeLength, edgeLength, edgeLength, 0, edgeLength, edgeLength);
-
-          //connectors
-          line(edgeLength, 0, 0, edgeLength, edgeLength, 0);
-          line(edgeLength, 0, edgeLength, edgeLength, edgeLength, edgeLength);
-          line(0, 0, edgeLength, 0, edgeLength, edgeLength);
-          line(0, 0, 0, 0, edgeLength, 0);
-
-          pop();
+      }
+  
+      //graph
+      {
+        push();
+        rotateX(PI / 3);
+        rotateZ(PI / 6);
+        translate(1 * unit, 1 * unit, 0);
+        scale(2.5, -2.5, 2.5);
+  
+        if (rgb == true) {
+          //cube
+          {
+            if ((rd + gr + bl) / 3 < 128) {
+              stroke("white");
+            }
+            if ((rd + gr + bl) / 3 >= 128) {
+              stroke("black");
+            }
+            strokeWeight(0.04 * unit);
+            //front
+            line(0, 0, 0, 0, 0, unit);
+            line(0, 0, 0, unit, 0, 0);
+            line(unit, 0, 0, unit, 0, unit);
+            line(unit, 0, unit, 0, 0, unit);
+  
+            //back
+            line(0, unit, 0, 0, unit, unit);
+            line(0, unit, 0, unit, unit, 0);
+            line(unit, unit, 0, unit, unit, unit);
+            line(unit, unit, unit, 0, unit, unit);
+  
+            //connectors
+            line(unit, 0, 0, unit, unit, 0);
+            line(unit, 0, unit, unit, unit, unit);
+            line(0, 0, unit, 0, unit, unit);
+            line(0, 0, 0, 0, unit, 0);
+  
+            if (curve1 == false && curve2 == false && curve3 == false) {
+              push();
+              translate(
+                (rd / 255) * unit,
+                (gr / 255) * unit,
+                (bl / 255) * unit
+              );
+              sphere(0.05 * unit);
+              pop();
+            }
+          }
         }
-
-        //(c,m,y,k) point
+  
+        if (curve1 == true) {
+          for (p = 0; p < 1; p += 0.001) {
+            point(p * unit, p * unit, p * unit);
+          }
+          push();
+          translate(rgbTimer * unit, rgbTimer * unit, rgbTimer * unit);
+          sphere(0.05 * unit);
+          pop();
+          rd = rgbTimer * 255;
+          gr = rgbTimer * 255;
+          bl = rgbTimer * 255;
+        }
+  
+        if (curve2 == true) {
+          for (p = 0; p < 1; p += 0.001) {
+            point(p * unit, p ** 2 * unit, p ** 3 * unit);
+          }
+          push();
+          translate(rgbTimer * unit, rgbTimer ** 2 * unit, rgbTimer ** 3 * unit);
+          sphere(0.05 * unit);
+          pop();
+  
+          rd = rgbTimer * 255;
+          gr = ((rgbTimer) ** 2) * 255;
+          bl = ((rgbTimer) ** 3) * 255;
+  
+        }
+  
+        if (curve3 == true) {
+          for (p = 0; p < 1; p += 0.001) {
+            point(
+              p * unit,
+              unit * ((sin(p * 2 * PI) + 1) / 2),
+              unit * ((cos(p * 2 * PI) + 1) / 2)
+            );
+          }
+          push();
+          translate(
+            rgbTimer * unit,
+            unit * ((sin(rgbTimer * 2 * PI) + 1) / 2),
+            unit * ((cos(rgbTimer * 2 * PI) + 1) / 2)
+          );
+          sphere(0.05 * unit);
+          pop();
+  
+          gr = ((sin(rgbTimer * 2 * PI) + 1) / 2) * 255;
+          bl = ((cos(rgbTimer * 2 * PI) + 1) / 2) * 255;
+          rd = rgbTimer * 255;
+        }
+        pop();
       }
     }
   }
+
+  //short version part 3 title; long version cmyk space
+  if (counter == 14) {
+    if (version == false) {
+      push();
+      translate(-7.0 * unit, 0.0 * unit);
+      textAlign(LEFT);
+      fill("white");
+
+      textSize(1.5 * unit);
+      text("Part 3", 0, 0);
+
+      textSize(1 * unit);
+      text("The math metaphor", 0, 1.5 * unit);
+
+      textSize(0.75 * unit);
+      text("mathematical vs physical space", 0, 2.625 * unit);
+      pop();
+    }
+    if (version == true) {
+      //sliders
+      {
+        rectMode(CENTER);
+        stroke(255);
+        strokeWeight(0.05 * unit);
+  
+        //bars
+        fill(0, 255, 255);
+        rect(-5.5 * unit, -1.5 * unit, 3 * unit, 0.1 * unit, 0.1 * unit);
+  
+        fill(255, 0, 255);
+        rect(-5.5 * unit, -0.5 * unit, 3 * unit, 0.1 * unit, 0.1 * unit);
+  
+        fill(255, 255, 0);
+        rect(-5.5 * unit, 0.5 * unit, 3 * unit, 0.1 * unit, 0.1 * unit);
+  
+        fill(0, 0, 0);
+        rect(-5.5 * unit, 1.5 * unit, 3 * unit, 0.1 * unit, 0.1 * unit);
+  
+        //handles
+        push();
+        translate(0, 0, 1);
+        strokeWeight(0.025 * unit);
+        fill(128);
+        rect(cmykToSlider(cy) * unit, -1.5 * unit, 0.2 * unit, 0.5 * unit, 0.1 * unit);
+        rect(cmykToSlider(mg) * unit, -0.5 * unit, 0.2 * unit, 0.5 * unit, 0.1 * unit);
+        rect(cmykToSlider(yw) * unit, 0.5 * unit, 0.2 * unit, 0.5 * unit, 0.1 * unit);
+        rect(cmykToSlider(bk) * unit, 1.5 * unit, 0.2 * unit, 0.5 * unit, 0.1 * unit);
+        pop();
+  
+        //text
+        textSize(0.5 * unit);
+        if ((cmykToRgb(cy, mg, yw, bk)[0] + cmykToRgb(cy, mg, yw, bk)[1] + cmykToRgb(cy, mg, yw, bk)[2]) / 3 < 128) {
+          fill("white");
+        }
+        if ((cmykToRgb(cy, mg, yw, bk)[0] + cmykToRgb(cy, mg, yw, bk)[1] + cmykToRgb(cy, mg, yw, bk)[2]) / 3 >= 128) {
+          fill("black");
+        }
+        textAlign(LEFT);
+        text(round(cy, 3), -3.5 * unit, -1.3 * unit);
+        text(round(mg, 3), -3.5 * unit, -0.3 * unit);
+        text(round(yw, 3), -3.5 * unit, 0.7 * unit);
+        text(round(bk, 3), -3.5 * unit, 1.7 * unit);
+      }
+  
+      //controls
+      {
+        //cyan
+        {
+          if (
+            dist(
+              cmykToSlider(cy),
+              1.5,
+              mouseToWorld(mouseX, mouseY)[0],
+              mouseToWorld(mouseX, mouseY)[1]
+            ) < 0.5 &&
+            mouseIsPressed
+          ) {
+            if (mouseToWorld(mouseX, mouseY)[0] < -7) {
+              cy = 0;
+            }
+            if (mouseToWorld(mouseX, mouseY)[0] > -4) {
+              cy = 1;
+            }
+            if (
+              mouseToWorld(mouseX, mouseY)[0] >= -7 &&
+              mouseToWorld(mouseX, mouseY)[0] <= -4
+            ) {
+              cy = sliderToCmyk(mouseToWorld(mouseX, mouseY)[0]);
+            }
+          }
+        }
+  
+        //magenta
+        {
+          if (
+            dist(
+              cmykToSlider(mg),
+              0.5,
+              mouseToWorld(mouseX, mouseY)[0],
+              mouseToWorld(mouseX, mouseY)[1]
+            ) < 0.5 &&
+            mouseIsPressed
+          ) {
+            if (mouseToWorld(mouseX, mouseY)[0] < -7) {
+              mg = 0;
+            }
+            if (mouseToWorld(mouseX, mouseY)[0] > -4) {
+              mg = 1;
+            }
+            if (
+              mouseToWorld(mouseX, mouseY)[0] >= -7 &&
+              mouseToWorld(mouseX, mouseY)[0] <= -4
+            ) {
+              mg = sliderToCmyk(mouseToWorld(mouseX, mouseY)[0]);
+            }
+          }
+        }
+  
+        //yellow
+        {
+          if (
+            dist(
+              cmykToSlider(yw),
+              -0.5,
+              mouseToWorld(mouseX, mouseY)[0],
+              mouseToWorld(mouseX, mouseY)[1]
+            ) < 0.5 &&
+            mouseIsPressed
+          ) {
+            if (mouseToWorld(mouseX, mouseY)[0] < -7) {
+              yw = 0;
+            }
+            if (mouseToWorld(mouseX, mouseY)[0] > -4) {
+              yw = 1;
+            }
+            if (
+              mouseToWorld(mouseX, mouseY)[0] >= -7 &&
+              mouseToWorld(mouseX, mouseY)[0] <= -4
+            ) {
+              yw = sliderToCmyk(mouseToWorld(mouseX, mouseY)[0]);
+            }
+          }
+        }
+  
+        //black
+        {
+          if (
+            dist(
+              cmykToSlider(bk),
+              -1.5,
+              mouseToWorld(mouseX, mouseY)[0],
+              mouseToWorld(mouseX, mouseY)[1]
+            ) < 0.5 &&
+            mouseIsPressed
+          ) {
+            if (mouseToWorld(mouseX, mouseY)[0] < -7) {
+              bk = 0;
+            }
+            if (mouseToWorld(mouseX, mouseY)[0] > -4) {
+              bk = 1;
+            }
+            if (
+              mouseToWorld(mouseX, mouseY)[0] >= -7 &&
+              mouseToWorld(mouseX, mouseY)[0] <= -4
+            ) {
+              bk = sliderToCmyk(mouseToWorld(mouseX, mouseY)[0]);
+            }
+          }
+        }
+      }
+  
+      //graph
+      {
+        //cube
+        {
+          //set edgelength
+          edgeLength = 2.5 * unit;
+  
+          //stroke settings
+          {
+            if ((cmykToRgb(cy, mg, yw, bk)[0] + cmykToRgb(cy, mg, yw, bk)[1] + cmykToRgb(cy, mg, yw, bk)[2]) / 3 < 128) {
+              stroke("white");
+            }
+            if ((cmykToRgb(cy, mg, yw, bk)[0] + cmykToRgb(cy, mg, yw, bk)[1] + cmykToRgb(cy, mg, yw, bk)[2]) / 3 >= 128) {
+              stroke("black");
+            }
+            strokeWeight(0.04 * unit);
+          }
+  
+          //black = 0 face and dotted connectors and (c,m,y,k) point
+          {
+            push();
+  
+            rotateX(PI / 3);
+            rotateZ(PI / 6);
+            scale(1, -1, 1);
+            translate(0.5 * unit, -2.5 * unit, -0.5 * unit);
+  
+            //front
+            line(0, 0, 0, 0, 0, edgeLength);
+            line(0, 0, 0, edgeLength, 0, 0);
+            line(edgeLength, 0, 0, edgeLength, 0, edgeLength);
+            line(edgeLength, 0, edgeLength, 0, 0, edgeLength);
+  
+            //back
+            line(0, edgeLength, 0, 0, edgeLength, edgeLength);
+            line(0, edgeLength, 0, edgeLength, edgeLength, 0);
+            line(edgeLength, edgeLength, 0, edgeLength, edgeLength, edgeLength);
+            line(edgeLength, edgeLength, edgeLength, 0, edgeLength, edgeLength);
+  
+            //connectors
+            line(edgeLength, 0, 0, edgeLength, edgeLength, 0);
+            line(edgeLength, 0, edgeLength, edgeLength, edgeLength, edgeLength);
+            line(0, 0, edgeLength, 0, edgeLength, edgeLength);
+            line(0, 0, 0, 0, edgeLength, 0);
+  
+  
+            //dotted connectors
+            n = 20;
+            strokeWeight(0.05 * unit);
+            cubeVerts = [[0, 0, 0], [0, 0, 1], [0, 1, 0], [0, 1, 1], [1, 0, 0], [1, 0, 1], [1, 1, 0], [1, 1, 1]];
+            for (j = 0; j < 8; j++) {
+              for (i = 1; i < n; i++) {
+                point(cubeVerts[j][0] * edgeLength + (i / n) * 1 * unit, cubeVerts[j][1] * edgeLength + (i / n) * 1.5 * unit, cubeVerts[j][2] * edgeLength + (i / n) * 1.25 * unit);
+              }
+            }
+  
+            //(c,m,y,k) point
+            push();
+            translate(cy * edgeLength + bk * 1 * unit, mg * edgeLength + bk * 1.5 * unit, yw * edgeLength + bk * 1.25 * unit);
+            sphere(0.1 * unit);
+            pop();
+            pop();
+          }
+  
+          //black = 1 face
+          {
+            strokeWeight(0.04 * unit);
+  
+            push();
+  
+            rotateX(PI / 3);
+            rotateZ(PI / 6);
+            scale(1, -1, 1);
+            translate(1.5 * unit, -1.0 * unit, 0.75 * unit);
+  
+            //front
+            line(0, 0, 0, 0, 0, edgeLength);
+            line(0, 0, 0, edgeLength, 0, 0);
+            line(edgeLength, 0, 0, edgeLength, 0, edgeLength);
+            line(edgeLength, 0, edgeLength, 0, 0, edgeLength);
+  
+            //back
+            line(0, edgeLength, 0, 0, edgeLength, edgeLength);
+            line(0, edgeLength, 0, edgeLength, edgeLength, 0);
+            line(edgeLength, edgeLength, 0, edgeLength, edgeLength, edgeLength);
+            line(edgeLength, edgeLength, edgeLength, 0, edgeLength, edgeLength);
+  
+            //connectors
+            line(edgeLength, 0, 0, edgeLength, edgeLength, 0);
+            line(edgeLength, 0, edgeLength, edgeLength, edgeLength, edgeLength);
+            line(0, 0, edgeLength, 0, edgeLength, edgeLength);
+            line(0, 0, 0, 0, edgeLength, 0);
+  
+            pop();
+          }
+  
+          //(c,m,y,k) point
+        }
+      }
+    }
+  }
+
+  //short version RGB space; long version summary
+  if (counter == 15) {
+    if (version == false) {
+      if (rgbTimer < 0) {
+        rgbTimer = 0;
+      }
+  
+      //buttons
+      {
+        rectMode(CENTER);
+        textAlign(CENTER);
+        textSize(unit / 3);
+  
+        //rgb space button
+        //button shape
+        noFill();
+        if ((rd + gr + bl) / 3 < 128) {
+          stroke("white");
+        }
+        if ((rd + gr + bl) / 3 >= 128) {
+          stroke("black");
+        }
+        strokeWeight(unit / 50);
+        rect(-4.5 * unit, 3 * unit, 2.25 * unit, 0.75 * unit, 0.25 * unit);
+  
+        //button label
+        if ((rd + gr + bl) / 3 < 128) {
+          fill("white");
+        }
+        if ((rd + gr + bl) / 3 >= 128) {
+          fill("black");
+        } text("RGB space", -4.5 * unit, 3.1 * unit);
+  
+        //curve 1 button
+        //button shape
+        noFill();
+        if ((rd + gr + bl) / 3 < 128) {
+          stroke("white");
+        }
+        if ((rd + gr + bl) / 3 >= 128) {
+          stroke("black");
+        } strokeWeight(unit / 50);
+        rect(-1.5 * unit, 3 * unit, 2.25 * unit, 0.75 * unit, 0.25 * unit);
+  
+        //button label
+        if ((rd + gr + bl) / 3 < 128) {
+          fill("white");
+        }
+        if ((rd + gr + bl) / 3 >= 128) {
+          fill("black");
+        } text("curve 1", -1.5 * unit, 3.1 * unit);
+  
+        //curve 2 button
+        //button shape
+        noFill();
+        if ((rd + gr + bl) / 3 < 128) {
+          stroke("white");
+        }
+        if ((rd + gr + bl) / 3 >= 128) {
+          stroke("black");
+        } strokeWeight(unit / 50);
+        rect(1.5 * unit, 3 * unit, 2.25 * unit, 0.75 * unit, 0.25 * unit);
+  
+        //button label
+        if ((rd + gr + bl) / 3 < 128) {
+          fill("white");
+        }
+        if ((rd + gr + bl) / 3 >= 128) {
+          fill("black");
+        } text("curve 2", 1.5 * unit, 3.1 * unit);
+  
+        //curve 3 button
+        //button shape
+        noFill();
+        if ((rd + gr + bl) / 3 < 128) {
+          stroke("white");
+        }
+        if ((rd + gr + bl) / 3 >= 128) {
+          stroke("black");
+        } strokeWeight(unit / 50);
+        rect(4.5 * unit, 3 * unit, 2.25 * unit, 0.75 * unit, 0.25 * unit);
+  
+        //button label
+        if ((rd + gr + bl) / 3 < 128) {
+          fill("white");
+        }
+        if ((rd + gr + bl) / 3 >= 128) {
+          fill("black");
+        } text("curve 3", 4.5 * unit, 3.1 * unit);
+      }
+  
+      //sliders
+      {
+        rectMode(CENTER);
+        stroke(255);
+        strokeWeight(0.05 * unit);
+  
+        //bars
+        fill(255, 0, 0);
+        rect(-5.5 * unit, -1 * unit, 3 * unit, 0.1 * unit, 0.1 * unit);
+  
+        fill(0, 255, 0);
+        rect(-5.5 * unit, 0 * unit, 3 * unit, 0.1 * unit, 0.1 * unit);
+  
+        fill(0, 0, 255);
+        rect(-5.5 * unit, 1 * unit, 3 * unit, 0.1 * unit, 0.1 * unit);
+  
+        //handles
+        push();
+        translate(0, 0, 1);
+        strokeWeight(0.025 * unit);
+        fill(128);
+        rect(rgbToSlider(rd) * unit, -1 * unit, 0.2 * unit, 0.5 * unit, 0.1 * unit);
+        rect(rgbToSlider(gr) * unit, 0 * unit, 0.2 * unit, 0.5 * unit, 0.1 * unit);
+        rect(rgbToSlider(bl) * unit, 1 * unit, 0.2 * unit, 0.5 * unit, 0.1 * unit);
+        pop();
+  
+        //text
+        textSize(0.5 * unit);
+        if ((rd + gr + bl) / 3 < 128) {
+          fill("white");
+        }
+        if ((rd + gr + bl) / 3 >= 128) {
+          fill("black");
+        }
+        textAlign(LEFT);
+        text(round(rd, 0), -3.5 * unit, -0.8 * unit);
+        text(round(gr, 0), -3.5 * unit, 0.2 * unit);
+        text(round(bl, 0), -3.5 * unit, 1.2 * unit);
+      }
+  
+      //controls
+      {
+        if (curve1 == false && curve2 == false && curve3 == false) {
+          //red
+          {
+            if (
+              dist(
+                rgbToSlider(rd),
+                1,
+                mouseToWorld(mouseX, mouseY)[0],
+                mouseToWorld(mouseX, mouseY)[1]
+              ) < 0.5 &&
+              mouseIsPressed
+            ) {
+              if (mouseToWorld(mouseX, mouseY)[0] < -7) {
+                rd = 0;
+              }
+              if (mouseToWorld(mouseX, mouseY)[0] > -4) {
+                rd = 255;
+              }
+              if (
+                mouseToWorld(mouseX, mouseY)[0] >= -7 &&
+                mouseToWorld(mouseX, mouseY)[0] <= -4
+              ) {
+                rd = sliderToRgb(mouseToWorld(mouseX, mouseY)[0]);
+              }
+            }
+          }
+  
+          //green
+          {
+            if (
+              dist(
+                rgbToSlider(gr),
+                0,
+                mouseToWorld(mouseX, mouseY)[0],
+                mouseToWorld(mouseX, mouseY)[1]
+              ) < 0.5 &&
+              mouseIsPressed
+            ) {
+              if (mouseToWorld(mouseX, mouseY)[0] < -7) {
+                gr = 0;
+              }
+              if (mouseToWorld(mouseX, mouseY)[0] > -4) {
+                gr = 255;
+              }
+              if (
+                mouseToWorld(mouseX, mouseY)[0] >= -7 &&
+                mouseToWorld(mouseX, mouseY)[0] <= -4
+              ) {
+                gr = sliderToRgb(mouseToWorld(mouseX, mouseY)[0]);
+              }
+            }
+          }
+  
+          //blue
+          {
+            if (
+              dist(
+                rgbToSlider(bl),
+                -1,
+                mouseToWorld(mouseX, mouseY)[0],
+                mouseToWorld(mouseX, mouseY)[1]
+              ) < 0.5 &&
+              mouseIsPressed
+            ) {
+              if (mouseToWorld(mouseX, mouseY)[0] < -7) {
+                bl = 0;
+              }
+              if (mouseToWorld(mouseX, mouseY)[0] > -4) {
+                bl = 255;
+              }
+              if (
+                mouseToWorld(mouseX, mouseY)[0] >= -7 &&
+                mouseToWorld(mouseX, mouseY)[0] <= -4
+              ) {
+                bl = sliderToRgb(mouseToWorld(mouseX, mouseY)[0]);
+              }
+            }
+          }
+        }
+      }
+  
+      //graph
+      {
+        push();
+        rotateX(PI / 3);
+        rotateZ(PI / 6);
+        translate(1 * unit, 1 * unit, 0);
+        scale(2.5, -2.5, 2.5);
+  
+        if (rgb == true) {
+          //cube
+          {
+            if ((rd + gr + bl) / 3 < 128) {
+              stroke("white");
+            }
+            if ((rd + gr + bl) / 3 >= 128) {
+              stroke("black");
+            }
+            strokeWeight(0.04 * unit);
+            //front
+            line(0, 0, 0, 0, 0, unit);
+            line(0, 0, 0, unit, 0, 0);
+            line(unit, 0, 0, unit, 0, unit);
+            line(unit, 0, unit, 0, 0, unit);
+  
+            //back
+            line(0, unit, 0, 0, unit, unit);
+            line(0, unit, 0, unit, unit, 0);
+            line(unit, unit, 0, unit, unit, unit);
+            line(unit, unit, unit, 0, unit, unit);
+  
+            //connectors
+            line(unit, 0, 0, unit, unit, 0);
+            line(unit, 0, unit, unit, unit, unit);
+            line(0, 0, unit, 0, unit, unit);
+            line(0, 0, 0, 0, unit, 0);
+  
+            if (curve1 == false && curve2 == false && curve3 == false) {
+              push();
+              translate(
+                (rd / 255) * unit,
+                (gr / 255) * unit,
+                (bl / 255) * unit
+              );
+              sphere(0.05 * unit);
+              pop();
+            }
+          }
+        }
+  
+        if (curve1 == true) {
+          for (p = 0; p < 1; p += 0.001) {
+            point(p * unit, p * unit, p * unit);
+          }
+          push();
+          translate(rgbTimer * unit, rgbTimer * unit, rgbTimer * unit);
+          sphere(0.05 * unit);
+          pop();
+          rd = rgbTimer * 255;
+          gr = rgbTimer * 255;
+          bl = rgbTimer * 255;
+        }
+  
+        if (curve2 == true) {
+          for (p = 0; p < 1; p += 0.001) {
+            point(p * unit, p ** 2 * unit, p ** 3 * unit);
+          }
+          push();
+          translate(rgbTimer * unit, rgbTimer ** 2 * unit, rgbTimer ** 3 * unit);
+          sphere(0.05 * unit);
+          pop();
+  
+          rd = rgbTimer * 255;
+          gr = ((rgbTimer) ** 2) * 255;
+          bl = ((rgbTimer) ** 3) * 255;
+  
+        }
+  
+        if (curve3 == true) {
+          for (p = 0; p < 1; p += 0.001) {
+            point(
+              p * unit,
+              unit * ((sin(p * 2 * PI) + 1) / 2),
+              unit * ((cos(p * 2 * PI) + 1) / 2)
+            );
+          }
+          push();
+          translate(
+            rgbTimer * unit,
+            unit * ((sin(rgbTimer * 2 * PI) + 1) / 2),
+            unit * ((cos(rgbTimer * 2 * PI) + 1) / 2)
+          );
+          sphere(0.05 * unit);
+          pop();
+  
+          gr = ((sin(rgbTimer * 2 * PI) + 1) / 2) * 255;
+          bl = ((cos(rgbTimer * 2 * PI) + 1) / 2) * 255;
+          rd = rgbTimer * 255;
+        }
+        pop();
+      }
+    }
+    if (version == true) {
+      noFill();
+      strokeWeight(unit / 50);
+      stroke("white");
+
+      circle(-7.0 * unit, -2 * unit, 0.25 * unit);
+      circle(-7.0 * unit, -0.9 * unit, 0.25 * unit);
+      circle(-7.0 * unit, 0.85 * unit, 0.25 * unit);
+      circle(-7.0 * unit, 2.6 * unit, 0.25 * unit);
+
+      push();
+      translate(-7.0 * unit, 0.0 * unit);
+      textAlign(LEFT);
+      noStroke();
+      fill("white");
+
+      textSize(1 * unit);
+      text("Summary", unit, -3 * unit);
+
+      textSize(0.5 * unit);
+      if (summaryBullets[0] === true) {
+        circle(0, -2 * unit, 0.25 * unit);
+        text("Higher dimensions exist", unit, -1.85 * unit);
+      }
+      if (summaryBullets[1] === true) {
+        circle(0, -0.9 * unit, 0.25 * unit);
+        text("There are high-dimensional versions of\n2D and 3D objects", unit, -0.75 * unit);
+      }    
+      if (summaryBullets[2] === true) {
+        circle(0, 0.85 * unit, 0.25 * unit);
+        text("We can \"see\" higher dimensions by\nlooking at slices and shadows", unit, 1 * unit);
+      }
+      if (summaryBullets[3] === true) {
+        circle(0, 2.6 * unit, 0.25 * unit);
+        text("Mathematics is a creative process that connects\nour world and our imagination", unit, 2.75 * unit);
+      }
+      pop();
+    }    
+  }
+
+  //short version CMYK space; long version final
+  if (counter == 16) {
+    if (version == false) {
+      //sliders
+      {
+        rectMode(CENTER);
+        stroke(255);
+        strokeWeight(0.05 * unit);
+  
+        //bars
+        fill(0, 255, 255);
+        rect(-5.5 * unit, -1.5 * unit, 3 * unit, 0.1 * unit, 0.1 * unit);
+  
+        fill(255, 0, 255);
+        rect(-5.5 * unit, -0.5 * unit, 3 * unit, 0.1 * unit, 0.1 * unit);
+  
+        fill(255, 255, 0);
+        rect(-5.5 * unit, 0.5 * unit, 3 * unit, 0.1 * unit, 0.1 * unit);
+  
+        fill(0, 0, 0);
+        rect(-5.5 * unit, 1.5 * unit, 3 * unit, 0.1 * unit, 0.1 * unit);
+  
+        //handles
+        push();
+        translate(0, 0, 1);
+        strokeWeight(0.025 * unit);
+        fill(128);
+        rect(cmykToSlider(cy) * unit, -1.5 * unit, 0.2 * unit, 0.5 * unit, 0.1 * unit);
+        rect(cmykToSlider(mg) * unit, -0.5 * unit, 0.2 * unit, 0.5 * unit, 0.1 * unit);
+        rect(cmykToSlider(yw) * unit, 0.5 * unit, 0.2 * unit, 0.5 * unit, 0.1 * unit);
+        rect(cmykToSlider(bk) * unit, 1.5 * unit, 0.2 * unit, 0.5 * unit, 0.1 * unit);
+        pop();
+  
+        //text
+        textSize(0.5 * unit);
+        if ((cmykToRgb(cy, mg, yw, bk)[0] + cmykToRgb(cy, mg, yw, bk)[1] + cmykToRgb(cy, mg, yw, bk)[2]) / 3 < 128) {
+          fill("white");
+        }
+        if ((cmykToRgb(cy, mg, yw, bk)[0] + cmykToRgb(cy, mg, yw, bk)[1] + cmykToRgb(cy, mg, yw, bk)[2]) / 3 >= 128) {
+          fill("black");
+        }
+        textAlign(LEFT);
+        text(round(cy, 3), -3.5 * unit, -1.3 * unit);
+        text(round(mg, 3), -3.5 * unit, -0.3 * unit);
+        text(round(yw, 3), -3.5 * unit, 0.7 * unit);
+        text(round(bk, 3), -3.5 * unit, 1.7 * unit);
+      }
+  
+      //controls
+      {
+        //cyan
+        {
+          if (
+            dist(
+              cmykToSlider(cy),
+              1.5,
+              mouseToWorld(mouseX, mouseY)[0],
+              mouseToWorld(mouseX, mouseY)[1]
+            ) < 0.5 &&
+            mouseIsPressed
+          ) {
+            if (mouseToWorld(mouseX, mouseY)[0] < -7) {
+              cy = 0;
+            }
+            if (mouseToWorld(mouseX, mouseY)[0] > -4) {
+              cy = 1;
+            }
+            if (
+              mouseToWorld(mouseX, mouseY)[0] >= -7 &&
+              mouseToWorld(mouseX, mouseY)[0] <= -4
+            ) {
+              cy = sliderToCmyk(mouseToWorld(mouseX, mouseY)[0]);
+            }
+          }
+        }
+  
+        //magenta
+        {
+          if (
+            dist(
+              cmykToSlider(mg),
+              0.5,
+              mouseToWorld(mouseX, mouseY)[0],
+              mouseToWorld(mouseX, mouseY)[1]
+            ) < 0.5 &&
+            mouseIsPressed
+          ) {
+            if (mouseToWorld(mouseX, mouseY)[0] < -7) {
+              mg = 0;
+            }
+            if (mouseToWorld(mouseX, mouseY)[0] > -4) {
+              mg = 1;
+            }
+            if (
+              mouseToWorld(mouseX, mouseY)[0] >= -7 &&
+              mouseToWorld(mouseX, mouseY)[0] <= -4
+            ) {
+              mg = sliderToCmyk(mouseToWorld(mouseX, mouseY)[0]);
+            }
+          }
+        }
+  
+        //yellow
+        {
+          if (
+            dist(
+              cmykToSlider(yw),
+              -0.5,
+              mouseToWorld(mouseX, mouseY)[0],
+              mouseToWorld(mouseX, mouseY)[1]
+            ) < 0.5 &&
+            mouseIsPressed
+          ) {
+            if (mouseToWorld(mouseX, mouseY)[0] < -7) {
+              yw = 0;
+            }
+            if (mouseToWorld(mouseX, mouseY)[0] > -4) {
+              yw = 1;
+            }
+            if (
+              mouseToWorld(mouseX, mouseY)[0] >= -7 &&
+              mouseToWorld(mouseX, mouseY)[0] <= -4
+            ) {
+              yw = sliderToCmyk(mouseToWorld(mouseX, mouseY)[0]);
+            }
+          }
+        }
+  
+        //black
+        {
+          if (
+            dist(
+              cmykToSlider(bk),
+              -1.5,
+              mouseToWorld(mouseX, mouseY)[0],
+              mouseToWorld(mouseX, mouseY)[1]
+            ) < 0.5 &&
+            mouseIsPressed
+          ) {
+            if (mouseToWorld(mouseX, mouseY)[0] < -7) {
+              bk = 0;
+            }
+            if (mouseToWorld(mouseX, mouseY)[0] > -4) {
+              bk = 1;
+            }
+            if (
+              mouseToWorld(mouseX, mouseY)[0] >= -7 &&
+              mouseToWorld(mouseX, mouseY)[0] <= -4
+            ) {
+              bk = sliderToCmyk(mouseToWorld(mouseX, mouseY)[0]);
+            }
+          }
+        }
+      }
+  
+      //graph
+      {
+        //cube
+        {
+          //set edgelength
+          edgeLength = 2.5 * unit;
+  
+          //stroke settings
+          {
+            if ((cmykToRgb(cy, mg, yw, bk)[0] + cmykToRgb(cy, mg, yw, bk)[1] + cmykToRgb(cy, mg, yw, bk)[2]) / 3 < 128) {
+              stroke("white");
+            }
+            if ((cmykToRgb(cy, mg, yw, bk)[0] + cmykToRgb(cy, mg, yw, bk)[1] + cmykToRgb(cy, mg, yw, bk)[2]) / 3 >= 128) {
+              stroke("black");
+            }
+            strokeWeight(0.04 * unit);
+          }
+  
+          //black = 0 face and dotted connectors and (c,m,y,k) point
+          {
+            push();
+  
+            rotateX(PI / 3);
+            rotateZ(PI / 6);
+            scale(1, -1, 1);
+            translate(0.5 * unit, -2.5 * unit, -0.5 * unit);
+  
+            //front
+            line(0, 0, 0, 0, 0, edgeLength);
+            line(0, 0, 0, edgeLength, 0, 0);
+            line(edgeLength, 0, 0, edgeLength, 0, edgeLength);
+            line(edgeLength, 0, edgeLength, 0, 0, edgeLength);
+  
+            //back
+            line(0, edgeLength, 0, 0, edgeLength, edgeLength);
+            line(0, edgeLength, 0, edgeLength, edgeLength, 0);
+            line(edgeLength, edgeLength, 0, edgeLength, edgeLength, edgeLength);
+            line(edgeLength, edgeLength, edgeLength, 0, edgeLength, edgeLength);
+  
+            //connectors
+            line(edgeLength, 0, 0, edgeLength, edgeLength, 0);
+            line(edgeLength, 0, edgeLength, edgeLength, edgeLength, edgeLength);
+            line(0, 0, edgeLength, 0, edgeLength, edgeLength);
+            line(0, 0, 0, 0, edgeLength, 0);
+  
+  
+            //dotted connectors
+            n = 20;
+            strokeWeight(0.05 * unit);
+            cubeVerts = [[0, 0, 0], [0, 0, 1], [0, 1, 0], [0, 1, 1], [1, 0, 0], [1, 0, 1], [1, 1, 0], [1, 1, 1]];
+            for (j = 0; j < 8; j++) {
+              for (i = 1; i < n; i++) {
+                point(cubeVerts[j][0] * edgeLength + (i / n) * 1 * unit, cubeVerts[j][1] * edgeLength + (i / n) * 1.5 * unit, cubeVerts[j][2] * edgeLength + (i / n) * 1.25 * unit);
+              }
+            }
+  
+            //(c,m,y,k) point
+            push();
+            translate(cy * edgeLength + bk * 1 * unit, mg * edgeLength + bk * 1.5 * unit, yw * edgeLength + bk * 1.25 * unit);
+            sphere(0.1 * unit);
+            pop();
+            pop();
+          }
+  
+          //black = 1 face
+          {
+            strokeWeight(0.04 * unit);
+  
+            push();
+  
+            rotateX(PI / 3);
+            rotateZ(PI / 6);
+            scale(1, -1, 1);
+            translate(1.5 * unit, -1.0 * unit, 0.75 * unit);
+  
+            //front
+            line(0, 0, 0, 0, 0, edgeLength);
+            line(0, 0, 0, edgeLength, 0, 0);
+            line(edgeLength, 0, 0, edgeLength, 0, edgeLength);
+            line(edgeLength, 0, edgeLength, 0, 0, edgeLength);
+  
+            //back
+            line(0, edgeLength, 0, 0, edgeLength, edgeLength);
+            line(0, edgeLength, 0, edgeLength, edgeLength, 0);
+            line(edgeLength, edgeLength, 0, edgeLength, edgeLength, edgeLength);
+            line(edgeLength, edgeLength, edgeLength, 0, edgeLength, edgeLength);
+  
+            //connectors
+            line(edgeLength, 0, 0, edgeLength, edgeLength, 0);
+            line(edgeLength, 0, edgeLength, edgeLength, edgeLength, edgeLength);
+            line(0, 0, edgeLength, 0, edgeLength, edgeLength);
+            line(0, 0, 0, 0, edgeLength, 0);
+  
+            pop();
+          }
+  
+          //(c,m,y,k) point
+        }
+      }
+    }
+    if (version == true) {
+      push();
+      translate(-7.0 * unit, 0.0 * unit);
+      textAlign(LEFT);
+      fill("white");
+
+      textSize(1.8 * unit);
+      text("Thank you!", 0, 0);
+
+    
+      pop();
+
+      push();
+      scale(2.5 * unit, 2.5 * unit, 2.5 * unit);
+      translate(-0.25, 0);
+      rotateX(PI / 3);
+      rotateZ(PI / 6);
+      stroke('white');
+      strokeWeight(0.01 * unit);
+      for (j = 0; j < 15; j++) {
+        for (i = j + 1; i < 16; i++) {
+          if (arrComp(P[j], P[i]) == true) {
+            edge(titleRotation(phi_x, phi_y, phi_z, P[j]), titleRotation(phi_x, phi_y, phi_z, P[i]));
+          }
+        }
+      }
+      pop();
+
+      let slowDown = 100
+
+      titleTimer++;
+      phi_x = sin(titleTimer / slowDown);
+      phi_y = cos(1.5 * titleTimer / slowDown);
+      phi_z = sin(titleTimer / slowDown) * cos(titleTimer / slowDown);
+    }
+  }
+
 }
